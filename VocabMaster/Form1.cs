@@ -117,20 +117,38 @@ namespace VocabMaster
             tuMoi.TiengViet = VietHoaChuCaiDauTien(txtTiengViet.Text);
             tuMoi.LoaiTu = txtLoaiTu.Text; // Lấy luôn loại từ vừa dịch được
             tuMoi.PhienAm = txtPhienAm.Text; // Lấy luôn phiên âm vừa dịch được
-            tuMoi.ChuDe = "Chưa có chủ đề";
             tuMoi.DaThuoc = false;
+            string chuDe = cboChonChuDe.Text.Trim();
+            if (string.IsNullOrEmpty(chuDe))
+            {
+                chuDe = "Khác";
+            }
+            else
+            {
+                chuDe = VietHoaChuCaiDauTien(chuDe);
+            }
+            tuMoi.ChuDe = chuDe;
 
-            _danhSachTuVung.Add(tuMoi);
+            _danhSachTuVung.Insert(0, tuMoi); // Thêm vào đầu danh sách
             _kho.LuuDuLieu(_danhSachTuVung);
 
             TaiDuLieuLenBang();
+            TaiDanhSachChuDe(); // Cập nhật lại danh sách chủ đề
 
             // Reset ô nhập
             txtTiengAnh.Text = "";
             txtTiengViet.Text = "";
             txtLoaiTu.Text = "";
             txtPhienAm.Text = ""; // Reset luôn ô phiên âm
+
             txtTiengAnh.Focus();
+
+            if(dgvDanhSach.Rows.Count > 0)
+            {
+                dgvDanhSach.FirstDisplayedScrollingRowIndex = 0; // Cuộn lên đầu bảng
+                dgvDanhSach.Rows[0].Selected = true; // Chọn dòng đầu tiên
+                dgvDanhSach.CurrentCell = dgvDanhSach.Rows[0].Cells[0]; // Đặt con trỏ vào dòng đầu tiên
+            }
         }
 
         private void btnXoa_Click(object sender, EventArgs e)
@@ -171,6 +189,7 @@ namespace VocabMaster
                                 .ToList();
             danhSachChuDe.Insert(0, "Tất cả chủ đề");  // Thêm mục "Tất cả" vào đầu danh sách
             cboLocChuDe.DataSource = danhSachChuDe;
+            cboChonChuDe.DataSource = danhSachChuDe.Where(cd => cd != "Tất cả chủ đề").ToList(); // Loại bỏ "Tất cả chủ đề" khỏi cboChonChuDe
         }
 
         private void cboLocChuDe_SelectedIndexChanged(object sender, EventArgs e)
