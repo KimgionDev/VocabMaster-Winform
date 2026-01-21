@@ -118,16 +118,31 @@ namespace VocabMaster
             tuMoi.LoaiTu = txtLoaiTu.Text; // Lấy luôn loại từ vừa dịch được
             tuMoi.PhienAm = txtPhienAm.Text; // Lấy luôn phiên âm vừa dịch được
             tuMoi.DaThuoc = false;
-            string chuDe = cboChonChuDe.Text.Trim();
-            if (string.IsNullOrEmpty(chuDe))
+
+            string tenChuDe = cboChonChuDe.Text.Trim();
+            if (string.IsNullOrEmpty(tenChuDe) || tenChuDe.Equals("Nhập chủ đề"))
             {
-                chuDe = "Khác";
+                tenChuDe = "Chưa phân loại";
             }
             else
             {
-                chuDe = VietHoaChuCaiDauTien(chuDe);
+                tenChuDe = VietHoaChuCaiDauTien(tenChuDe);
             }
-            tuMoi.ChuDe = chuDe;
+            ChuDe chuDeDaTonTai = _danhSachTuVung
+                                    .Select(cd => cd.ChuDe)     // FirstOrDefault chỉ lấy chủ đề đầu tiên tìm thấy
+                                    .FirstOrDefault(cd => cd != null && cd.TenChuDe.Equals(tenChuDe));
+            ChuDe objChuDeFinal;
+            if (chuDeDaTonTai != null)
+            {
+                objChuDeFinal = chuDeDaTonTai;
+            }
+            else
+            {
+                objChuDeFinal = new ChuDe();
+                objChuDeFinal.IdChuDe = Guid.NewGuid().ToString();
+                objChuDeFinal.TenChuDe = tenChuDe;
+            }
+            tuMoi.ChuDe = objChuDeFinal;
 
             _danhSachTuVung.Insert(0, tuMoi); // Thêm vào đầu danh sách
             _kho.LuuDuLieu(_danhSachTuVung);
@@ -140,6 +155,7 @@ namespace VocabMaster
             txtTiengViet.Text = "";
             txtLoaiTu.Text = "";
             txtPhienAm.Text = ""; // Reset luôn ô phiên âm
+            cboChonChuDe.Text = "Nhập chủ đề";
 
             txtTiengAnh.Focus();
 
@@ -171,11 +187,6 @@ namespace VocabMaster
             }
         }
 
-        private void dgvDanhSach_CellEndEdit(object sender, DataGridViewCellEventArgs e)
-        {
-            _kho.LuuDuLieu(_danhSachTuVung);
-        }
-
         private void txtTimKiem_TextChanged(object sender, EventArgs e)
         {
             LocDuLieu();
@@ -184,11 +195,11 @@ namespace VocabMaster
         private void TaiDanhSachChuDe()
         {
             var danhSachChuDe = _danhSachTuVung
-                                .Select(dscd => dscd.ChuDe)
+                                .Select(dscd => dscd.ChuDe?.TenChuDe)
                                 .Distinct()
                                 .ToList();
-            danhSachChuDe.Insert(0, "Tất cả chủ đề");  // Thêm mục "Tất cả" vào đầu danh sách
-            cboLocChuDe.DataSource = danhSachChuDe;
+            danhSachChuDe.Insert(0, "Tất cả chủ đề");   // Thêm mục "Tất cả" vào đầu danh sách
+            cboLocChuDe.DataSource = danhSachChuDe;     // Gán danh sách chủ đề cho cboLocChuDe
             cboChonChuDe.DataSource = danhSachChuDe.Where(cd => cd != "Tất cả chủ đề").ToList(); // Loại bỏ "Tất cả chủ đề" khỏi cboChonChuDe
         }
 
@@ -222,7 +233,7 @@ namespace VocabMaster
 
             if (!string.IsNullOrEmpty(chuDeDaChon) && chuDeDaChon != "Tất cả chủ đề")
             {
-                ketQua = ketQua.Where(cd => cd.ChuDe == chuDeDaChon);
+                ketQua = ketQua.Where(cd => cd.ChuDe?.TenChuDe == chuDeDaChon);
             }
 
             if (!string.IsNullOrEmpty(tuKhoa))
@@ -238,11 +249,14 @@ namespace VocabMaster
         {
             if (e.RowIndex >= 0)
             {
-                DataGridViewRow dongDaChon = dgvDanhSach.Rows[e.RowIndex];
-                txtTiengAnh.Text = dongDaChon.Cells["TiengAnh"].Value?.ToString();
-                txtTiengViet.Text = dongDaChon.Cells["TiengViet"].Value?.ToString();
-                txtPhienAm.Text = dongDaChon.Cells["PhienAm"].Value?.ToString();
-                txtLoaiTu.Text = dongDaChon.Cells["LoaiTu"].Value?.ToString();
+                DataGridViewRow dongDuocChon = dgvDanhSach.Rows[e.RowIndex];
+                txtTiengAnh.Text = dongDuocChon.Cells["TiengAnh"].Value?.ToString();
+                txtTiengViet.Text = dongDuocChon.Cells["TiengViet"].Value?.ToString();
+                txtPhienAm.Text = dongDuocChon.Cells["PhienAm"].Value?.ToString();
+                txtLoaiTu.Text = dongDuocChon.Cells["LoaiTu"].Value?.ToString();
+                cboChonChuDe.Text = dongDuocChon.Cells["ChuDe"].Value?.ToString(); 
+                MessageBox.Show("Chỉnh sửa và nhấn nút Sửa để lưu lại.", "Thông báo");
+                txtTiengAnh.Focus();
             }
         }
 
@@ -258,6 +272,11 @@ namespace VocabMaster
         private void cboLocDaThuoc_SelectedIndexChanged(object sender, EventArgs e)
         {
             LocDuLieu();
+        }
+
+        private void btnSua_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

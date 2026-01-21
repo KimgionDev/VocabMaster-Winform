@@ -14,5 +14,10 @@ namespace VocabMaster
             TenChuDe = "";
             MoTa = ""; 
         }
+
+        public override string ToString()
+        {
+            return TenChuDe;
+        }
     }
 }

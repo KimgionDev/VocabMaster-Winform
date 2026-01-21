@@ -87,6 +87,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChuDe.cs" />
     <Compile Include="DichThuatService.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>

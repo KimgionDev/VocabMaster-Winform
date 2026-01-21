@@ -8,7 +8,7 @@ namespace VocabMaster
         public string PhienAm { get; set; }
         public string TiengViet { get; set; }
         public string LoaiTu { get; set; }
-        public string ChuDe { get; set; }
+        public ChuDe ChuDe { get; set; }
         public bool DaThuoc { get; set; }
 
         public TuVung()
@@ -17,7 +17,7 @@ namespace VocabMaster
             TiengViet = "";
             PhienAm = "";
             LoaiTu = "";
-            ChuDe = "";
+            ChuDe = null;
             DaThuoc = false;
         }
     }

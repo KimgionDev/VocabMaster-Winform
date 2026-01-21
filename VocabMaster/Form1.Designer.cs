@@ -40,7 +40,6 @@
             this.btnXoa = new System.Windows.Forms.Button();
             this.btnThem = new System.Windows.Forms.Button();
             this.txtTiengAnh = new System.Windows.Forms.TextBox();
-            this.lblTiengViet = new System.Windows.Forms.Label();
             this.lblTiengAnh = new System.Windows.Forms.Label();
             this.dgvDanhSach = new System.Windows.Forms.DataGridView();
             this.txtTimKiem = new System.Windows.Forms.TextBox();
@@ -48,6 +47,9 @@
             this.cboLocDaThuoc = new System.Windows.Forms.ComboBox();
             this.lblDanhSachTuVung = new System.Windows.Forms.Label();
             this.cboChonChuDe = new System.Windows.Forms.ComboBox();
+            this.btnSua = new System.Windows.Forms.Button();
+            this.lblTiengViet = new System.Windows.Forms.Label();
+            this.lblChuDe = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDanhSach)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -59,7 +61,7 @@
             // 
             this.cboLocChuDe.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cboLocChuDe.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.cboLocChuDe.Font = new System.Drawing.Font("K2D", 8.5F);
+            this.cboLocChuDe.Font = new System.Drawing.Font("K2D SemiBold", 8.5F, System.Drawing.FontStyle.Bold);
             this.cboLocChuDe.FormattingEnabled = true;
             this.cboLocChuDe.Location = new System.Drawing.Point(278, 60);
             this.cboLocChuDe.Name = "cboLocChuDe";
@@ -75,7 +77,7 @@
             this.btnLoa.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnLoa.FlatAppearance.BorderSize = 0;
             this.btnLoa.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnLoa.Font = new System.Drawing.Font("K2D", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLoa.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnLoa.ForeColor = System.Drawing.Color.White;
             this.btnLoa.Location = new System.Drawing.Point(303, 190);
             this.btnLoa.Name = "btnLoa";
@@ -160,7 +162,7 @@
             this.btnDich.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnDich.FlatAppearance.BorderSize = 0;
             this.btnDich.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnDich.Font = new System.Drawing.Font("K2D", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDich.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDich.ForeColor = System.Drawing.Color.White;
             this.btnDich.Location = new System.Drawing.Point(253, 144);
             this.btnDich.Name = "btnDich";
@@ -177,11 +179,11 @@
             this.btnXoa.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnXoa.FlatAppearance.BorderSize = 0;
             this.btnXoa.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnXoa.Font = new System.Drawing.Font("K2D", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnXoa.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnXoa.ForeColor = System.Drawing.Color.White;
-            this.btnXoa.Location = new System.Drawing.Point(253, 524);
+            this.btnXoa.Location = new System.Drawing.Point(253, 537);
             this.btnXoa.Name = "btnXoa";
-            this.btnXoa.Size = new System.Drawing.Size(120, 40);
+            this.btnXoa.Size = new System.Drawing.Size(120, 35);
             this.btnXoa.TabIndex = 8;
             this.btnXoa.Text = "Xóa";
             this.btnXoa.UseVisualStyleBackColor = false;
@@ -194,11 +196,11 @@
             this.btnThem.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnThem.FlatAppearance.BorderSize = 0;
             this.btnThem.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnThem.Font = new System.Drawing.Font("K2D", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnThem.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnThem.ForeColor = System.Drawing.Color.White;
-            this.btnThem.Location = new System.Drawing.Point(253, 461);
+            this.btnThem.Location = new System.Drawing.Point(253, 455);
             this.btnThem.Name = "btnThem";
-            this.btnThem.Size = new System.Drawing.Size(120, 40);
+            this.btnThem.Size = new System.Drawing.Size(120, 35);
             this.btnThem.TabIndex = 6;
             this.btnThem.Text = "Thêm";
             this.btnThem.UseVisualStyleBackColor = false;
@@ -218,19 +220,6 @@
             this.txtTiengAnh.Size = new System.Drawing.Size(363, 85);
             this.txtTiengAnh.TabIndex = 3;
             // 
-            // lblTiengViet
-            // 
-            this.lblTiengViet.Font = new System.Drawing.Font("K2D", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTiengViet.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(60)))), ((int)(((byte)(120)))));
-            this.lblTiengViet.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblTiengViet.Location = new System.Drawing.Point(10, 323);
-            this.lblTiengViet.Margin = new System.Windows.Forms.Padding(10, 3, 3, 3);
-            this.lblTiengViet.Name = "lblTiengViet";
-            this.lblTiengViet.Size = new System.Drawing.Size(326, 35);
-            this.lblTiengViet.TabIndex = 1;
-            this.lblTiengViet.Text = "Tiếng Việt";
-            this.lblTiengViet.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // lblTiengAnh
             // 
             this.lblTiengAnh.Font = new System.Drawing.Font("K2D", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -248,6 +237,7 @@
             // 
             this.dgvDanhSach.AllowUserToAddRows = false;
             this.dgvDanhSach.AllowUserToDeleteRows = false;
+            this.dgvDanhSach.AllowUserToResizeRows = false;
             this.dgvDanhSach.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -265,15 +255,15 @@
             this.dgvDanhSach.EnableHeadersVisualStyles = false;
             this.dgvDanhSach.Location = new System.Drawing.Point(12, 97);
             this.dgvDanhSach.Name = "dgvDanhSach";
+            this.dgvDanhSach.ReadOnly = true;
             this.dgvDanhSach.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             this.dgvDanhSach.RowHeadersVisible = false;
             this.dgvDanhSach.RowHeadersWidth = 51;
             this.dgvDanhSach.RowTemplate.Height = 24;
             this.dgvDanhSach.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvDanhSach.Size = new System.Drawing.Size(535, 467);
+            this.dgvDanhSach.Size = new System.Drawing.Size(535, 471);
             this.dgvDanhSach.TabIndex = 1;
             this.dgvDanhSach.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvDanhSach_CellDoubleClick);
-            this.dgvDanhSach.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvDanhSach_CellEndEdit);
             // 
             // txtTimKiem
             // 
@@ -309,6 +299,7 @@
             // 
             this.splitContainer1.Panel2.BackColor = System.Drawing.Color.White;
             this.splitContainer1.Panel2.Controls.Add(this.cboChonChuDe);
+            this.splitContainer1.Panel2.Controls.Add(this.btnSua);
             this.splitContainer1.Panel2.Controls.Add(this.btnXoa);
             this.splitContainer1.Panel2.Controls.Add(this.btnLoa);
             this.splitContainer1.Panel2.Controls.Add(this.lblLoaiTu);
@@ -321,9 +312,10 @@
             this.splitContainer1.Panel2.Controls.Add(this.lblPhienAm);
             this.splitContainer1.Panel2.Controls.Add(this.lblTiengViet);
             this.splitContainer1.Panel2.Controls.Add(this.txtLoaiTu);
+            this.splitContainer1.Panel2.Controls.Add(this.lblChuDe);
             this.splitContainer1.Panel2.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.splitContainer1.Panel2MinSize = 350;
-            this.splitContainer1.Size = new System.Drawing.Size(939, 576);
+            this.splitContainer1.Size = new System.Drawing.Size(939, 580);
             this.splitContainer1.SplitterDistance = 550;
             this.splitContainer1.TabIndex = 17;
             // 
@@ -331,7 +323,7 @@
             // 
             this.cboLocDaThuoc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cboLocDaThuoc.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.cboLocDaThuoc.Font = new System.Drawing.Font("K2D", 8.5F);
+            this.cboLocDaThuoc.Font = new System.Drawing.Font("K2D SemiBold", 8.5F, System.Drawing.FontStyle.Bold);
             this.cboLocDaThuoc.FormattingEnabled = true;
             this.cboLocDaThuoc.Location = new System.Drawing.Point(434, 60);
             this.cboLocDaThuoc.Name = "cboLocDaThuoc";
@@ -355,19 +347,62 @@
             // cboChonChuDe
             // 
             this.cboChonChuDe.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.cboChonChuDe.Font = new System.Drawing.Font("K2D", 8.5F);
+            this.cboChonChuDe.Font = new System.Drawing.Font("K2D SemiBold", 8.5F, System.Drawing.FontStyle.Bold);
             this.cboChonChuDe.FormattingEnabled = true;
-            this.cboChonChuDe.Location = new System.Drawing.Point(10, 461);
+            this.cboChonChuDe.Location = new System.Drawing.Point(10, 496);
             this.cboChonChuDe.Name = "cboChonChuDe";
-            this.cboChonChuDe.Size = new System.Drawing.Size(150, 35);
+            this.cboChonChuDe.Size = new System.Drawing.Size(164, 35);
             this.cboChonChuDe.TabIndex = 18;
             this.cboChonChuDe.Text = "Nhập chủ đề";
+            // 
+            // btnSua
+            // 
+            this.btnSua.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSua.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(95)))), ((int)(((byte)(180)))));
+            this.btnSua.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnSua.FlatAppearance.BorderSize = 0;
+            this.btnSua.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSua.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSua.ForeColor = System.Drawing.Color.White;
+            this.btnSua.Location = new System.Drawing.Point(253, 496);
+            this.btnSua.Name = "btnSua";
+            this.btnSua.Size = new System.Drawing.Size(120, 35);
+            this.btnSua.TabIndex = 20;
+            this.btnSua.Text = "Sửa";
+            this.btnSua.UseVisualStyleBackColor = false;
+            this.btnSua.Click += new System.EventHandler(this.btnSua_Click);
+            // 
+            // lblTiengViet
+            // 
+            this.lblTiengViet.Font = new System.Drawing.Font("K2D", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTiengViet.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(60)))), ((int)(((byte)(120)))));
+            this.lblTiengViet.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblTiengViet.Location = new System.Drawing.Point(10, 323);
+            this.lblTiengViet.Margin = new System.Windows.Forms.Padding(10, 3, 3, 3);
+            this.lblTiengViet.Name = "lblTiengViet";
+            this.lblTiengViet.Size = new System.Drawing.Size(326, 35);
+            this.lblTiengViet.TabIndex = 1;
+            this.lblTiengViet.Text = "Tiếng Việt";
+            this.lblTiengViet.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblChuDe
+            // 
+            this.lblChuDe.Font = new System.Drawing.Font("K2D", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblChuDe.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(60)))), ((int)(((byte)(120)))));
+            this.lblChuDe.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblChuDe.Location = new System.Drawing.Point(10, 455);
+            this.lblChuDe.Margin = new System.Windows.Forms.Padding(10, 3, 0, 3);
+            this.lblChuDe.Name = "lblChuDe";
+            this.lblChuDe.Size = new System.Drawing.Size(101, 35);
+            this.lblChuDe.TabIndex = 19;
+            this.lblChuDe.Text = "Chủ đề";
+            this.lblChuDe.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.ClientSize = new System.Drawing.Size(939, 576);
+            this.ClientSize = new System.Drawing.Size(939, 580);
             this.Controls.Add(this.splitContainer1);
             this.Font = new System.Drawing.Font("K2D", 10F);
             this.Name = "Form1";
@@ -387,7 +422,6 @@
         #endregion
         private System.Windows.Forms.DataGridView dgvDanhSach;
         private System.Windows.Forms.Label lblTiengAnh;
-        private System.Windows.Forms.Label lblTiengViet;
         private System.Windows.Forms.Label lblPhienAm;
         private System.Windows.Forms.TextBox txtTiengAnh;
         private System.Windows.Forms.Button btnDich;
@@ -404,6 +438,9 @@
         private System.Windows.Forms.Label lblDanhSachTuVung;
         private System.Windows.Forms.ComboBox cboLocDaThuoc;
         private System.Windows.Forms.ComboBox cboChonChuDe;
+        private System.Windows.Forms.Label lblChuDe;
+        private System.Windows.Forms.Label lblTiengViet;
+        private System.Windows.Forms.Button btnSua;
     }
 }
 
