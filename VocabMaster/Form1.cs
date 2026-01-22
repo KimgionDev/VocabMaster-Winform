@@ -15,6 +15,7 @@ namespace VocabMaster
     {
         KhoDuLieuJSON _kho = new KhoDuLieuJSON();
         List<TuVung> _danhSachTuVung = new List<TuVung>();
+        TuVung _tuDangChon = null;
 
         public Form1()
         {
@@ -79,14 +80,18 @@ namespace VocabMaster
             string cauCanDoc = txtTiengAnh.Text.Trim();
             if (string.IsNullOrEmpty(cauCanDoc)) return;
 
+            btnLoa.Text = "..."; // Báo hiệu đang chạy
+            btnLoa.Enabled = false;
+
             // Tạo máy đọc
             SpeechSynthesizer mayDoc = new SpeechSynthesizer();
             mayDoc.Volume = 100; // Âm lượng max
             mayDoc.Rate = 0;     // Tốc độ bình thường
             mayDoc.SelectVoiceByHints(VoiceGender.NotSet, VoiceAge.NotSet, 0, new System.Globalization.CultureInfo("en-US")); // Giọng Anh-Mỹ
-
             // Đọc bất chấp (chạy ngầm)
             mayDoc.SpeakAsync(cauCanDoc);
+            btnLoa.Text = "Loa";
+            btnLoa.Enabled = true;
         }
 
         private string VietHoaChuCaiDauTien(string vanBan)
@@ -97,28 +102,8 @@ namespace VocabMaster
             return vanBan;
         }
 
-        private void btnThem_Click(object sender, EventArgs e)
+        private ChuDe ChuDeDaTonTai()
         {
-            if (txtTiengAnh.Text == "" || txtTiengViet.Text == "")
-            {
-                MessageBox.Show("Chưa nhập gì ní ơi!", "Cảnh báo");
-                return;
-            }
-
-            bool daTonTai = _danhSachTuVung.Any(tu => (tu.TiengAnh.ToLower() == txtTiengAnh.Text.Trim().ToLower()) &&  (tu.TiengViet.ToLower() == txtTiengViet.Text.Trim().ToLower()));
-            if(daTonTai)
-            {
-                MessageBox.Show("Từ này đã có trong từ điển rồi nè!", "Cảnh báo");
-                return;
-            }
-
-            TuVung tuMoi = new TuVung();
-            tuMoi.TiengAnh = VietHoaChuCaiDauTien(txtTiengAnh.Text);
-            tuMoi.TiengViet = VietHoaChuCaiDauTien(txtTiengViet.Text);
-            tuMoi.LoaiTu = txtLoaiTu.Text; // Lấy luôn loại từ vừa dịch được
-            tuMoi.PhienAm = txtPhienAm.Text; // Lấy luôn phiên âm vừa dịch được
-            tuMoi.DaThuoc = false;
-
             string tenChuDe = cboChonChuDe.Text.Trim();
             if (string.IsNullOrEmpty(tenChuDe) || tenChuDe.Equals("Nhập chủ đề"))
             {
@@ -142,7 +127,31 @@ namespace VocabMaster
                 objChuDeFinal.IdChuDe = Guid.NewGuid().ToString();
                 objChuDeFinal.TenChuDe = tenChuDe;
             }
-            tuMoi.ChuDe = objChuDeFinal;
+            return objChuDeFinal;
+        }
+
+        private void btnThem_Click(object sender, EventArgs e)
+        {
+            if (txtTiengAnh.Text == "" || txtTiengViet.Text == "")
+            {
+                MessageBox.Show("Chưa nhập gì ní ơi!", "Cảnh báo");
+                return;
+            }
+
+            bool daTonTai = _danhSachTuVung.Any(tu => (tu.TiengAnh.ToLower() == txtTiengAnh.Text.Trim().ToLower()) &&  (tu.TiengViet.ToLower() == txtTiengViet.Text.Trim().ToLower()));
+            if(daTonTai)
+            {
+                MessageBox.Show("Từ này đã có trong từ điển rồi nè!", "Cảnh báo");
+                return;
+            }
+
+            TuVung tuMoi = new TuVung();
+            tuMoi.TiengAnh = VietHoaChuCaiDauTien(txtTiengAnh.Text);
+            tuMoi.TiengViet = VietHoaChuCaiDauTien(txtTiengViet.Text);
+            tuMoi.LoaiTu = txtLoaiTu.Text; // Lấy luôn loại từ vừa dịch được
+            tuMoi.PhienAm = txtPhienAm.Text; // Lấy luôn phiên âm vừa dịch được
+            tuMoi.DaThuoc = false;
+            tuMoi.ChuDe = ChuDeDaTonTai();
 
             _danhSachTuVung.Insert(0, tuMoi); // Thêm vào đầu danh sách
             _kho.LuuDuLieu(_danhSachTuVung);
@@ -257,6 +266,8 @@ namespace VocabMaster
                 cboChonChuDe.Text = dongDuocChon.Cells["ChuDe"].Value?.ToString(); 
                 MessageBox.Show("Chỉnh sửa và nhấn nút Sửa để lưu lại.", "Thông báo");
                 txtTiengAnh.Focus();
+                _tuDangChon = _danhSachTuVung
+                              .Find(tu => tu.TiengAnh == txtTiengAnh.Text && tu.TiengViet == txtTiengViet.Text);
             }
         }
 
@@ -276,7 +287,30 @@ namespace VocabMaster
 
         private void btnSua_Click(object sender, EventArgs e)
         {
+            if(_tuDangChon == null)
+            {
+                MessageBox.Show("Chưa chọn từ để sửa. Nhấn đúp vào một từ trong bảng để chọn.", "Cảnh báo");
+                return;
+            }
 
+            btnSua.Text = "...";
+            btnSua.Enabled = false;
+
+            _tuDangChon.TiengAnh = VietHoaChuCaiDauTien(txtTiengAnh.Text);
+            _tuDangChon.TiengViet = VietHoaChuCaiDauTien(txtTiengViet.Text);
+            _tuDangChon.LoaiTu = txtLoaiTu.Text;
+            _tuDangChon.PhienAm = txtPhienAm.Text;
+            _tuDangChon.ChuDe = ChuDeDaTonTai();
+
+            _kho.LuuDuLieu(_danhSachTuVung);
+            TaiDuLieuLenBang();
+            TaiDanhSachChuDe();
+
+            _tuDangChon = null; // Reset từ đang chọn   
+            btnSua.Text = "Sửa";
+            btnSua.Enabled = true;
+
+            MessageBox.Show("Sửa từ thành công!", "Thông báo");
         }
     }
 }
