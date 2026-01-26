@@ -45,7 +45,7 @@ namespace VocabMaster
                 {
                     return ketQua; // Trả về luôn kết quả dịch, bỏ qua đoạn dưới
                 }
-
+                // Gọi API từ điển
                 string url = $"https://api.dictionaryapi.dev/api/v2/entries/en/{Uri.EscapeDataString(tuTiengAnh)}";
                 string jsonResponse = await _httpClient.GetStringAsync(url);
 

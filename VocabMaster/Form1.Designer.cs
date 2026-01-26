@@ -36,7 +36,6 @@
             this.txtPhienAm = new System.Windows.Forms.TextBox();
             this.lblPhienAm = new System.Windows.Forms.Label();
             this.txtTiengViet = new System.Windows.Forms.TextBox();
-            this.btnDich = new System.Windows.Forms.Button();
             this.btnXoa = new System.Windows.Forms.Button();
             this.btnThem = new System.Windows.Forms.Button();
             this.txtTiengAnh = new System.Windows.Forms.TextBox();
@@ -155,23 +154,6 @@
             this.txtTiengViet.Size = new System.Drawing.Size(363, 85);
             this.txtTiengViet.TabIndex = 10;
             // 
-            // btnDich
-            // 
-            this.btnDich.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDich.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(95)))), ((int)(((byte)(180)))));
-            this.btnDich.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnDich.FlatAppearance.BorderSize = 0;
-            this.btnDich.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnDich.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDich.ForeColor = System.Drawing.Color.White;
-            this.btnDich.Location = new System.Drawing.Point(253, 144);
-            this.btnDich.Name = "btnDich";
-            this.btnDich.Size = new System.Drawing.Size(120, 40);
-            this.btnDich.TabIndex = 9;
-            this.btnDich.Text = "Dịch";
-            this.btnDich.UseVisualStyleBackColor = false;
-            this.btnDich.Click += new System.EventHandler(this.btnDich_Click);
-            // 
             // btnXoa
             // 
             this.btnXoa.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -219,6 +201,7 @@
             this.txtTiengAnh.Name = "txtTiengAnh";
             this.txtTiengAnh.Size = new System.Drawing.Size(363, 85);
             this.txtTiengAnh.TabIndex = 3;
+            this.txtTiengAnh.TextChanged += new System.EventHandler(this.txtTiengAnh_TextChanged);
             // 
             // lblTiengAnh
             // 
@@ -303,7 +286,6 @@
             this.splitContainer1.Panel2.Controls.Add(this.btnXoa);
             this.splitContainer1.Panel2.Controls.Add(this.btnLoa);
             this.splitContainer1.Panel2.Controls.Add(this.lblLoaiTu);
-            this.splitContainer1.Panel2.Controls.Add(this.btnDich);
             this.splitContainer1.Panel2.Controls.Add(this.txtTiengAnh);
             this.splitContainer1.Panel2.Controls.Add(this.lblTiengAnh);
             this.splitContainer1.Panel2.Controls.Add(this.btnThem);
@@ -424,7 +406,6 @@
         private System.Windows.Forms.Label lblTiengAnh;
         private System.Windows.Forms.Label lblPhienAm;
         private System.Windows.Forms.TextBox txtTiengAnh;
-        private System.Windows.Forms.Button btnDich;
         private System.Windows.Forms.Button btnXoa;
         private System.Windows.Forms.Button btnThem;
         private System.Windows.Forms.TextBox txtTiengViet;

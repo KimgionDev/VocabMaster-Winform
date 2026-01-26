@@ -95,6 +95,12 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormTracNghiem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormTracNghiem.Designer.cs">
+      <DependentUpon>FormTracNghiem.cs</DependentUpon>
+    </Compile>
     <Compile Include="KhoDuLieuJSON.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

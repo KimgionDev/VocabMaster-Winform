@@ -1,9 +1,11 @@
-﻿using System; // Thư viện cơ bản
+﻿using System;
+using System.ComponentModel;    // Thêm thư viện này để dùng [Description]
 
 namespace VocabMaster
 {
     public class TuVung
     {
+        [Browsable(false)] public string IdTuVung { get; set; } // Ẩn trong DataGridView
         public string TiengAnh { get; set; }
         public string PhienAm { get; set; }
         public string TiengViet { get; set; }
@@ -13,6 +15,7 @@ namespace VocabMaster
 
         public TuVung()
         {
+            IdTuVung = Guid.NewGuid().ToString();
             TiengAnh = "";
             TiengViet = "";
             PhienAm = "";

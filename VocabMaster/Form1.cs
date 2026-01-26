@@ -16,10 +16,14 @@ namespace VocabMaster
         KhoDuLieuJSON _kho = new KhoDuLieuJSON();
         List<TuVung> _danhSachTuVung = new List<TuVung>();
         TuVung _tuDangChon = null;
+        System.Windows.Forms.Timer _timerTuDongDich;
 
         public Form1()
         {
             InitializeComponent();
+            _timerTuDongDich = new System.Windows.Forms.Timer();
+            _timerTuDongDich.Interval = 1000;
+            _timerTuDongDich.Tick += TimerTuDongDich_Tick;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -33,6 +37,7 @@ namespace VocabMaster
         {
             // Đọc dữ liệu từ file lên
             _danhSachTuVung = _kho.DocDuLieu();
+            _danhSachTuVung = _danhSachTuVung.OrderBy(tu => tu.TiengAnh).ToList(); // Sắp xếp từ A-Z
 
             // Gán null trước để reset bảng, tránh lỗi không cập nhật
             dgvDanhSach.DataSource = null;
@@ -49,15 +54,10 @@ namespace VocabMaster
             }
         }
 
-        private async void btnDich_Click(object sender, EventArgs e)
+        private async void Dich()
         {
             string tu = txtTiengAnh.Text.Trim();
             if (string.IsNullOrEmpty(tu)) return;
-
-            btnDich.Text = "..."; // Báo hiệu đang chạy
-            btnDich.Enabled = false;
-
-            // Gọi class dịch vụ
             DichThuatService service = new DichThuatService();
             var ketQua = await service.TraCuuTuDayDu(tu);
 
@@ -70,9 +70,18 @@ namespace VocabMaster
             {
                 txtLoaiTu.Text = "";
             }
+        }
 
-            btnDich.Text = "Dịch";
-            btnDich.Enabled = true;
+        private void TimerTuDongDich_Tick(object sender, EventArgs e)
+        {
+            _timerTuDongDich.Stop();    // Dừng timer để tránh gọi liên tục
+            Dich();
+        }
+
+        private void txtTiengAnh_TextChanged(object sender, EventArgs e)
+        {
+            _timerTuDongDich.Stop();    // Dừng timer nếu người dùng vẫn đang gõ
+            _timerTuDongDich.Start();   // Bắt đầu đếm ngược
         }
 
         private void btnDoc_Click(object sender, EventArgs e)
@@ -138,8 +147,8 @@ namespace VocabMaster
                 return;
             }
 
-            bool daTonTai = _danhSachTuVung.Any(tu => (tu.TiengAnh.ToLower() == txtTiengAnh.Text.Trim().ToLower()) &&  (tu.TiengViet.ToLower() == txtTiengViet.Text.Trim().ToLower()));
-            if(daTonTai)
+            bool daTonTai = _danhSachTuVung.Any(tu => (tu.TiengAnh.ToLower() == txtTiengAnh.Text.Trim().ToLower()) && (tu.TiengViet.ToLower() == txtTiengViet.Text.Trim().ToLower()));
+            if (daTonTai)
             {
                 MessageBox.Show("Từ này đã có trong từ điển rồi nè!", "Cảnh báo");
                 return;
@@ -168,7 +177,7 @@ namespace VocabMaster
 
             txtTiengAnh.Focus();
 
-            if(dgvDanhSach.Rows.Count > 0)
+            if (dgvDanhSach.Rows.Count > 0)
             {
                 dgvDanhSach.FirstDisplayedScrollingRowIndex = 0; // Cuộn lên đầu bảng
                 dgvDanhSach.Rows[0].Selected = true; // Chọn dòng đầu tiên
@@ -228,7 +237,7 @@ namespace VocabMaster
                 tuKhoa = "";
             }
 
-            switch(cboLocDaThuoc.Text)
+            switch (cboLocDaThuoc.Text)
             {
                 case "Đã thuộc":
                     ketQua = ketQua.Where(tu => tu.DaThuoc == true);
@@ -263,7 +272,7 @@ namespace VocabMaster
                 txtTiengViet.Text = dongDuocChon.Cells["TiengViet"].Value?.ToString();
                 txtPhienAm.Text = dongDuocChon.Cells["PhienAm"].Value?.ToString();
                 txtLoaiTu.Text = dongDuocChon.Cells["LoaiTu"].Value?.ToString();
-                cboChonChuDe.Text = dongDuocChon.Cells["ChuDe"].Value?.ToString(); 
+                cboChonChuDe.Text = dongDuocChon.Cells["ChuDe"].Value?.ToString();
                 MessageBox.Show("Chỉnh sửa và nhấn nút Sửa để lưu lại.", "Thông báo");
                 txtTiengAnh.Focus();
                 _tuDangChon = _danhSachTuVung
@@ -287,7 +296,7 @@ namespace VocabMaster
 
         private void btnSua_Click(object sender, EventArgs e)
         {
-            if(_tuDangChon == null)
+            if (_tuDangChon == null)
             {
                 MessageBox.Show("Chưa chọn từ để sửa. Nhấn đúp vào một từ trong bảng để chọn.", "Cảnh báo");
                 return;
