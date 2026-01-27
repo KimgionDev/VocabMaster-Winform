@@ -12,9 +12,22 @@ namespace VocabMaster
 {
     public partial class FormTracNghiem : Form
     {
-        public FormTracNghiem()
+        private LuyenTapService _luyenTapService;
+        private List<CauHoi> _deThi;
+        private int _chiSoCauHoiHienTai = 0;
+        public FormTracNghiem(List<TuVung> danhSachTu)
         {
             InitializeComponent();
+            _luyenTapService = new LuyenTapService(danhSachTu);
+            try
+            {
+                _luyenTapService.TaoDeThi(10);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                this.Close();
+            }
         }
     }
 }

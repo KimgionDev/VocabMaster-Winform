@@ -49,6 +49,7 @@
             this.btnSua = new System.Windows.Forms.Button();
             this.lblTiengViet = new System.Windows.Forms.Label();
             this.lblChuDe = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDanhSach)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -253,10 +254,10 @@
             this.txtTimKiem.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtTimKiem.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.txtTimKiem.Location = new System.Drawing.Point(12, 15);
+            this.txtTimKiem.Location = new System.Drawing.Point(63, 15);
             this.txtTimKiem.Multiline = true;
             this.txtTimKiem.Name = "txtTimKiem";
-            this.txtTimKiem.Size = new System.Drawing.Size(535, 35);
+            this.txtTimKiem.Size = new System.Drawing.Size(484, 35);
             this.txtTimKiem.TabIndex = 15;
             this.txtTimKiem.Text = "Tìm kiếm";
             this.txtTimKiem.TextChanged += new System.EventHandler(this.txtTimKiem_TextChanged);
@@ -271,6 +272,7 @@
             // splitContainer1.Panel1
             // 
             this.splitContainer1.Panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(244)))), ((int)(((byte)(248)))));
+            this.splitContainer1.Panel1.Controls.Add(this.button1);
             this.splitContainer1.Panel1.Controls.Add(this.cboLocDaThuoc);
             this.splitContainer1.Panel1.Controls.Add(this.lblDanhSachTuVung);
             this.splitContainer1.Panel1.Controls.Add(this.cboLocChuDe);
@@ -380,6 +382,23 @@
             this.lblChuDe.Text = "Chủ đề";
             this.lblChuDe.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // button1
+            // 
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(95)))), ((int)(((byte)(180)))));
+            this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button1.FlatAppearance.BorderSize = 0;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.ForeColor = System.Drawing.Color.White;
+            this.button1.Location = new System.Drawing.Point(5, 15);
+            this.button1.Margin = new System.Windows.Forms.Padding(5);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(50, 35);
+            this.button1.TabIndex = 21;
+            this.button1.Text = "=";
+            this.button1.UseVisualStyleBackColor = false;
+            // 
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -422,6 +441,7 @@
         private System.Windows.Forms.Label lblChuDe;
         private System.Windows.Forms.Label lblTiengViet;
         private System.Windows.Forms.Button btnSua;
+        private System.Windows.Forms.Button button1;
     }
 }
 
