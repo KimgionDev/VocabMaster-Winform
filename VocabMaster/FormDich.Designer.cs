@@ -1,6 +1,6 @@
 ﻿namespace VocabMaster
 {
-    partial class Form1
+    partial class FormDich
     {
         /// <summary>
         /// Required designer variable.
@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormDich));
             this.cboLocChuDe = new System.Windows.Forms.ComboBox();
             this.btnLoa = new System.Windows.Forms.Button();
             this.txtLoaiTu = new System.Windows.Forms.TextBox();
@@ -49,12 +50,18 @@
             this.btnSua = new System.Windows.Forms.Button();
             this.lblTiengViet = new System.Windows.Forms.Label();
             this.lblChuDe = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.pnlMenu = new System.Windows.Forms.Panel();
+            this.button2 = new AntdUI.Button();
+            this.button3 = new AntdUI.Button();
+            this.button1 = new AntdUI.Button();
+            this.pnlNoiDung = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDanhSach)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.pnlMenu.SuspendLayout();
+            this.pnlNoiDung.SuspendLayout();
             this.SuspendLayout();
             // 
             // cboLocChuDe
@@ -79,7 +86,7 @@
             this.btnLoa.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLoa.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnLoa.ForeColor = System.Drawing.Color.White;
-            this.btnLoa.Location = new System.Drawing.Point(303, 190);
+            this.btnLoa.Location = new System.Drawing.Point(305, 190);
             this.btnLoa.Name = "btnLoa";
             this.btnLoa.Size = new System.Drawing.Size(70, 40);
             this.btnLoa.TabIndex = 14;
@@ -98,7 +105,7 @@
             this.txtLoaiTu.Margin = new System.Windows.Forms.Padding(10, 3, 3, 3);
             this.txtLoaiTu.Multiline = true;
             this.txtLoaiTu.Name = "txtLoaiTu";
-            this.txtLoaiTu.Size = new System.Drawing.Size(363, 40);
+            this.txtLoaiTu.Size = new System.Drawing.Size(365, 40);
             this.txtLoaiTu.TabIndex = 13;
             // 
             // lblLoaiTu
@@ -125,7 +132,7 @@
             this.txtPhienAm.Margin = new System.Windows.Forms.Padding(10, 3, 3, 3);
             this.txtPhienAm.Multiline = true;
             this.txtPhienAm.Name = "txtPhienAm";
-            this.txtPhienAm.Size = new System.Drawing.Size(287, 40);
+            this.txtPhienAm.Size = new System.Drawing.Size(289, 40);
             this.txtPhienAm.TabIndex = 11;
             // 
             // lblPhienAm
@@ -152,7 +159,7 @@
             this.txtTiengViet.Margin = new System.Windows.Forms.Padding(10, 3, 3, 3);
             this.txtTiengViet.Multiline = true;
             this.txtTiengViet.Name = "txtTiengViet";
-            this.txtTiengViet.Size = new System.Drawing.Size(363, 85);
+            this.txtTiengViet.Size = new System.Drawing.Size(365, 85);
             this.txtTiengViet.TabIndex = 10;
             // 
             // btnXoa
@@ -164,7 +171,7 @@
             this.btnXoa.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnXoa.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnXoa.ForeColor = System.Drawing.Color.White;
-            this.btnXoa.Location = new System.Drawing.Point(253, 537);
+            this.btnXoa.Location = new System.Drawing.Point(255, 537);
             this.btnXoa.Name = "btnXoa";
             this.btnXoa.Size = new System.Drawing.Size(120, 35);
             this.btnXoa.TabIndex = 8;
@@ -181,7 +188,7 @@
             this.btnThem.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnThem.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnThem.ForeColor = System.Drawing.Color.White;
-            this.btnThem.Location = new System.Drawing.Point(253, 455);
+            this.btnThem.Location = new System.Drawing.Point(255, 455);
             this.btnThem.Name = "btnThem";
             this.btnThem.Size = new System.Drawing.Size(120, 35);
             this.btnThem.TabIndex = 6;
@@ -200,7 +207,7 @@
             this.txtTiengAnh.Margin = new System.Windows.Forms.Padding(10, 3, 3, 3);
             this.txtTiengAnh.Multiline = true;
             this.txtTiengAnh.Name = "txtTiengAnh";
-            this.txtTiengAnh.Size = new System.Drawing.Size(363, 85);
+            this.txtTiengAnh.Size = new System.Drawing.Size(365, 85);
             this.txtTiengAnh.TabIndex = 3;
             this.txtTiengAnh.TextChanged += new System.EventHandler(this.txtTiengAnh_TextChanged);
             // 
@@ -237,7 +244,7 @@
             this.dgvDanhSach.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvDanhSach.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvDanhSach.EnableHeadersVisualStyles = false;
-            this.dgvDanhSach.Location = new System.Drawing.Point(12, 97);
+            this.dgvDanhSach.Location = new System.Drawing.Point(6, 97);
             this.dgvDanhSach.Name = "dgvDanhSach";
             this.dgvDanhSach.ReadOnly = true;
             this.dgvDanhSach.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
@@ -245,7 +252,7 @@
             this.dgvDanhSach.RowHeadersWidth = 51;
             this.dgvDanhSach.RowTemplate.Height = 24;
             this.dgvDanhSach.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvDanhSach.Size = new System.Drawing.Size(535, 471);
+            this.dgvDanhSach.Size = new System.Drawing.Size(541, 471);
             this.dgvDanhSach.TabIndex = 1;
             this.dgvDanhSach.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvDanhSach_CellDoubleClick);
             // 
@@ -254,10 +261,10 @@
             this.txtTimKiem.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtTimKiem.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.txtTimKiem.Location = new System.Drawing.Point(63, 15);
+            this.txtTimKiem.Location = new System.Drawing.Point(6, 15);
             this.txtTimKiem.Multiline = true;
             this.txtTimKiem.Name = "txtTimKiem";
-            this.txtTimKiem.Size = new System.Drawing.Size(484, 35);
+            this.txtTimKiem.Size = new System.Drawing.Size(541, 35);
             this.txtTimKiem.TabIndex = 15;
             this.txtTimKiem.Text = "Tìm kiếm";
             this.txtTimKiem.TextChanged += new System.EventHandler(this.txtTimKiem_TextChanged);
@@ -272,7 +279,6 @@
             // splitContainer1.Panel1
             // 
             this.splitContainer1.Panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(244)))), ((int)(((byte)(248)))));
-            this.splitContainer1.Panel1.Controls.Add(this.button1);
             this.splitContainer1.Panel1.Controls.Add(this.cboLocDaThuoc);
             this.splitContainer1.Panel1.Controls.Add(this.lblDanhSachTuVung);
             this.splitContainer1.Panel1.Controls.Add(this.cboLocChuDe);
@@ -299,7 +305,7 @@
             this.splitContainer1.Panel2.Controls.Add(this.lblChuDe);
             this.splitContainer1.Panel2.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.splitContainer1.Panel2MinSize = 350;
-            this.splitContainer1.Size = new System.Drawing.Size(939, 580);
+            this.splitContainer1.Size = new System.Drawing.Size(941, 580);
             this.splitContainer1.SplitterDistance = 550;
             this.splitContainer1.TabIndex = 17;
             // 
@@ -320,7 +326,7 @@
             // 
             this.lblDanhSachTuVung.Font = new System.Drawing.Font("K2D", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDanhSachTuVung.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(60)))), ((int)(((byte)(120)))));
-            this.lblDanhSachTuVung.Location = new System.Drawing.Point(12, 56);
+            this.lblDanhSachTuVung.Location = new System.Drawing.Point(6, 56);
             this.lblDanhSachTuVung.Margin = new System.Windows.Forms.Padding(3);
             this.lblDanhSachTuVung.Name = "lblDanhSachTuVung";
             this.lblDanhSachTuVung.Size = new System.Drawing.Size(160, 35);
@@ -348,7 +354,7 @@
             this.btnSua.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSua.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSua.ForeColor = System.Drawing.Color.White;
-            this.btnSua.Location = new System.Drawing.Point(253, 496);
+            this.btnSua.Location = new System.Drawing.Point(255, 496);
             this.btnSua.Name = "btnSua";
             this.btnSua.Size = new System.Drawing.Size(120, 35);
             this.btnSua.TabIndex = 20;
@@ -382,31 +388,92 @@
             this.lblChuDe.Text = "Chủ đề";
             this.lblChuDe.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // pnlMenu
+            // 
+            this.pnlMenu.Controls.Add(this.button2);
+            this.pnlMenu.Controls.Add(this.button3);
+            this.pnlMenu.Controls.Add(this.button1);
+            this.pnlMenu.Dock = System.Windows.Forms.DockStyle.Left;
+            this.pnlMenu.Location = new System.Drawing.Point(0, 0);
+            this.pnlMenu.Name = "pnlMenu";
+            this.pnlMenu.Size = new System.Drawing.Size(51, 580);
+            this.pnlMenu.TabIndex = 22;
+            // 
+            // button2
+            // 
+            this.button2.BackActive = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(225)))), ((int)(((byte)(255)))));
+            this.button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(245)))), ((int)(((byte)(245)))));
+            this.button2.BackHover = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(240)))), ((int)(((byte)(255)))));
+            this.button2.Font = new System.Drawing.Font("K2D", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button2.ForeActive = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(92)))), ((int)(((byte)(169)))));
+            this.button2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(92)))), ((int)(((byte)(169)))));
+            this.button2.Icon = global::VocabMaster.Properties.Resources.btn_trac_nghiem;
+            this.button2.IconRatio = 2.2F;
+            this.button2.Location = new System.Drawing.Point(1, 115);
+            this.button2.Margin = new System.Windows.Forms.Padding(0);
+            this.button2.Name = "button2";
+            this.button2.Radius = 25;
+            this.button2.Size = new System.Drawing.Size(50, 50);
+            this.button2.TabIndex = 1;
+            this.button2.Type = AntdUI.TTypeMini.Primary;
+            // 
+            // button3
+            // 
+            this.button3.BackActive = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(225)))), ((int)(((byte)(255)))));
+            this.button3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(245)))), ((int)(((byte)(245)))));
+            this.button3.BackgroundImageLayout = AntdUI.TFit.None;
+            this.button3.BackHover = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(240)))), ((int)(((byte)(255)))));
+            this.button3.Font = new System.Drawing.Font("K2D", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button3.ForeActive = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(92)))), ((int)(((byte)(169)))));
+            this.button3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(92)))), ((int)(((byte)(169)))));
+            this.button3.Icon = global::VocabMaster.Properties.Resources.btn_menu;
+            this.button3.IconRatio = 1.3F;
+            this.button3.Location = new System.Drawing.Point(1, 15);
+            this.button3.Margin = new System.Windows.Forms.Padding(0);
+            this.button3.Name = "button3";
+            this.button3.Radius = 25;
+            this.button3.Size = new System.Drawing.Size(50, 50);
+            this.button3.TabIndex = 18;
+            this.button3.Type = AntdUI.TTypeMini.Primary;
+            // 
             // button1
             // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(95)))), ((int)(((byte)(180)))));
-            this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button1.FlatAppearance.BorderSize = 0;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(5, 15);
-            this.button1.Margin = new System.Windows.Forms.Padding(5);
+            this.button1.BackActive = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(225)))), ((int)(((byte)(255)))));
+            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(245)))), ((int)(((byte)(245)))));
+            this.button1.BackgroundImageLayout = AntdUI.TFit.None;
+            this.button1.BackHover = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(240)))), ((int)(((byte)(255)))));
+            this.button1.Font = new System.Drawing.Font("K2D", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.ForeActive = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(92)))), ((int)(((byte)(169)))));
+            this.button1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(92)))), ((int)(((byte)(169)))));
+            this.button1.Icon = global::VocabMaster.Properties.Resources.btn_chuyen_doi_en_vi;
+            this.button1.IconRatio = 2.2F;
+            this.button1.Location = new System.Drawing.Point(1, 65);
+            this.button1.Margin = new System.Windows.Forms.Padding(0);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(50, 35);
-            this.button1.TabIndex = 21;
-            this.button1.Text = "=";
-            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Radius = 25;
+            this.button1.Size = new System.Drawing.Size(50, 50);
+            this.button1.TabIndex = 0;
+            this.button1.Type = AntdUI.TTypeMini.Primary;
             // 
-            // Form1
+            // pnlNoiDung
+            // 
+            this.pnlNoiDung.Controls.Add(this.splitContainer1);
+            this.pnlNoiDung.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlNoiDung.Location = new System.Drawing.Point(51, 0);
+            this.pnlNoiDung.Name = "pnlNoiDung";
+            this.pnlNoiDung.Size = new System.Drawing.Size(941, 580);
+            this.pnlNoiDung.TabIndex = 23;
+            // 
+            // FormDich
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.ClientSize = new System.Drawing.Size(939, 580);
-            this.Controls.Add(this.splitContainer1);
+            this.ClientSize = new System.Drawing.Size(992, 580);
+            this.Controls.Add(this.pnlNoiDung);
+            this.Controls.Add(this.pnlMenu);
             this.Font = new System.Drawing.Font("K2D", 10F);
-            this.Name = "Form1";
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Name = "FormDich";
             this.Text = "VocabMaster";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvDanhSach)).EndInit();
@@ -416,6 +483,8 @@
             this.splitContainer1.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.pnlMenu.ResumeLayout(false);
+            this.pnlNoiDung.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -441,7 +510,11 @@
         private System.Windows.Forms.Label lblChuDe;
         private System.Windows.Forms.Label lblTiengViet;
         private System.Windows.Forms.Button btnSua;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Panel pnlNoiDung;
+        private System.Windows.Forms.Panel pnlMenu;
+        private AntdUI.Button button1;
+        private AntdUI.Button button2;
+        private AntdUI.Button button3;
     }
 }
 

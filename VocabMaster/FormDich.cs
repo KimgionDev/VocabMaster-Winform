@@ -11,18 +11,18 @@ using System.Speech.Synthesis;
 
 namespace VocabMaster
 {
-    public partial class Form1 : Form
+    public partial class FormDich : Form
     {
         KhoDuLieuJSON _kho = new KhoDuLieuJSON();
         List<TuVung> _danhSachTuVung = new List<TuVung>();
         TuVung _tuDangChon = null;
         System.Windows.Forms.Timer _timerTuDongDich;
 
-        public Form1()
+        public FormDich()
         {
             InitializeComponent();
             _timerTuDongDich = new System.Windows.Forms.Timer();
-            _timerTuDongDich.Interval = 1000;
+            _timerTuDongDich.Interval = 500;
             _timerTuDongDich.Tick += TimerTuDongDich_Tick;
         }
 
