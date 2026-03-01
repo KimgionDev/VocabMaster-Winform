@@ -42,9 +42,6 @@
             // 
             // tableLayoutPanelBot
             // 
-            this.tableLayoutPanelBot.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanelBot.ColumnCount = 2;
             this.tableLayoutPanelBot.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanelBot.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -52,12 +49,14 @@
             this.tableLayoutPanelBot.Controls.Add(this.btnD, 1, 1);
             this.tableLayoutPanelBot.Controls.Add(this.btnC, 0, 1);
             this.tableLayoutPanelBot.Controls.Add(this.btnB, 1, 0);
-            this.tableLayoutPanelBot.Location = new System.Drawing.Point(0, 198);
+            this.tableLayoutPanelBot.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanelBot.Location = new System.Drawing.Point(0, 220);
             this.tableLayoutPanelBot.Name = "tableLayoutPanelBot";
+            this.tableLayoutPanelBot.Padding = new System.Windows.Forms.Padding(10);
             this.tableLayoutPanelBot.RowCount = 2;
             this.tableLayoutPanelBot.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanelBot.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanelBot.Size = new System.Drawing.Size(800, 252);
+            this.tableLayoutPanelBot.Size = new System.Drawing.Size(1102, 363);
             this.tableLayoutPanelBot.TabIndex = 0;
             // 
             // btnA
@@ -67,16 +66,17 @@
             this.btnA.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnA.Font = new System.Drawing.Font("K2D SemiBold", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnA.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.btnA.Location = new System.Drawing.Point(3, 3);
+            this.btnA.Location = new System.Drawing.Point(13, 13);
             this.btnA.Name = "btnA";
             this.btnA.Radius = 12;
             this.btnA.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(77)))), ((int)(((byte)(79)))));
             this.btnA.ShadowOpacity = 0.5F;
-            this.btnA.Size = new System.Drawing.Size(394, 120);
+            this.btnA.Size = new System.Drawing.Size(535, 165);
             this.btnA.TabIndex = 0;
             this.btnA.Text = "A";
             this.btnA.Type = AntdUI.TTypeMini.Primary;
             this.btnA.WaveSize = 2;
+            this.btnA.Click += new System.EventHandler(this.btnA_Click);
             // 
             // btnD
             // 
@@ -85,16 +85,17 @@
             this.btnD.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnD.Font = new System.Drawing.Font("K2D SemiBold", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnD.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.btnD.Location = new System.Drawing.Point(403, 129);
+            this.btnD.Location = new System.Drawing.Point(554, 184);
             this.btnD.Name = "btnD";
             this.btnD.Radius = 12;
             this.btnD.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(82)))), ((int)(((byte)(196)))), ((int)(((byte)(26)))));
             this.btnD.ShadowOpacity = 0.5F;
-            this.btnD.Size = new System.Drawing.Size(394, 120);
+            this.btnD.Size = new System.Drawing.Size(535, 166);
             this.btnD.TabIndex = 3;
             this.btnD.Text = "D";
             this.btnD.Type = AntdUI.TTypeMini.Primary;
             this.btnD.WaveSize = 2;
+            this.btnD.Click += new System.EventHandler(this.btnD_Click);
             // 
             // btnC
             // 
@@ -103,16 +104,17 @@
             this.btnC.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnC.Font = new System.Drawing.Font("K2D SemiBold", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnC.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.btnC.Location = new System.Drawing.Point(3, 129);
+            this.btnC.Location = new System.Drawing.Point(13, 184);
             this.btnC.Name = "btnC";
             this.btnC.Radius = 12;
             this.btnC.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(173)))), ((int)(((byte)(20)))));
             this.btnC.ShadowOpacity = 0.5F;
-            this.btnC.Size = new System.Drawing.Size(394, 120);
+            this.btnC.Size = new System.Drawing.Size(535, 166);
             this.btnC.TabIndex = 2;
             this.btnC.Text = "C";
             this.btnC.Type = AntdUI.TTypeMini.Primary;
             this.btnC.WaveSize = 2;
+            this.btnC.Click += new System.EventHandler(this.btnC_Click);
             // 
             // btnB
             // 
@@ -121,24 +123,24 @@
             this.btnB.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnB.Font = new System.Drawing.Font("K2D SemiBold", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnB.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.btnB.Location = new System.Drawing.Point(403, 3);
+            this.btnB.Location = new System.Drawing.Point(554, 13);
             this.btnB.Name = "btnB";
             this.btnB.Radius = 12;
             this.btnB.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(144)))), ((int)(((byte)(255)))));
             this.btnB.ShadowOpacity = 0.5F;
-            this.btnB.Size = new System.Drawing.Size(394, 120);
+            this.btnB.Size = new System.Drawing.Size(535, 165);
             this.btnB.TabIndex = 1;
             this.btnB.Text = "B";
             this.btnB.Type = AntdUI.TTypeMini.Primary;
             this.btnB.WaveSize = 2;
+            this.btnB.Click += new System.EventHandler(this.btnB_Click);
             // 
             // panelTop
             // 
-            this.panelTop.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.panelTop.Back = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.panelTop.Controls.Add(this.lblSoThuTu);
             this.panelTop.Controls.Add(this.lblCauHoi);
+            this.panelTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelTop.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
             this.panelTop.Location = new System.Drawing.Point(0, 0);
             this.panelTop.Name = "panelTop";
@@ -146,7 +148,7 @@
             this.panelTop.Radius = 20;
             this.panelTop.Shadow = 15;
             this.panelTop.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
-            this.panelTop.Size = new System.Drawing.Size(800, 195);
+            this.panelTop.Size = new System.Drawing.Size(1102, 220);
             this.panelTop.TabIndex = 1;
             this.panelTop.Text = "panelCauHoi";
             // 
@@ -155,11 +157,12 @@
             this.lblSoThuTu.BackColor = System.Drawing.Color.White;
             this.lblSoThuTu.Font = new System.Drawing.Font("K2D SemiBold", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSoThuTu.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
-            this.lblSoThuTu.Location = new System.Drawing.Point(31, 28);
+            this.lblSoThuTu.Location = new System.Drawing.Point(28, 28);
+            this.lblSoThuTu.Margin = new System.Windows.Forms.Padding(0);
             this.lblSoThuTu.Name = "lblSoThuTu";
-            this.lblSoThuTu.Size = new System.Drawing.Size(104, 39);
+            this.lblSoThuTu.Size = new System.Drawing.Size(129, 39);
             this.lblSoThuTu.TabIndex = 1;
-            this.lblSoThuTu.Text = "Câu 5/10";
+            this.lblSoThuTu.Text = "Câu 5 / 10";
             this.lblSoThuTu.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblCauHoi
@@ -171,7 +174,7 @@
             this.lblCauHoi.Location = new System.Drawing.Point(28, 28);
             this.lblCauHoi.Margin = new System.Windows.Forms.Padding(0);
             this.lblCauHoi.Name = "lblCauHoi";
-            this.lblCauHoi.Size = new System.Drawing.Size(744, 139);
+            this.lblCauHoi.Size = new System.Drawing.Size(1046, 164);
             this.lblCauHoi.TabIndex = 0;
             this.lblCauHoi.Text = "Câu hỏi";
             this.lblCauHoi.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -181,9 +184,9 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.panelTop);
+            this.ClientSize = new System.Drawing.Size(1102, 583);
             this.Controls.Add(this.tableLayoutPanelBot);
+            this.Controls.Add(this.panelTop);
             this.Name = "FormTracNghiem";
             this.Text = "FormTracNghiem";
             this.tableLayoutPanelBot.ResumeLayout(false);

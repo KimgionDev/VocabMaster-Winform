@@ -17,6 +17,7 @@ namespace VocabMaster
         List<TuVung> _danhSachTuVung = new List<TuVung>();
         TuVung _tuDangChon = null;
         System.Windows.Forms.Timer _timerTuDongDich;
+        private FormTracNghiem frmTracNghiem;
 
         public FormDich()
         {
@@ -24,6 +25,7 @@ namespace VocabMaster
             _timerTuDongDich = new System.Windows.Forms.Timer();
             _timerTuDongDich.Interval = 500;
             _timerTuDongDich.Tick += TimerTuDongDich_Tick;
+            KichHoatNut(btnTuDien);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -320,6 +322,50 @@ namespace VocabMaster
             btnSua.Enabled = true;
 
             MessageBox.Show("Sửa từ thành công!", "Thông báo");
+        }
+
+        private void ResetMauNut()
+        {
+            btnTuDien.BackColor = Color.White;
+            btnTracNghiem.BackColor = Color.White;
+        }
+
+        private void KichHoatNut(Button nutDangChon)
+        {
+            ResetMauNut();
+            nutDangChon.BackColor = Color.LightSkyBlue;
+        }
+
+        private void btnTuDien_Click(object sender, EventArgs e)
+        {
+            KichHoatNut(btnTuDien);
+            if (frmTracNghiem != null)
+            {
+                frmTracNghiem.Hide();
+            }
+
+            splitContainer1.Visible = true;
+            splitContainer1.BringToFront();
+        }
+
+        private void btnTracNghiem_Click(object sender, EventArgs e)
+        {
+            KichHoatNut(btnTracNghiem);
+            splitContainer1.Visible = false;
+
+            if (frmTracNghiem == null || frmTracNghiem.IsDisposed)
+            {
+                frmTracNghiem = new FormTracNghiem(_danhSachTuVung);
+
+                frmTracNghiem.TopLevel = false;
+                frmTracNghiem.FormBorderStyle = FormBorderStyle.None;
+                frmTracNghiem.Dock = DockStyle.Fill;
+
+                pnlNoiDung.Controls.Add(frmTracNghiem);
+            }
+
+            frmTracNghiem.Show();
+            frmTracNghiem.BringToFront();
         }
     }
 }
