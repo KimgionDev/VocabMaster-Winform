@@ -55,17 +55,29 @@ namespace VocabMaster
             return cauHienTai.TuChinh.TiengViet.Equals(dapAnNguoiDung, StringComparison.OrdinalIgnoreCase);
         }
 
-        public void XuLyDapAn(string dapAnDaChon)
+        public async void XuLyDapAn(AntdUI.Button dapAnDaChon)
         {
-            bool ketQua = KiemTraDapAn(dapAnDaChon);
+            bool ketQua = KiemTraDapAn(dapAnDaChon.Text);
             if(ketQua)
             {
-                MessageBox.Show("Đáp án đúng!");
+                dapAnDaChon.Text += " ✅";
+                dapAnDaChon.ForeColor = Color.LimeGreen;
             }
             else
             {
-                MessageBox.Show($"Đáp án sai! Đáp án đúng là: { _deThi[_chiSoCauHoiHienTai].TuChinh.TiengViet}");
+                lblCauHoi.Text += $" (Đáp án đúng: {_deThi[_chiSoCauHoiHienTai].TuChinh.TiengViet})";
+                dapAnDaChon.Text += " ❎";
+                dapAnDaChon.ForeColor = Color.Red;
+
+                if (KiemTraDapAn(btnA.Text)) { btnA.Text += " ✅"; btnA.ForeColor = Color.LimeGreen; }
+                if (KiemTraDapAn(btnB.Text)) { btnB.Text += " ✅"; btnB.ForeColor = Color.LimeGreen; }
+                if (KiemTraDapAn(btnC.Text)) { btnC.Text += " ✅"; btnC.ForeColor = Color.LimeGreen; }
+                if (KiemTraDapAn(btnD.Text)) { btnD.Text += " ✅"; btnD.ForeColor = Color.LimeGreen; }
             }
+
+            await Task.Delay(10000); // Đợi 1.5 giây để người dùng nhìn thấy kết quả trước khi chuyển câu hỏi tiếp theo
+
+            dapAnDaChon.ForeColor = Color.White;
             if (_chiSoCauHoiHienTai + 1 < _deThi.Count)     _chiSoCauHoiHienTai++;
             lblSoThuTu.Text = $"Câu hỏi {_chiSoCauHoiHienTai + 1} / {_deThi.Count}";
             HienThiCauHoi();
@@ -73,22 +85,22 @@ namespace VocabMaster
 
         private void btnA_Click(object sender, EventArgs e)
         {
-            XuLyDapAn(btnA.Text);
+            XuLyDapAn(btnA);
         }
 
         private void btnB_Click(object sender, EventArgs e)
         {
-            XuLyDapAn(btnB.Text);
+            XuLyDapAn(btnB);
         }
 
         private void btnC_Click(object sender, EventArgs e)
         {
-            XuLyDapAn(btnC.Text);
+            XuLyDapAn(btnC);
         }
 
         private void btnD_Click(object sender, EventArgs e)
         {
-            XuLyDapAn(btnD.Text);
+            XuLyDapAn(btnD);
         }
     }
 }
