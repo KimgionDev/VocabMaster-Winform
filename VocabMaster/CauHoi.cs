@@ -14,7 +14,7 @@ namespace VocabMaster
         public CauHoi()
         {
             CacTuVungSai = new List<TuVung>();
-                CacDapAnTuVung = new List<TuVung>();
+            CacDapAnTuVung = new List<TuVung>();
         }
     }
 }

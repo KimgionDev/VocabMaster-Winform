@@ -33,7 +33,8 @@ namespace VocabMaster
                 CauHoi cauHoi = new CauHoi();
                 cauHoi.TuChinh = tuChinh;
                 cauHoi.CacTuVungSai = _danhSachTuVung
-                                    .Where(t => t.IdTuVung != tuChinh.IdTuVung)
+                                    .Where(t => t.IdTuVung != tuChinh.IdTuVung 
+                                    && t.TiengAnh.ToLower() != tuChinh.TiengAnh.ToLower())
                                     .OrderBy(t => _random.Next())
                                     .Take(3)
                                     .ToList();
