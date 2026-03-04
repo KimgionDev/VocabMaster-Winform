@@ -18,6 +18,7 @@ namespace VocabMaster
         TuVung _tuDangChon = null;
         System.Windows.Forms.Timer _timerTuDongDich;
         private FormTracNghiem frmTracNghiem;
+        private bool _menuMoRong = false;
 
         public FormDich()
         {
@@ -366,6 +367,26 @@ namespace VocabMaster
 
             frmTracNghiem.Show();
             frmTracNghiem.BringToFront();
+        }
+
+        private void btnMenu_Click(object sender, EventArgs e)
+        {
+            if (_menuMoRong)
+            {
+                pnlMenu.Width = 50;
+                btnMenu.Text = "";
+                btnTuDien.Text = "";
+                btnTracNghiem.Text = "";
+                _menuMoRong = false;
+            }
+            else
+            {
+                pnlMenu.Width = 200;
+                btnMenu.Text = "    Mở rộng";
+                btnTuDien.Text = "  Từ vựng";
+                btnTracNghiem.Text = "  Trắc nghiệm";
+                _menuMoRong = true;
+            }
         }
     }
 }

@@ -37,8 +37,8 @@
             this.lblSoThuTu = new System.Windows.Forms.Label();
             this.lblCauHoi = new AntdUI.Label();
             this.pnlKetQua = new System.Windows.Forms.Panel();
-            this.lblDiem = new System.Windows.Forms.Label();
             this.btnLamLai = new AntdUI.Button();
+            this.lblDiem = new System.Windows.Forms.Label();
             this.tableLayoutPanelBot.SuspendLayout();
             this.panelTop.SuspendLayout();
             this.pnlKetQua.SuspendLayout();
@@ -196,6 +196,21 @@
             this.pnlKetQua.Size = new System.Drawing.Size(1102, 532);
             this.pnlKetQua.TabIndex = 2;
             // 
+            // btnLamLai
+            // 
+            this.btnLamLai.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btnLamLai.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(119)))), ((int)(((byte)(255)))));
+            this.btnLamLai.BackHover = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(150)))), ((int)(((byte)(255)))));
+            this.btnLamLai.Font = new System.Drawing.Font("K2D", 22.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLamLai.ForeColor = System.Drawing.Color.White;
+            this.btnLamLai.Location = new System.Drawing.Point(434, 279);
+            this.btnLamLai.Name = "btnLamLai";
+            this.btnLamLai.Size = new System.Drawing.Size(240, 80);
+            this.btnLamLai.TabIndex = 1;
+            this.btnLamLai.Text = "Làm lại";
+            this.btnLamLai.Type = AntdUI.TTypeMini.Primary;
+            this.btnLamLai.Click += new System.EventHandler(this.btnLamLai_Click);
+            // 
             // lblDiem
             // 
             this.lblDiem.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -206,21 +221,6 @@
             this.lblDiem.TabIndex = 0;
             this.lblDiem.Text = "Bảng điểm";
             this.lblDiem.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            // 
-            // btnLamLai
-            // 
-            this.btnLamLai.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.btnLamLai.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(119)))), ((int)(((byte)(255)))));
-            this.btnLamLai.BackHover = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(150)))), ((int)(((byte)(255)))));
-            this.btnLamLai.Font = new System.Drawing.Font("K2D", 22.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLamLai.ForeColor = System.Drawing.Color.White;
-            this.btnLamLai.Location = new System.Drawing.Point(397, 314);
-            this.btnLamLai.Name = "btnLamLai";
-            this.btnLamLai.Size = new System.Drawing.Size(240, 80);
-            this.btnLamLai.TabIndex = 1;
-            this.btnLamLai.Text = "Làm lại";
-            this.btnLamLai.Type = AntdUI.TTypeMini.Primary;
-            this.btnLamLai.Click += new System.EventHandler(this.btnLamLai_Click);
             // 
             // FormTracNghiem
             // 

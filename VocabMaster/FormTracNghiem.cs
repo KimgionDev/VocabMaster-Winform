@@ -80,6 +80,11 @@ namespace VocabMaster
         {
             if (_dangXuLyDapAn) return; // Ngăn chặn việc chọn nhiều đáp án cùng lúc
                 _dangXuLyDapAn = true;
+            btnA.BackHover = Color.FromArgb(245, 247, 250); // Tạm thời vô hiệu hóa hover để tránh nhầm lẫn
+            btnB.BackHover = Color.FromArgb(245, 247, 250);
+            btnC.BackHover = Color.FromArgb(245, 247, 250);
+            btnD.BackHover = Color.FromArgb(245, 247, 250);
+
             bool ketQua = KiemTraDapAn(dapAnDaChon.Text);
             if(ketQua)
             {
@@ -99,7 +104,7 @@ namespace VocabMaster
                 if (KiemTraDapAn(btnD.Text)) { btnD.Text += " ✅"; btnD.ForeColor = Color.LimeGreen; }
             }
 
-            await Task.Delay(1000); // Đợi 1.5 giây để người dùng nhìn thấy kết quả trước khi chuyển câu hỏi tiếp theo
+            await Task.Delay(3000); // Đợi 3 giây để người dùng nhìn thấy kết quả trước khi chuyển câu hỏi tiếp theo
             _dangXuLyDapAn = false; // Cho phép chọn đáp án cho câu hỏi tiếp theo
             btnA.ForeColor = Color.Black;       // Reset màu sắc về mặc định
             btnB.ForeColor = Color.Black;
