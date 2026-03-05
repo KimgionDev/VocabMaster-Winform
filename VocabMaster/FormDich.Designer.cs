@@ -51,8 +51,8 @@
             this.lblTiengViet = new System.Windows.Forms.Label();
             this.lblChuDe = new System.Windows.Forms.Label();
             this.pnlMenu = new System.Windows.Forms.Panel();
-            this.btnTuDien = new System.Windows.Forms.Button();
             this.btnTracNghiem = new System.Windows.Forms.Button();
+            this.btnTuDien = new System.Windows.Forms.Button();
             this.btnMenu = new System.Windows.Forms.Button();
             this.pnlNoiDung = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDanhSach)).BeginInit();
@@ -86,7 +86,7 @@
             this.btnLoa.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLoa.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnLoa.ForeColor = System.Drawing.Color.White;
-            this.btnLoa.Location = new System.Drawing.Point(440, 190);
+            this.btnLoa.Location = new System.Drawing.Point(390, 190);
             this.btnLoa.Name = "btnLoa";
             this.btnLoa.Size = new System.Drawing.Size(70, 40);
             this.btnLoa.TabIndex = 14;
@@ -105,7 +105,7 @@
             this.txtLoaiTu.Margin = new System.Windows.Forms.Padding(10, 3, 3, 3);
             this.txtLoaiTu.Multiline = true;
             this.txtLoaiTu.Name = "txtLoaiTu";
-            this.txtLoaiTu.Size = new System.Drawing.Size(500, 40);
+            this.txtLoaiTu.Size = new System.Drawing.Size(450, 40);
             this.txtLoaiTu.TabIndex = 13;
             // 
             // lblLoaiTu
@@ -132,7 +132,7 @@
             this.txtPhienAm.Margin = new System.Windows.Forms.Padding(10, 3, 3, 3);
             this.txtPhienAm.Multiline = true;
             this.txtPhienAm.Name = "txtPhienAm";
-            this.txtPhienAm.Size = new System.Drawing.Size(424, 40);
+            this.txtPhienAm.Size = new System.Drawing.Size(374, 40);
             this.txtPhienAm.TabIndex = 11;
             // 
             // lblPhienAm
@@ -159,7 +159,7 @@
             this.txtTiengViet.Margin = new System.Windows.Forms.Padding(10, 3, 3, 3);
             this.txtTiengViet.Multiline = true;
             this.txtTiengViet.Name = "txtTiengViet";
-            this.txtTiengViet.Size = new System.Drawing.Size(500, 85);
+            this.txtTiengViet.Size = new System.Drawing.Size(450, 85);
             this.txtTiengViet.TabIndex = 10;
             // 
             // btnXoa
@@ -171,7 +171,7 @@
             this.btnXoa.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnXoa.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnXoa.ForeColor = System.Drawing.Color.White;
-            this.btnXoa.Location = new System.Drawing.Point(390, 537);
+            this.btnXoa.Location = new System.Drawing.Point(340, 537);
             this.btnXoa.Name = "btnXoa";
             this.btnXoa.Size = new System.Drawing.Size(120, 35);
             this.btnXoa.TabIndex = 8;
@@ -188,7 +188,7 @@
             this.btnThem.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnThem.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnThem.ForeColor = System.Drawing.Color.White;
-            this.btnThem.Location = new System.Drawing.Point(390, 455);
+            this.btnThem.Location = new System.Drawing.Point(340, 455);
             this.btnThem.Name = "btnThem";
             this.btnThem.Size = new System.Drawing.Size(120, 35);
             this.btnThem.TabIndex = 6;
@@ -207,7 +207,7 @@
             this.txtTiengAnh.Margin = new System.Windows.Forms.Padding(10, 3, 3, 3);
             this.txtTiengAnh.Multiline = true;
             this.txtTiengAnh.Name = "txtTiengAnh";
-            this.txtTiengAnh.Size = new System.Drawing.Size(500, 85);
+            this.txtTiengAnh.Size = new System.Drawing.Size(450, 85);
             this.txtTiengAnh.TabIndex = 3;
             this.txtTiengAnh.TextChanged += new System.EventHandler(this.txtTiengAnh_TextChanged);
             // 
@@ -244,7 +244,7 @@
             this.dgvDanhSach.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvDanhSach.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvDanhSach.EnableHeadersVisualStyles = false;
-            this.dgvDanhSach.Location = new System.Drawing.Point(56, 98);
+            this.dgvDanhSach.Location = new System.Drawing.Point(6, 98);
             this.dgvDanhSach.Name = "dgvDanhSach";
             this.dgvDanhSach.ReadOnly = true;
             this.dgvDanhSach.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
@@ -252,7 +252,7 @@
             this.dgvDanhSach.RowHeadersWidth = 51;
             this.dgvDanhSach.RowTemplate.Height = 24;
             this.dgvDanhSach.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvDanhSach.Size = new System.Drawing.Size(491, 474);
+            this.dgvDanhSach.Size = new System.Drawing.Size(541, 474);
             this.dgvDanhSach.TabIndex = 1;
             this.dgvDanhSach.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvDanhSach_CellDoubleClick);
             // 
@@ -261,10 +261,10 @@
             this.txtTimKiem.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtTimKiem.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.txtTimKiem.Location = new System.Drawing.Point(56, 15);
+            this.txtTimKiem.Location = new System.Drawing.Point(14, 12);
             this.txtTimKiem.Multiline = true;
             this.txtTimKiem.Name = "txtTimKiem";
-            this.txtTimKiem.Size = new System.Drawing.Size(491, 35);
+            this.txtTimKiem.Size = new System.Drawing.Size(533, 35);
             this.txtTimKiem.TabIndex = 15;
             this.txtTimKiem.Text = "Tìm kiếm";
             this.txtTimKiem.TextChanged += new System.EventHandler(this.txtTimKiem_TextChanged);
@@ -305,7 +305,7 @@
             this.splitContainer1.Panel2.Controls.Add(this.lblChuDe);
             this.splitContainer1.Panel2.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.splitContainer1.Panel2MinSize = 350;
-            this.splitContainer1.Size = new System.Drawing.Size(1102, 583);
+            this.splitContainer1.Size = new System.Drawing.Size(1052, 583);
             this.splitContainer1.SplitterDistance = 550;
             this.splitContainer1.TabIndex = 17;
             // 
@@ -326,7 +326,7 @@
             // 
             this.lblDanhSachTuVung.Font = new System.Drawing.Font("K2D", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDanhSachTuVung.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(60)))), ((int)(((byte)(120)))));
-            this.lblDanhSachTuVung.Location = new System.Drawing.Point(56, 56);
+            this.lblDanhSachTuVung.Location = new System.Drawing.Point(6, 60);
             this.lblDanhSachTuVung.Margin = new System.Windows.Forms.Padding(3);
             this.lblDanhSachTuVung.Name = "lblDanhSachTuVung";
             this.lblDanhSachTuVung.Size = new System.Drawing.Size(188, 35);
@@ -354,7 +354,7 @@
             this.btnSua.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSua.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSua.ForeColor = System.Drawing.Color.White;
-            this.btnSua.Location = new System.Drawing.Point(390, 496);
+            this.btnSua.Location = new System.Drawing.Point(340, 496);
             this.btnSua.Name = "btnSua";
             this.btnSua.Size = new System.Drawing.Size(120, 35);
             this.btnSua.TabIndex = 20;
@@ -404,26 +404,6 @@
             this.pnlMenu.TabIndex = 22;
             this.pnlMenu.TabStop = true;
             // 
-            // btnTuDien
-            // 
-            this.btnTuDien.BackColor = System.Drawing.Color.White;
-            this.btnTuDien.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnTuDien.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnTuDien.FlatAppearance.BorderSize = 0;
-            this.btnTuDien.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnTuDien.ForeColor = System.Drawing.Color.Black;
-            this.btnTuDien.Image = global::VocabMaster.Properties.Resources.btn_chuyen_doi_en_vi;
-            this.btnTuDien.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnTuDien.Location = new System.Drawing.Point(5, 55);
-            this.btnTuDien.Margin = new System.Windows.Forms.Padding(0);
-            this.btnTuDien.Name = "btnTuDien";
-            this.btnTuDien.Size = new System.Drawing.Size(40, 40);
-            this.btnTuDien.TabIndex = 24;
-            this.btnTuDien.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnTuDien.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnTuDien.UseVisualStyleBackColor = false;
-            this.btnTuDien.Click += new System.EventHandler(this.btnTuDien_Click);
-            // 
             // btnTracNghiem
             // 
             this.btnTracNghiem.BackColor = System.Drawing.Color.White;
@@ -443,6 +423,26 @@
             this.btnTracNghiem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnTracNghiem.UseVisualStyleBackColor = false;
             this.btnTracNghiem.Click += new System.EventHandler(this.btnTracNghiem_Click);
+            // 
+            // btnTuDien
+            // 
+            this.btnTuDien.BackColor = System.Drawing.Color.White;
+            this.btnTuDien.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnTuDien.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnTuDien.FlatAppearance.BorderSize = 0;
+            this.btnTuDien.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnTuDien.ForeColor = System.Drawing.Color.Black;
+            this.btnTuDien.Image = global::VocabMaster.Properties.Resources.btn_chuyen_doi_en_vi;
+            this.btnTuDien.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnTuDien.Location = new System.Drawing.Point(5, 55);
+            this.btnTuDien.Margin = new System.Windows.Forms.Padding(0);
+            this.btnTuDien.Name = "btnTuDien";
+            this.btnTuDien.Size = new System.Drawing.Size(40, 40);
+            this.btnTuDien.TabIndex = 24;
+            this.btnTuDien.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnTuDien.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnTuDien.UseVisualStyleBackColor = false;
+            this.btnTuDien.Click += new System.EventHandler(this.btnTuDien_Click);
             // 
             // btnMenu
             // 
@@ -468,9 +468,9 @@
             // 
             this.pnlNoiDung.Controls.Add(this.splitContainer1);
             this.pnlNoiDung.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlNoiDung.Location = new System.Drawing.Point(0, 0);
+            this.pnlNoiDung.Location = new System.Drawing.Point(50, 0);
             this.pnlNoiDung.Name = "pnlNoiDung";
-            this.pnlNoiDung.Size = new System.Drawing.Size(1102, 583);
+            this.pnlNoiDung.Size = new System.Drawing.Size(1052, 583);
             this.pnlNoiDung.TabIndex = 23;
             // 
             // FormDich
@@ -478,8 +478,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(1102, 583);
-            this.Controls.Add(this.pnlMenu);
             this.Controls.Add(this.pnlNoiDung);
+            this.Controls.Add(this.pnlMenu);
             this.Font = new System.Drawing.Font("K2D", 10F);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormDich";

@@ -48,7 +48,7 @@ namespace VocabMaster
                 pnlKetQua.Dock = DockStyle.Fill;
                 pnlKetQua.BringToFront(); // Bê nó lên lớp trên cùng
                 btnLamLai.Size = new Size(240, 80);
-                btnLamLai.Location = new Point((pnlKetQua.Width - btnLamLai.Width) / 2, (pnlKetQua.Height - btnLamLai.Height) / 2 + 50);
+                btnLamLai.Location = new Point((pnlKetQua.Width - btnLamLai.Width) / 2, (pnlKetQua.Height - btnLamLai.Height) / 2 + 200);
 
                 lblDiem.Text = "";
                 string loiNhan = _soCauDung >= 8 ? "Tuyệt vời, giữ vững phong độ nhé!" : "Bạn cần ôn tập thêm bộ từ này!";
