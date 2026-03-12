@@ -55,6 +55,8 @@
             this.btnTuDien = new System.Windows.Forms.Button();
             this.btnMenu = new System.Windows.Forms.Button();
             this.pnlNoiDung = new System.Windows.Forms.Panel();
+            this.btnXuatFile = new System.Windows.Forms.Button();
+            this.btnNhapFile = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDanhSach)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -70,7 +72,7 @@
             this.cboLocChuDe.Cursor = System.Windows.Forms.Cursors.Hand;
             this.cboLocChuDe.Font = new System.Drawing.Font("K2D SemiBold", 8.5F, System.Drawing.FontStyle.Bold);
             this.cboLocChuDe.FormattingEnabled = true;
-            this.cboLocChuDe.Location = new System.Drawing.Point(278, 60);
+            this.cboLocChuDe.Location = new System.Drawing.Point(349, 60);
             this.cboLocChuDe.Name = "cboLocChuDe";
             this.cboLocChuDe.Size = new System.Drawing.Size(150, 35);
             this.cboLocChuDe.TabIndex = 16;
@@ -86,7 +88,7 @@
             this.btnLoa.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLoa.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnLoa.ForeColor = System.Drawing.Color.White;
-            this.btnLoa.Location = new System.Drawing.Point(390, 190);
+            this.btnLoa.Location = new System.Drawing.Point(319, 190);
             this.btnLoa.Name = "btnLoa";
             this.btnLoa.Size = new System.Drawing.Size(70, 40);
             this.btnLoa.TabIndex = 14;
@@ -105,7 +107,7 @@
             this.txtLoaiTu.Margin = new System.Windows.Forms.Padding(10, 3, 3, 3);
             this.txtLoaiTu.Multiline = true;
             this.txtLoaiTu.Name = "txtLoaiTu";
-            this.txtLoaiTu.Size = new System.Drawing.Size(450, 40);
+            this.txtLoaiTu.Size = new System.Drawing.Size(379, 40);
             this.txtLoaiTu.TabIndex = 13;
             // 
             // lblLoaiTu
@@ -132,7 +134,7 @@
             this.txtPhienAm.Margin = new System.Windows.Forms.Padding(10, 3, 3, 3);
             this.txtPhienAm.Multiline = true;
             this.txtPhienAm.Name = "txtPhienAm";
-            this.txtPhienAm.Size = new System.Drawing.Size(374, 40);
+            this.txtPhienAm.Size = new System.Drawing.Size(303, 40);
             this.txtPhienAm.TabIndex = 11;
             // 
             // lblPhienAm
@@ -159,7 +161,7 @@
             this.txtTiengViet.Margin = new System.Windows.Forms.Padding(10, 3, 3, 3);
             this.txtTiengViet.Multiline = true;
             this.txtTiengViet.Name = "txtTiengViet";
-            this.txtTiengViet.Size = new System.Drawing.Size(450, 85);
+            this.txtTiengViet.Size = new System.Drawing.Size(379, 85);
             this.txtTiengViet.TabIndex = 10;
             // 
             // btnXoa
@@ -171,7 +173,7 @@
             this.btnXoa.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnXoa.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnXoa.ForeColor = System.Drawing.Color.White;
-            this.btnXoa.Location = new System.Drawing.Point(340, 537);
+            this.btnXoa.Location = new System.Drawing.Point(269, 537);
             this.btnXoa.Name = "btnXoa";
             this.btnXoa.Size = new System.Drawing.Size(120, 35);
             this.btnXoa.TabIndex = 8;
@@ -188,7 +190,7 @@
             this.btnThem.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnThem.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnThem.ForeColor = System.Drawing.Color.White;
-            this.btnThem.Location = new System.Drawing.Point(340, 455);
+            this.btnThem.Location = new System.Drawing.Point(269, 455);
             this.btnThem.Name = "btnThem";
             this.btnThem.Size = new System.Drawing.Size(120, 35);
             this.btnThem.TabIndex = 6;
@@ -207,7 +209,7 @@
             this.txtTiengAnh.Margin = new System.Windows.Forms.Padding(10, 3, 3, 3);
             this.txtTiengAnh.Multiline = true;
             this.txtTiengAnh.Name = "txtTiengAnh";
-            this.txtTiengAnh.Size = new System.Drawing.Size(450, 85);
+            this.txtTiengAnh.Size = new System.Drawing.Size(379, 85);
             this.txtTiengAnh.TabIndex = 3;
             this.txtTiengAnh.TextChanged += new System.EventHandler(this.txtTiengAnh_TextChanged);
             // 
@@ -252,7 +254,7 @@
             this.dgvDanhSach.RowHeadersWidth = 51;
             this.dgvDanhSach.RowTemplate.Height = 24;
             this.dgvDanhSach.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvDanhSach.Size = new System.Drawing.Size(541, 474);
+            this.dgvDanhSach.Size = new System.Drawing.Size(612, 474);
             this.dgvDanhSach.TabIndex = 1;
             this.dgvDanhSach.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvDanhSach_CellDoubleClick);
             // 
@@ -264,7 +266,7 @@
             this.txtTimKiem.Location = new System.Drawing.Point(14, 12);
             this.txtTimKiem.Multiline = true;
             this.txtTimKiem.Name = "txtTimKiem";
-            this.txtTimKiem.Size = new System.Drawing.Size(533, 35);
+            this.txtTimKiem.Size = new System.Drawing.Size(604, 35);
             this.txtTimKiem.TabIndex = 15;
             this.txtTimKiem.Text = "Tìm kiếm";
             this.txtTimKiem.TextChanged += new System.EventHandler(this.txtTimKiem_TextChanged);
@@ -306,7 +308,7 @@
             this.splitContainer1.Panel2.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.splitContainer1.Panel2MinSize = 350;
             this.splitContainer1.Size = new System.Drawing.Size(1052, 583);
-            this.splitContainer1.SplitterDistance = 550;
+            this.splitContainer1.SplitterDistance = 621;
             this.splitContainer1.TabIndex = 17;
             // 
             // cboLocDaThuoc
@@ -315,7 +317,7 @@
             this.cboLocDaThuoc.Cursor = System.Windows.Forms.Cursors.Hand;
             this.cboLocDaThuoc.Font = new System.Drawing.Font("K2D SemiBold", 8.5F, System.Drawing.FontStyle.Bold);
             this.cboLocDaThuoc.FormattingEnabled = true;
-            this.cboLocDaThuoc.Location = new System.Drawing.Point(434, 60);
+            this.cboLocDaThuoc.Location = new System.Drawing.Point(505, 60);
             this.cboLocDaThuoc.Name = "cboLocDaThuoc";
             this.cboLocDaThuoc.Size = new System.Drawing.Size(113, 35);
             this.cboLocDaThuoc.TabIndex = 17;
@@ -354,7 +356,7 @@
             this.btnSua.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSua.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSua.ForeColor = System.Drawing.Color.White;
-            this.btnSua.Location = new System.Drawing.Point(340, 496);
+            this.btnSua.Location = new System.Drawing.Point(269, 496);
             this.btnSua.Name = "btnSua";
             this.btnSua.Size = new System.Drawing.Size(120, 35);
             this.btnSua.TabIndex = 20;
@@ -392,6 +394,8 @@
             // 
             this.pnlMenu.BackColor = System.Drawing.Color.White;
             this.pnlMenu.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.pnlMenu.Controls.Add(this.btnNhapFile);
+            this.pnlMenu.Controls.Add(this.btnXuatFile);
             this.pnlMenu.Controls.Add(this.btnTracNghiem);
             this.pnlMenu.Controls.Add(this.btnTuDien);
             this.pnlMenu.Controls.Add(this.btnMenu);
@@ -473,6 +477,46 @@
             this.pnlNoiDung.Size = new System.Drawing.Size(1052, 583);
             this.pnlNoiDung.TabIndex = 23;
             // 
+            // btnXuatFile
+            // 
+            this.btnXuatFile.BackColor = System.Drawing.Color.White;
+            this.btnXuatFile.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnXuatFile.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnXuatFile.FlatAppearance.BorderSize = 0;
+            this.btnXuatFile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnXuatFile.ForeColor = System.Drawing.Color.Black;
+            this.btnXuatFile.Image = global::VocabMaster.Properties.Resources.btn_trac_nghiem;
+            this.btnXuatFile.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnXuatFile.Location = new System.Drawing.Point(5, 135);
+            this.btnXuatFile.Margin = new System.Windows.Forms.Padding(0);
+            this.btnXuatFile.Name = "btnXuatFile";
+            this.btnXuatFile.Size = new System.Drawing.Size(40, 40);
+            this.btnXuatFile.TabIndex = 25;
+            this.btnXuatFile.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnXuatFile.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnXuatFile.UseVisualStyleBackColor = false;
+            this.btnXuatFile.Click += new System.EventHandler(this.btnXuatFile_Click);
+            // 
+            // btnNhapFile
+            // 
+            this.btnNhapFile.BackColor = System.Drawing.Color.White;
+            this.btnNhapFile.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnNhapFile.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnNhapFile.FlatAppearance.BorderSize = 0;
+            this.btnNhapFile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnNhapFile.ForeColor = System.Drawing.Color.Black;
+            this.btnNhapFile.Image = global::VocabMaster.Properties.Resources.btn_trac_nghiem;
+            this.btnNhapFile.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnNhapFile.Location = new System.Drawing.Point(5, 175);
+            this.btnNhapFile.Margin = new System.Windows.Forms.Padding(0);
+            this.btnNhapFile.Name = "btnNhapFile";
+            this.btnNhapFile.Size = new System.Drawing.Size(40, 40);
+            this.btnNhapFile.TabIndex = 26;
+            this.btnNhapFile.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnNhapFile.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnNhapFile.UseVisualStyleBackColor = false;
+            this.btnNhapFile.Click += new System.EventHandler(this.btnNhapFile_Click);
+            // 
             // FormDich
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -524,6 +568,8 @@
         private System.Windows.Forms.Button btnTuDien;
         private System.Windows.Forms.Button btnTracNghiem;
         private System.Windows.Forms.Button btnMenu;
+        private System.Windows.Forms.Button btnNhapFile;
+        private System.Windows.Forms.Button btnXuatFile;
     }
 }
 

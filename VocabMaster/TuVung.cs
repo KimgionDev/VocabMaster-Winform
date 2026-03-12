@@ -5,7 +5,7 @@ namespace VocabMaster
 {
     public class TuVung
     {
-        [Browsable(false)] public string IdTuVung { get; set; } // Ẩn trong DataGridView
+        [Browsable(false)] public int IdTuVung { get; set; } // Ẩn trong DataGridView
         public string TiengAnh { get; set; }
         public string PhienAm { get; set; }
         public string TiengViet { get; set; }
@@ -15,7 +15,6 @@ namespace VocabMaster
 
         public TuVung()
         {
-            IdTuVung = Guid.NewGuid().ToString();
             TiengAnh = "";
             TiengViet = "";
             PhienAm = "";

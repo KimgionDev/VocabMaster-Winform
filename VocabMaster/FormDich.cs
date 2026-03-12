@@ -8,17 +8,20 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Speech.Synthesis;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace VocabMaster
 {
     public partial class FormDich : Form
     {
-        KhoDuLieuJSON _kho = new KhoDuLieuJSON();
+        DatabaseHelper _db = new DatabaseHelper();
         List<TuVung> _danhSachTuVung = new List<TuVung>();
         TuVung _tuDangChon = null;
         System.Windows.Forms.Timer _timerTuDongDich;
         private FormTracNghiem frmTracNghiem;
         private bool _menuMoRong = false;
+        private int _idTuDangChon = -1; // -1 nghĩa là chưa chọn từ nào
 
         public FormDich()
         {
@@ -38,16 +41,31 @@ namespace VocabMaster
 
         private void TaiDuLieuLenBang()
         {
-            // Đọc dữ liệu từ file lên
-            _danhSachTuVung = _kho.DocDuLieu();
-            _danhSachTuVung = _danhSachTuVung.OrderBy(tu => tu.TiengAnh).ToList(); // Sắp xếp từ A-Z
+            // Câu lệnh SQL lấy từ vựng và tên chủ đề tương ứng
+            string sql = @"
+        SELECT 
+            t.IdTuVung, 
+            t.TiengAnh, 
+            t.PhienAm, 
+            t.TiengViet, 
+            t.LoaiTu, 
+            c.TenChuDe AS ChuDe, 
+            t.DaThuoc 
+        FROM TuVung t
+        LEFT JOIN ChuDe c ON t.IdChuDe = c.IdChuDe
+        ORDER BY t.TiengAnh ASC";
 
-            // Gán null trước để reset bảng, tránh lỗi không cập nhật
+            // Gọi DatabaseHelper để lấy dữ liệu
+            DataTable dt = _db.LayDuLieu(sql);
+
+            // Đổ dữ liệu lên DataGridView
             dgvDanhSach.DataSource = null;
-            dgvDanhSach.DataSource = _danhSachTuVung;
+            dgvDanhSach.DataSource = dt;
 
+            // Đổi tên cột hiển thị
             if (dgvDanhSach.Columns.Count > 0)
             {
+                dgvDanhSach.Columns["IdTuVung"].Visible = false; // Giấu cột ID
                 dgvDanhSach.Columns["TiengAnh"].HeaderText = "Từ Tiếng Anh";
                 dgvDanhSach.Columns["PhienAm"].HeaderText = "Phiên Âm";
                 dgvDanhSach.Columns["TiengViet"].HeaderText = "Nghĩa Tiếng Việt";
@@ -114,7 +132,7 @@ namespace VocabMaster
             return vanBan;
         }
 
-        private ChuDe ChuDeDaTonTai()
+        private int XuLyChuDe()
         {
             string tenChuDe = cboChonChuDe.Text.Trim();
             if (string.IsNullOrEmpty(tenChuDe) || tenChuDe.Equals("Nhập chủ đề"))
@@ -125,21 +143,24 @@ namespace VocabMaster
             {
                 tenChuDe = VietHoaChuCaiDauTien(tenChuDe);
             }
-            ChuDe chuDeDaTonTai = _danhSachTuVung
-                                    .Select(cd => cd.ChuDe)     // FirstOrDefault chỉ lấy chủ đề đầu tiên tìm thấy
-                                    .FirstOrDefault(cd => cd != null && cd.TenChuDe.Equals(tenChuDe));
-            ChuDe objChuDeFinal;
-            if (chuDeDaTonTai != null)
+            tenChuDe = tenChuDe.Replace("'", "''"); // Tránh lỗi cú pháp SQL khi có dấu nháy đơn
+
+            // Kiểm tra chủ đề có trong bảng ChuDe chưa
+            string sqlKiemTra = $"SELECT IdChuDe FROM ChuDe WHERE TenChuDe = N'{tenChuDe}'";
+            DataTable dtChuDe = _db.LayDuLieu(sqlKiemTra);
+
+            if (dtChuDe.Rows.Count > 0)
             {
-                objChuDeFinal = chuDeDaTonTai;
+                // Chủ đề đã có, trả về ID của nó
+                return Convert.ToInt32(dtChuDe.Rows[0]["IdChuDe"]);
             }
             else
             {
-                objChuDeFinal = new ChuDe();
-                objChuDeFinal.IdChuDe = Guid.NewGuid().ToString();
-                objChuDeFinal.TenChuDe = tenChuDe;
+                // Chủ đề mới, thêm vào bảng ChuDe và lấy ngay ID vừa tạo (SCOPE_IDENTITY)
+                string sqlThem = $"INSERT INTO ChuDe (TenChuDe) VALUES (N'{tenChuDe}'); SELECT SCOPE_IDENTITY() AS NewId;";
+                DataTable dtMoi = _db.LayDuLieu(sqlThem);
+                return Convert.ToInt32(dtMoi.Rows[0]["NewId"]);
             }
-            return objChuDeFinal;
         }
 
         private void btnThem_Click(object sender, EventArgs e)
@@ -150,42 +171,39 @@ namespace VocabMaster
                 return;
             }
 
-            bool daTonTai = _danhSachTuVung.Any(tu => (tu.TiengAnh.ToLower() == txtTiengAnh.Text.Trim().ToLower()) && (tu.TiengViet.ToLower() == txtTiengViet.Text.Trim().ToLower()));
-            if (daTonTai)
+            string tiengAnh = VietHoaChuCaiDauTien(txtTiengAnh.Text).Replace("'", "''");
+            string tiengViet = VietHoaChuCaiDauTien(txtTiengViet.Text).Replace("'", "''");
+            string loaiTu = txtLoaiTu.Text.Replace("'", "''");
+            string phienAm = txtPhienAm.Text.Replace("'", "''");
+
+            // Kiểm tra trùng từ trong CSDL
+            string sqlKiemTra = $"SELECT * FROM TuVung WHERE TiengAnh = N'{tiengAnh}' AND TiengViet = N'{tiengViet}'";
+            DataTable dtKiemTra = _db.LayDuLieu(sqlKiemTra);
+            if (dtKiemTra.Rows.Count > 0)
             {
                 MessageBox.Show("Từ này đã có trong từ điển rồi nè!", "Cảnh báo");
                 return;
             }
 
-            TuVung tuMoi = new TuVung();
-            tuMoi.TiengAnh = VietHoaChuCaiDauTien(txtTiengAnh.Text);
-            tuMoi.TiengViet = VietHoaChuCaiDauTien(txtTiengViet.Text);
-            tuMoi.LoaiTu = txtLoaiTu.Text; // Lấy luôn loại từ vừa dịch được
-            tuMoi.PhienAm = txtPhienAm.Text; // Lấy luôn phiên âm vừa dịch được
-            tuMoi.DaThuoc = false;
-            tuMoi.ChuDe = ChuDeDaTonTai();
+            // Lấy ID chủ đề (hoặc tạo mới)
+            int idChuDe = XuLyChuDe();
 
-            _danhSachTuVung.Insert(0, tuMoi); // Thêm vào đầu danh sách
-            _kho.LuuDuLieu(_danhSachTuVung);
+            // Thêm từ mới vào bảng TuVung
+            string sqlThemTu = $"INSERT INTO TuVung (TiengAnh, TiengViet, LoaiTu, PhienAm, DaThuoc, IdChuDe) " +
+                               $"VALUES (N'{tiengAnh}', N'{tiengViet}', N'{loaiTu}', N'{phienAm}', 0, {idChuDe})";
+            _db.ThucThiLenh(sqlThemTu);
 
+            // Tải lại bảng và danh sách chủ đề
             TaiDuLieuLenBang();
-            TaiDanhSachChuDe(); // Cập nhật lại danh sách chủ đề
+            TaiDanhSachChuDe();
 
-            // Reset ô nhập
+            // Reset giao diện
             txtTiengAnh.Text = "";
             txtTiengViet.Text = "";
             txtLoaiTu.Text = "";
-            txtPhienAm.Text = ""; // Reset luôn ô phiên âm
+            txtPhienAm.Text = "";
             cboChonChuDe.Text = "Nhập chủ đề";
-
             txtTiengAnh.Focus();
-
-            if (dgvDanhSach.Rows.Count > 0)
-            {
-                dgvDanhSach.FirstDisplayedScrollingRowIndex = 0; // Cuộn lên đầu bảng
-                dgvDanhSach.Rows[0].Selected = true; // Chọn dòng đầu tiên
-                dgvDanhSach.CurrentCell = dgvDanhSach.Rows[0].Cells[0]; // Đặt con trỏ vào dòng đầu tiên
-            }
         }
 
         private void btnXoa_Click(object sender, EventArgs e)
@@ -194,17 +212,22 @@ namespace VocabMaster
 
             if (MessageBox.Show("Xóa thiệt hả?", "Hỏi", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                int chiSo = dgvDanhSach.SelectedRows[0].Index;
-                _danhSachTuVung.RemoveAt(chiSo);
+                // Lấy ID từ dòng đang chọn trên DataGridView
+                int idXoa = Convert.ToInt32(dgvDanhSach.SelectedRows[0].Cells["IdTuVung"].Value);
 
-                _kho.LuuDuLieu(_danhSachTuVung);
+                string sqlXoa = $"DELETE FROM TuVung WHERE IdTuVung = {idXoa}";
+                _db.ThucThiLenh(sqlXoa);
+
                 TaiDuLieuLenBang();
+                TaiDanhSachChuDe();
 
                 // Xóa trắng ô nhập
                 txtTiengAnh.Text = "";
                 txtTiengViet.Text = "";
                 txtLoaiTu.Text = "";
                 txtPhienAm.Text = "";
+                cboChonChuDe.Text = "Nhập chủ đề";
+                _idTuDangChon = -1;
             }
         }
 
@@ -215,13 +238,23 @@ namespace VocabMaster
 
         private void TaiDanhSachChuDe()
         {
-            var danhSachChuDe = _danhSachTuVung
-                                .Select(dscd => dscd.ChuDe?.TenChuDe)
-                                .Distinct()
-                                .ToList();
-            danhSachChuDe.Insert(0, "Tất cả chủ đề");   // Thêm mục "Tất cả" vào đầu danh sách
-            cboLocChuDe.DataSource = danhSachChuDe;     // Gán danh sách chủ đề cho cboLocChuDe
-            cboChonChuDe.DataSource = danhSachChuDe.Where(cd => cd != "Tất cả chủ đề").ToList(); // Loại bỏ "Tất cả chủ đề" khỏi cboChonChuDe
+            string sql = "SELECT TenChuDe FROM ChuDe ORDER BY TenChuDe ASC";
+            DataTable dt = _db.LayDuLieu(sql);
+
+            List<string> danhSachChuDe = new List<string>();
+            danhSachChuDe.Add("Tất cả chủ đề"); // Thêm mục "Tất cả" lên đầu
+
+            foreach (DataRow row in dt.Rows)
+            {
+                danhSachChuDe.Add(row["TenChuDe"].ToString());
+            }
+
+            cboLocChuDe.DataSource = danhSachChuDe;
+
+            // Gán dữ liệu cho cboChonChuDe
+            List<string> danhSachChon = new List<string>(danhSachChuDe);
+            danhSachChon.Remove("Tất cả chủ đề");
+            cboChonChuDe.DataSource = danhSachChon;
         }
 
         private void cboLocChuDe_SelectedIndexChanged(object sender, EventArgs e)
@@ -231,55 +264,87 @@ namespace VocabMaster
 
         private void LocDuLieu()
         {
-            IEnumerable<TuVung> ketQua = _danhSachTuVung;
-            var chuDeDaChon = cboLocChuDe.SelectedItem?.ToString();     // selectedItem? là null check nhưng vẫn có thể rỗng
-            var tuKhoa = txtTimKiem.Text.Trim().ToLower();
-
-            if (tuKhoa == "tìm kiếm")
+            string tuKhoa = txtTimKiem.Text.Trim().Replace("'", "''");
+            if (tuKhoa.ToLower() == "tìm kiếm")
             {
                 tuKhoa = "";
             }
 
-            switch (cboLocDaThuoc.Text)
-            {
-                case "Đã thuộc":
-                    ketQua = ketQua.Where(tu => tu.DaThuoc == true);
-                    break;
-                case "Chưa thuộc":
-                    ketQua = ketQua.Where(tu => tu.DaThuoc == false);
-                    break;
-                default:
-                    break;
-            }
+            string chuDeDaChon = cboLocChuDe.SelectedItem?.ToString();
+            string trangThai = cboLocDaThuoc.Text;
 
-            if (!string.IsNullOrEmpty(chuDeDaChon) && chuDeDaChon != "Tất cả chủ đề")
-            {
-                ketQua = ketQua.Where(cd => cd.ChuDe?.TenChuDe == chuDeDaChon);
-            }
+            // Lệnh SQL cơ sở
+            string sql = @"
+        SELECT 
+            t.IdTuVung, 
+            t.TiengAnh, 
+            t.PhienAm, 
+            t.TiengViet, 
+            t.LoaiTu, 
+            c.TenChuDe AS ChuDe, 
+            t.DaThuoc 
+        FROM TuVung t
+        LEFT JOIN ChuDe c ON t.IdChuDe = c.IdChuDe
+        WHERE 1=1 ";
 
+            // Chèn điều kiện lọc từ khóa
             if (!string.IsNullOrEmpty(tuKhoa))
             {
-                ketQua = ketQua.Where(tu => tu.TiengAnh.ToLower().Contains(tuKhoa) || tu.TiengViet.ToLower().Contains(tuKhoa)).ToList();
+                sql += $" AND (t.TiengAnh LIKE N'%{tuKhoa}%' OR t.TiengViet LIKE N'%{tuKhoa}%') ";
             }
 
-            dgvDanhSach.DataSource = null;  // Reset bảng
-            dgvDanhSach.DataSource = ketQua.ToList();
+            // Chèn điều kiện lọc trạng thái
+            if (trangThai == "Đã thuộc")
+            {
+                sql += " AND t.DaThuoc = 1 ";
+            }
+            else if (trangThai == "Chưa thuộc")
+            {
+                sql += " AND t.DaThuoc = 0 ";
+            }
+
+            // Chèn điều kiện lọc chủ đề
+            if (!string.IsNullOrEmpty(chuDeDaChon) && chuDeDaChon != "Tất cả chủ đề")
+            {
+                sql += $" AND c.TenChuDe = N'{chuDeDaChon}' ";
+            }
+
+            sql += " ORDER BY t.TiengAnh ASC";
+
+            // Lấy dữ liệu và đổ lên DataGridView
+            DataTable dt = _db.LayDuLieu(sql);
+            dgvDanhSach.DataSource = null;
+            dgvDanhSach.DataSource = dt;
+
+            if (dgvDanhSach.Columns.Count > 0)
+            {
+                dgvDanhSach.Columns["IdTuVung"].Visible = false;
+                dgvDanhSach.Columns["TiengAnh"].HeaderText = "Từ Tiếng Anh";
+                dgvDanhSach.Columns["PhienAm"].HeaderText = "Phiên Âm";
+                dgvDanhSach.Columns["TiengViet"].HeaderText = "Nghĩa Tiếng Việt";
+                dgvDanhSach.Columns["LoaiTu"].HeaderText = "Loại Từ";
+                dgvDanhSach.Columns["ChuDe"].HeaderText = "Chủ Đề";
+                dgvDanhSach.Columns["DaThuoc"].HeaderText = "Đã Thuộc";
+            }
         }
 
         private void dgvDanhSach_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
             {
-                DataGridViewRow dongDuocChon = dgvDanhSach.Rows[e.RowIndex];
-                txtTiengAnh.Text = dongDuocChon.Cells["TiengAnh"].Value?.ToString();
-                txtTiengViet.Text = dongDuocChon.Cells["TiengViet"].Value?.ToString();
-                txtPhienAm.Text = dongDuocChon.Cells["PhienAm"].Value?.ToString();
-                txtLoaiTu.Text = dongDuocChon.Cells["LoaiTu"].Value?.ToString();
-                cboChonChuDe.Text = dongDuocChon.Cells["ChuDe"].Value?.ToString();
+                DataGridViewRow dong = dgvDanhSach.Rows[e.RowIndex];
+
+                // Lưu lại ID của dòng đang chọn
+                _idTuDangChon = Convert.ToInt32(dong.Cells["IdTuVung"].Value);
+
+                txtTiengAnh.Text = dong.Cells["TiengAnh"].Value?.ToString();
+                txtTiengViet.Text = dong.Cells["TiengViet"].Value?.ToString();
+                txtPhienAm.Text = dong.Cells["PhienAm"].Value?.ToString();
+                txtLoaiTu.Text = dong.Cells["LoaiTu"].Value?.ToString();
+                cboChonChuDe.Text = dong.Cells["ChuDe"].Value?.ToString();
+
                 MessageBox.Show("Chỉnh sửa và nhấn nút Sửa để lưu lại.", "Thông báo");
                 txtTiengAnh.Focus();
-                _tuDangChon = _danhSachTuVung
-                              .Find(tu => tu.TiengAnh == txtTiengAnh.Text && tu.TiengViet == txtTiengViet.Text);
             }
         }
 
@@ -299,7 +364,7 @@ namespace VocabMaster
 
         private void btnSua_Click(object sender, EventArgs e)
         {
-            if (_tuDangChon == null)
+            if (_idTuDangChon == -1)
             {
                 MessageBox.Show("Chưa chọn từ để sửa. Nhấn đúp vào một từ trong bảng để chọn.", "Cảnh báo");
                 return;
@@ -308,19 +373,30 @@ namespace VocabMaster
             btnSua.Text = "...";
             btnSua.Enabled = false;
 
-            _tuDangChon.TiengAnh = VietHoaChuCaiDauTien(txtTiengAnh.Text);
-            _tuDangChon.TiengViet = VietHoaChuCaiDauTien(txtTiengViet.Text);
-            _tuDangChon.LoaiTu = txtLoaiTu.Text;
-            _tuDangChon.PhienAm = txtPhienAm.Text;
-            _tuDangChon.ChuDe = ChuDeDaTonTai();
+            string tiengAnh = VietHoaChuCaiDauTien(txtTiengAnh.Text).Replace("'", "''");
+            string tiengViet = VietHoaChuCaiDauTien(txtTiengViet.Text).Replace("'", "''");
+            string loaiTu = txtLoaiTu.Text.Replace("'", "''");
+            string phienAm = txtPhienAm.Text.Replace("'", "''");
 
-            _kho.LuuDuLieu(_danhSachTuVung);
+            int idChuDe = XuLyChuDe();
+
+            // Cập nhật dữ liệu dựa trên ID đang lưu
+            string sqlSua = $"UPDATE TuVung SET TiengAnh = N'{tiengAnh}', TiengViet = N'{tiengViet}', LoaiTu = N'{loaiTu}', PhienAm = N'{phienAm}', IdChuDe = {idChuDe} WHERE IdTuVung = {_idTuDangChon}";
+            _db.ThucThiLenh(sqlSua);
+
             TaiDuLieuLenBang();
             TaiDanhSachChuDe();
 
-            _tuDangChon = null; // Reset từ đang chọn   
+            // Reset trạng thái
+            _idTuDangChon = -1;
             btnSua.Text = "Sửa";
             btnSua.Enabled = true;
+
+            txtTiengAnh.Text = "";
+            txtTiengViet.Text = "";
+            txtLoaiTu.Text = "";
+            txtPhienAm.Text = "";
+            cboChonChuDe.Text = "Nhập chủ đề";
 
             MessageBox.Show("Sửa từ thành công!", "Thông báo");
         }
@@ -349,21 +425,54 @@ namespace VocabMaster
             splitContainer1.BringToFront();
         }
 
+        private List<TuVung> LayDanhSachTuVungTuDB()
+        {
+            List<TuVung> danhSach = new List<TuVung>();
+            string sql = @"
+        SELECT t.IdTuVung, t.TiengAnh, t.TiengViet, t.PhienAm, t.LoaiTu, c.TenChuDe, t.DaThuoc 
+        FROM TuVung t 
+        LEFT JOIN ChuDe c ON t.IdChuDe = c.IdChuDe";
+
+            DataTable dt = _db.LayDuLieu(sql);
+
+            foreach (DataRow row in dt.Rows)
+            {
+                TuVung tu = new TuVung();
+                tu.IdTuVung = Convert.ToInt32(row["IdTuVung"]);
+                tu.TiengAnh = row["TiengAnh"].ToString();
+                tu.TiengViet = row["TiengViet"].ToString();
+                tu.PhienAm = row["PhienAm"].ToString();
+                tu.LoaiTu = row["LoaiTu"].ToString();
+                tu.DaThuoc = Convert.ToBoolean(row["DaThuoc"]);
+
+                tu.ChuDe = new ChuDe();
+                tu.ChuDe.TenChuDe = row["TenChuDe"]?.ToString() ?? "Chưa phân loại";
+
+                danhSach.Add(tu);
+            }
+            return danhSach;
+        }
+
         private void btnTracNghiem_Click(object sender, EventArgs e)
         {
             KichHoatNut(btnTracNghiem);
             splitContainer1.Visible = false;
 
-            if (frmTracNghiem == null || frmTracNghiem.IsDisposed)
+            // Lấy dữ liệu mới nhất từ CSDL
+            List<TuVung> danhSachMoiNhat = LayDanhSachTuVungTuDB();
+
+            // Đóng form cũ nếu nó đang mở để reset lại trạng thái
+            if (frmTracNghiem != null && !frmTracNghiem.IsDisposed)
             {
-                frmTracNghiem = new FormTracNghiem(_danhSachTuVung);
-
-                frmTracNghiem.TopLevel = false;
-                frmTracNghiem.FormBorderStyle = FormBorderStyle.None;
-                frmTracNghiem.Dock = DockStyle.Fill;
-
-                pnlNoiDung.Controls.Add(frmTracNghiem);
+                frmTracNghiem.Close();
             }
+
+            // Tạo form trắc nghiệm mới và truyền dữ liệu vào
+            frmTracNghiem = new FormTracNghiem(danhSachMoiNhat);
+            frmTracNghiem.TopLevel = false;
+            frmTracNghiem.FormBorderStyle = FormBorderStyle.None;
+            frmTracNghiem.Dock = DockStyle.Fill;
+            pnlNoiDung.Controls.Add(frmTracNghiem);
 
             frmTracNghiem.Show();
             frmTracNghiem.BringToFront();
@@ -386,6 +495,98 @@ namespace VocabMaster
                 btnTuDien.Text = "  Từ vựng";
                 btnTracNghiem.Text = "  Trắc nghiệm";
                 _menuMoRong = true;
+            }
+        }
+
+        private void btnXuatFile_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog hopThoaiLuu = new SaveFileDialog();
+            hopThoaiLuu.Filter = "JSON Files (*.json)|*.json";
+            hopThoaiLuu.FileName = "BoTuVung.json";
+
+            if (hopThoaiLuu.ShowDialog() == DialogResult.OK)
+            {
+                // Tái sử dụng hàm lấy dữ liệu bạn vừa tạo lúc nãy
+                List<TuVung> danhSachXuat = LayDanhSachTuVungTuDB();
+
+                // Chuyển thành chữ JSON và lưu
+                string json = JsonConvert.SerializeObject(danhSachXuat, Formatting.Indented);
+                File.WriteAllText(hopThoaiLuu.FileName, json);
+
+                MessageBox.Show("Xuất file thành công!", "Thông báo");
+            }
+        }
+
+        private void btnNhapFile_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog hopThoaiMo = new OpenFileDialog();
+            hopThoaiMo.Filter = "JSON Files (*.json)|*.json";
+
+            if (hopThoaiMo.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    string json = File.ReadAllText(hopThoaiMo.FileName);
+
+                    // Ép thử dữ liệu vào khuôn List<TuVung>
+                    List<TuVung> danhSachNhap = JsonConvert.DeserializeObject<List<TuVung>>(json);
+
+                    if (danhSachNhap == null || danhSachNhap.Count == 0)
+                    {
+                        MessageBox.Show("File trống hoặc không chứa dữ liệu từ vựng.", "Lỗi");
+                        return;
+                    }
+
+                    int soTuThemThanhCong = 0;
+                    foreach (var tu in danhSachNhap)
+                    {
+                        // BỘ LỌC AN TOÀN: Bỏ qua các đối tượng không có tiếng Anh hoặc tiếng Việt
+                        if (string.IsNullOrWhiteSpace(tu.TiengAnh) || string.IsNullOrWhiteSpace(tu.TiengViet))
+                            continue;
+
+                        string tiengAnh = tu.TiengAnh.Replace("'", "''");
+                        string tiengViet = tu.TiengViet.Replace("'", "''");
+                        string loaiTu = tu.LoaiTu != null ? tu.LoaiTu.Replace("'", "''") : "";
+                        string phienAm = tu.PhienAm != null ? tu.PhienAm.Replace("'", "''") : "";
+                        int daThuoc = tu.DaThuoc ? 1 : 0;
+
+                        string tenChuDe = (tu.ChuDe != null && !string.IsNullOrWhiteSpace(tu.ChuDe.TenChuDe))
+                                          ? tu.ChuDe.TenChuDe.Replace("'", "''") : "Chưa phân loại";
+
+                        // Xử lý Chủ đề
+                        string sqlKiemTraCD = $"SELECT IdChuDe FROM ChuDe WHERE TenChuDe = N'{tenChuDe}'";
+                        DataTable dtCD = _db.LayDuLieu(sqlKiemTraCD);
+                        int idChuDe;
+                        if (dtCD.Rows.Count > 0)
+                        {
+                            idChuDe = Convert.ToInt32(dtCD.Rows[0]["IdChuDe"]);
+                        }
+                        else
+                        {
+                            string sqlThemCD = $"INSERT INTO ChuDe (TenChuDe) VALUES (N'{tenChuDe}'); SELECT SCOPE_IDENTITY() AS NewId;";
+                            idChuDe = Convert.ToInt32(_db.LayDuLieu(sqlThemCD).Rows[0]["NewId"]);
+                        }
+
+                        // Xử lý Từ vựng
+                        string sqlKiemTraTu = $"SELECT IdTuVung FROM TuVung WHERE TiengAnh = N'{tiengAnh}' AND TiengViet = N'{tiengViet}'";
+                        if (_db.LayDuLieu(sqlKiemTraTu).Rows.Count == 0)
+                        {
+                            string sqlThemTu = $"INSERT INTO TuVung (TiengAnh, TiengViet, LoaiTu, PhienAm, DaThuoc, IdChuDe) " +
+                                               $"VALUES (N'{tiengAnh}', N'{tiengViet}', N'{loaiTu}', N'{phienAm}', {daThuoc}, {idChuDe})";
+                            _db.ThucThiLenh(sqlThemTu);
+                            soTuThemThanhCong++;
+                        }
+                    }
+
+                    TaiDuLieuLenBang();
+                    TaiDanhSachChuDe();
+                    MessageBox.Show($"Đã nhập thành công {soTuThemThanhCong} từ hợp lệ vào hệ thống!", "Hoàn tất");
+                }
+                catch (Exception)
+                {
+                    // Bắt mọi lỗi do sai cấu trúc file
+                    MessageBox.Show("File bạn chọn không đúng định dạng của VocabMaster. Vui lòng chọn file xuất ra từ ứng dụng.", "Từ chối nhập", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
     }

@@ -4,12 +4,11 @@ namespace VocabMaster
 {
     public class ChuDe
     {
-        public String IdChuDe { get; set; }
+        public int IdChuDe { get; set; }
         public String TenChuDe { get; set; }
 
         public ChuDe()
         {
-            IdChuDe = "";
             TenChuDe = "";
         }
 
