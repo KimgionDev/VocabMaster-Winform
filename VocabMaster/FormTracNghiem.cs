@@ -111,6 +111,11 @@ namespace VocabMaster
             btnC.ForeColor = Color.Black;
             btnD.ForeColor = Color.Black;
 
+            btnA.BackHover = Color.FromArgb(255, 77, 79); // Kích hoạt lại hover
+            btnB.BackHover = Color.FromArgb(82, 196, 26);
+            btnC.BackHover = Color.FromArgb(250, 173, 20);
+            btnD.BackHover = Color.FromArgb(24, 144, 255);
+
             if (_chiSoCauHoiHienTai < _deThi.Count)     _chiSoCauHoiHienTai++;
             lblSoThuTu.Text = $"Câu hỏi {_chiSoCauHoiHienTai + 1} / {_deThi.Count}";
             HienThiCauHoi();

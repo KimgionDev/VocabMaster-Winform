@@ -585,7 +585,7 @@ namespace VocabMaster
                 catch (Exception)
                 {
                     // Bắt mọi lỗi do sai cấu trúc file
-                    MessageBox.Show("File bạn chọn không đúng định dạng của VocabMaster. Vui lòng chọn file xuất ra từ ứng dụng.", "Từ chối nhập", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("File không đúng cấu trúc.\nVui lòng chọn file xuất ra từ ứng dụng.", "Từ chối nhập", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
