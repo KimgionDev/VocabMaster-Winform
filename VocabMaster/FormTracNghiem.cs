@@ -17,50 +17,28 @@ namespace VocabMaster
         private int _chiSoCauHoiHienTai = 0;
         private bool _dangXuLyDapAn = false;
         private int _soCauDung = 0;
-        public FormTracNghiem(List<TuVung> danhSachTu)
+        private List<TuVung> _danhSachTu;
+
+        public FormTracNghiem(List<TuVung> danhSachTu, int soLuongCau = 4)
         {
             InitializeComponent();
-            _luyenTapService = new LuyenTapService(danhSachTu);
+            _danhSachTu = danhSachTu; // Lưu lại
+            _luyenTapService = new LuyenTapService(_danhSachTu);
             try
             {
-                _deThi = _luyenTapService.TaoDeThi(5);
+                _deThi = _luyenTapService.TaoDeThi(soLuongCau);
                 HienThiCauHoi();
+                lblSoThuTu.Text = $"Câu hỏi {_chiSoCauHoiHienTai + 1} / {_deThi.Count}";
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-                // Dùng BeginInvoke để tránh lỗi crash khi đóng Form lúc đang khởi tạo
                 this.BeginInvoke(new Action(() => this.Close()));
             }
-            lblSoThuTu.Text = $"Câu hỏi {_chiSoCauHoiHienTai + 1} / {_deThi.Count}";
-            pnlKetQua.Visible = false; // Ẩn bảng điểm ban đầu
         }
+
         private void HienThiCauHoi()
         {
-            if (_chiSoCauHoiHienTai >= _deThi.Count)
-            {
-                // Giấu giao diện thi
-                panelTop.Visible = false;
-                tableLayoutPanelBot.Visible = false;
-
-                // Bật bảng điểm lên
-                pnlKetQua.Visible = true;
-                pnlKetQua.Dock = DockStyle.Fill;
-                pnlKetQua.BringToFront(); // Bê nó lên lớp trên cùng
-                btnLamLai.Size = new Size(240, 80);
-                btnLamLai.Location = new Point((pnlKetQua.Width - btnLamLai.Width) / 2, (pnlKetQua.Height - btnLamLai.Height) / 2 + 200);
-
-                lblDiem.Text = "";
-                string loiNhan = _soCauDung >= 8 ? "Tuyệt vời, giữ vững phong độ nhé!" : "Bạn cần ôn tập thêm bộ từ này!";
-
-                // Gộp nội dung thành nhiều dòng
-                string thongBao = $"Hoàn thành bài tập!\n" +
-                                  $"Kết quả: {_soCauDung} / {_deThi.Count} câu.\n" +
-                                  $"{loiNhan}";
-                lblDiem.Text += thongBao;
-                return;
-            }
-
             CauHoi cauHienTai = _deThi[_chiSoCauHoiHienTai];
             lblCauHoi.Text = cauHienTai.TuChinh.TiengAnh;
 
@@ -79,14 +57,14 @@ namespace VocabMaster
         public async void XuLyDapAn(AntdUI.Button dapAnDaChon)
         {
             if (_dangXuLyDapAn) return; // Ngăn chặn việc chọn nhiều đáp án cùng lúc
-                _dangXuLyDapAn = true;
+            _dangXuLyDapAn = true;
             btnA.BackHover = Color.FromArgb(245, 247, 250); // Tạm thời vô hiệu hóa hover để tránh nhầm lẫn
             btnB.BackHover = Color.FromArgb(245, 247, 250);
             btnC.BackHover = Color.FromArgb(245, 247, 250);
             btnD.BackHover = Color.FromArgb(245, 247, 250);
 
             bool ketQua = KiemTraDapAn(dapAnDaChon.Text);
-            if(ketQua)
+            if (ketQua)
             {
                 dapAnDaChon.Text += " ✅";
                 dapAnDaChon.ForeColor = Color.LimeGreen;
@@ -104,7 +82,7 @@ namespace VocabMaster
                 if (KiemTraDapAn(btnD.Text)) { btnD.Text += " ✅"; btnD.ForeColor = Color.LimeGreen; }
             }
 
-            await Task.Delay(3000); // Đợi 3 giây để người dùng nhìn thấy kết quả trước khi chuyển câu hỏi tiếp theo
+            await Task.Delay(2000); // Đợi 3 giây để người dùng nhìn thấy kết quả trước khi chuyển câu hỏi tiếp theo
             _dangXuLyDapAn = false; // Cho phép chọn đáp án cho câu hỏi tiếp theo
             btnA.ForeColor = Color.Black;       // Reset màu sắc về mặc định
             btnB.ForeColor = Color.Black;
@@ -116,9 +94,36 @@ namespace VocabMaster
             btnC.BackHover = Color.FromArgb(250, 173, 20);
             btnD.BackHover = Color.FromArgb(24, 144, 255);
 
-            if (_chiSoCauHoiHienTai < _deThi.Count)     _chiSoCauHoiHienTai++;
-            lblSoThuTu.Text = $"Câu hỏi {_chiSoCauHoiHienTai + 1} / {_deThi.Count}";
-            HienThiCauHoi();
+            _chiSoCauHoiHienTai++;
+            if (_chiSoCauHoiHienTai < _deThi.Count)
+            {
+                // Nếu còn câu hỏi thì hiển thị tiếp
+                lblSoThuTu.Text = $"Câu hỏi {_chiSoCauHoiHienTai + 1} / {_deThi.Count}";
+                HienThiCauHoi();
+            }
+            else
+            {
+                // Nếu hết câu hỏi thì chuyển sang FormKetQua
+                ChuyenSangFormKetQua();
+            }
+        }
+
+        private void ChuyenSangFormKetQua()
+        {
+            // Lấy Panel đang chứa FormTracNghiem (chính là pnlNoiDung bên FormDich)
+            Panel panelChua = (Panel)this.Parent;
+            panelChua.Controls.Clear(); // Xóa FormTracNghiem khỏi panel
+
+            // Khởi tạo FormKetQua, truyền dữ liệu vào
+            FormKetQua frmKetQua = new FormKetQua(_soCauDung, _deThi.Count, _danhSachTu);
+            frmKetQua.TopLevel = false;
+            frmKetQua.FormBorderStyle = FormBorderStyle.None;
+            frmKetQua.Dock = DockStyle.Fill;
+
+            panelChua.Controls.Add(frmKetQua);
+            frmKetQua.Show();
+
+            this.Close(); // Đóng FormTracNghiem cũ
         }
 
         private void btnA_Click(object sender, EventArgs e)
@@ -139,23 +144,6 @@ namespace VocabMaster
         private void btnD_Click(object sender, EventArgs e)
         {
             XuLyDapAn(btnD);
-        }
-
-        private void btnLamLai_Click(object sender, EventArgs e)
-        {
-            // Reset điểm và chỉ số câu hỏi
-            _chiSoCauHoiHienTai = 0;
-            _soCauDung = 0;
-
-            // Ẩn bảng điểm, hiện lại khung thi
-            pnlKetQua.Visible = false;
-            panelTop.Visible = true;
-            tableLayoutPanelBot.Visible = true;
-
-            // Tạo đề mới và hiển thị
-            _deThi = _luyenTapService.TaoDeThi(5);
-            lblSoThuTu.Text = $"Câu hỏi {_chiSoCauHoiHienTai + 1} / {_deThi.Count}";
-            HienThiCauHoi();
         }
     }
 }

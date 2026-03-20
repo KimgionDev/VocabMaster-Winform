@@ -104,6 +104,12 @@
     <Compile Include="FormDich.Designer.cs">
       <DependentUpon>FormDich.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormKetQua.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormKetQua.Designer.cs">
+      <DependentUpon>FormKetQua.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormTracNghiem.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -116,6 +122,9 @@
     <Compile Include="TuVung.cs" />
     <EmbeddedResource Include="FormDich.resx">
       <DependentUpon>FormDich.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormKetQua.resx">
+      <DependentUpon>FormKetQua.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormTracNghiem.resx">
       <DependentUpon>FormTracNghiem.cs</DependentUpon>

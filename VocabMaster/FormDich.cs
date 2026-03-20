@@ -17,7 +17,6 @@ namespace VocabMaster
     {
         DatabaseHelper _db = new DatabaseHelper();
         List<TuVung> _danhSachTuVung = new List<TuVung>();
-        TuVung _tuDangChon = null;
         System.Windows.Forms.Timer _timerTuDongDich;
         private FormTracNghiem frmTracNghiem;
         private bool _menuMoRong = false;
