@@ -57,21 +57,18 @@ namespace VocabMaster
         private void btnLamLai_Click(object sender, EventArgs e)
         {
             int soCauMoi = (int)nudSoCauHoi.Value;
-
-            // Lấy Panel cha đang chứa FormKetQua
             Panel panelChua = (Panel)this.Parent;
-            panelChua.Controls.Clear();
 
-            // Khởi tạo lại FormTracNghiem với số câu mới
             FormTracNghiem frmTracNghiem = new FormTracNghiem(_danhSachTu, soCauMoi);
-            frmTracNghiem.TopLevel = false; // Cho phép nhúng form con vào panel
+            frmTracNghiem.TopLevel = false;
             frmTracNghiem.FormBorderStyle = FormBorderStyle.None;
             frmTracNghiem.Dock = DockStyle.Fill;
 
             panelChua.Controls.Add(frmTracNghiem);
             frmTracNghiem.Show();
+            frmTracNghiem.BringToFront();
 
-            this.Close(); // Đóng form kết quả
+            this.Close();
         }
     }
 }

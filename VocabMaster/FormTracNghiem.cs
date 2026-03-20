@@ -110,20 +110,20 @@ namespace VocabMaster
 
         private void ChuyenSangFormKetQua()
         {
-            // Lấy Panel đang chứa FormTracNghiem (chính là pnlNoiDung bên FormDich)
             Panel panelChua = (Panel)this.Parent;
-            panelChua.Controls.Clear(); // Xóa FormTracNghiem khỏi panel
 
-            // Khởi tạo FormKetQua, truyền dữ liệu vào
             FormKetQua frmKetQua = new FormKetQua(_soCauDung, _deThi.Count, _danhSachTu);
             frmKetQua.TopLevel = false;
             frmKetQua.FormBorderStyle = FormBorderStyle.None;
             frmKetQua.Dock = DockStyle.Fill;
 
+            // Thêm vào panel và đưa lên trên cùng
             panelChua.Controls.Add(frmKetQua);
             frmKetQua.Show();
+            frmKetQua.BringToFront();
 
-            this.Close(); // Đóng FormTracNghiem cũ
+            // Đóng form trắc nghiệm này lại để giải phóng RAM
+            this.Close();
         }
 
         private void btnA_Click(object sender, EventArgs e)

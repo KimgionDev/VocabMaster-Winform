@@ -415,9 +415,11 @@ namespace VocabMaster
         private void btnTuDien_Click(object sender, EventArgs e)
         {
             KichHoatNut(btnTuDien);
-            if (frmTracNghiem != null)
+
+            // Tìm và đóng tất cả các Form đang nhúng trong pnlNoiDung
+            foreach (Form frm in pnlNoiDung.Controls.OfType<Form>().ToList())
             {
-                frmTracNghiem.Hide();
+                frm.Close();
             }
 
             splitContainer1.Visible = true;
@@ -457,16 +459,15 @@ namespace VocabMaster
             KichHoatNut(btnTracNghiem);
             splitContainer1.Visible = false;
 
+            // Tìm và đóng tất cả các Form đang nhúng trong pnlNoiDung
+            foreach (Form frm in pnlNoiDung.Controls.OfType<Form>().ToList())
+            {
+                frm.Close();
+            }
+
             // Lấy dữ liệu mới nhất từ CSDL
             List<TuVung> danhSachMoiNhat = LayDanhSachTuVungTuDB();
 
-            // Đóng form cũ nếu nó đang mở để reset lại trạng thái
-            if (frmTracNghiem != null && !frmTracNghiem.IsDisposed)
-            {
-                frmTracNghiem.Close();
-            }
-
-            // Tạo form trắc nghiệm mới và truyền dữ liệu vào
             frmTracNghiem = new FormTracNghiem(danhSachMoiNhat);
             frmTracNghiem.TopLevel = false;
             frmTracNghiem.FormBorderStyle = FormBorderStyle.None;
@@ -539,7 +540,7 @@ namespace VocabMaster
                     int soTuThemThanhCong = 0;
                     foreach (var tu in danhSachNhap)
                     {
-                        // BỘ LỌC AN TOÀN: Bỏ qua các đối tượng không có tiếng Anh hoặc tiếng Việt
+                        // BỘ LỌC bỏ qua các đối tượng không có tiếng Anh hoặc tiếng Việt
                         if (string.IsNullOrWhiteSpace(tu.TiengAnh) || string.IsNullOrWhiteSpace(tu.TiengViet))
                             continue;
 
