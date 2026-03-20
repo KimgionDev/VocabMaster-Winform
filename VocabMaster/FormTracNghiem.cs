@@ -19,6 +19,7 @@ namespace VocabMaster
         private int _soCauDung = 0;
         private List<TuVung> _danhSachTu;
 
+        #region Khởi tạo
         public FormTracNghiem(List<TuVung> danhSachTu, int soLuongCau = 4)
         {
             InitializeComponent();
@@ -36,7 +37,9 @@ namespace VocabMaster
                 this.BeginInvoke(new Action(() => this.Close()));
             }
         }
+        #endregion
 
+        #region Hiển thị & Xử lý logic câu hỏi
         private void HienThiCauHoi()
         {
             CauHoi cauHienTai = _deThi[_chiSoCauHoiHienTai];
@@ -80,9 +83,11 @@ namespace VocabMaster
                 if (KiemTraDapAn(btnB.Text)) { btnB.Text += " ✅"; btnB.ForeColor = Color.LimeGreen; }
                 if (KiemTraDapAn(btnC.Text)) { btnC.Text += " ✅"; btnC.ForeColor = Color.LimeGreen; }
                 if (KiemTraDapAn(btnD.Text)) { btnD.Text += " ✅"; btnD.ForeColor = Color.LimeGreen; }
+
+                CapNhatTuVungKho(_deThi[_chiSoCauHoiHienTai].TuChinh.IdTuVung); // Cập nhật từ vựng khó nếu trả lời sai
             }
 
-            await Task.Delay(2000); // Đợi 3 giây để người dùng nhìn thấy kết quả trước khi chuyển câu hỏi tiếp theo
+            await Task.Delay(2000); // Đợi 2 giây để người dùng nhìn thấy kết quả trước khi chuyển câu hỏi tiếp theo
             _dangXuLyDapAn = false; // Cho phép chọn đáp án cho câu hỏi tiếp theo
             btnA.ForeColor = Color.Black;       // Reset màu sắc về mặc định
             btnB.ForeColor = Color.Black;
@@ -126,6 +131,21 @@ namespace VocabMaster
             this.Close();
         }
 
+        private void CapNhatTuVungKho(int idTuVung)
+        {
+            DatabaseHelper db = new DatabaseHelper();
+            // Lệnh SQL: Nếu từ đã có trong bảng TuVungKho thì +1 SoLanSai, nếu chưa có thì INSERT mới
+            string sql = $@"
+        IF EXISTS (SELECT 1 FROM TuVungKho WHERE IdTuVung = {idTuVung})
+            UPDATE TuVungKho SET SoLanSai = SoLanSai + 1, NgaySaiCuoiCung = GETDATE() WHERE IdTuVung = {idTuVung}
+        ELSE
+            INSERT INTO TuVungKho (IdTuVung, SoLanSai, NgaySaiCuoiCung) VALUES ({idTuVung}, 1, GETDATE())";
+
+            db.ThucThiLenh(sql);
+        }
+        #endregion
+
+        #region Sự kiện Click Đáp án
         private void btnA_Click(object sender, EventArgs e)
         {
             XuLyDapAn(btnA);
@@ -145,5 +165,6 @@ namespace VocabMaster
         {
             XuLyDapAn(btnD);
         }
+        #endregion
     }
 }

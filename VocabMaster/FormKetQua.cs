@@ -8,6 +8,7 @@ namespace VocabMaster
     {
         private List<TuVung> _danhSachTu;
 
+        #region Khởi tạo
         public FormKetQua(int soCauDung, int tongSoCau, List<TuVung> danhSachTu)
         {
             InitializeComponent();
@@ -25,7 +26,9 @@ namespace VocabMaster
             nudSoCauHoi.Maximum = _danhSachTu.Count;
             nudSoCauHoi.Value = tongSoCau; // Gợi ý lại số câu vừa làm
         }
+        #endregion
 
+        #region Xử lý Kết quả
         private void HienThiNhanXet(int soCauDung, int tongSoCau)
         {
             // Tính tỷ lệ phần trăm
@@ -54,6 +57,23 @@ namespace VocabMaster
             lblDiem.Text = $"Bạn đúng {soCauDung} / {tongSoCau} câu.\n{cauNhanXet}";
         }
 
+        private void LuuKetQuaVaoLichSu(int soCauDung, int tongSoCau)
+        {
+            try
+            {
+                DatabaseHelper db = new DatabaseHelper();
+                // Chỉ cần chèn SoCauDung và TongSoCau, NgayHoc và TiLe sẽ tự sinh trong DB
+                string sql = $"INSERT INTO LichSuHocTap (SoCauDung, TongSoCau) VALUES ({soCauDung}, {tongSoCau})";
+                db.ThucThiLenh(sql);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Lỗi lưu lịch sử: " + ex.Message);
+            }
+        }
+        #endregion
+
+        #region Sự kiện
         private void btnLamLai_Click(object sender, EventArgs e)
         {
             int soCauMoi = (int)nudSoCauHoi.Value;
@@ -70,5 +90,6 @@ namespace VocabMaster
 
             this.Close();
         }
+        #endregion
     }
 }
