@@ -16,7 +16,7 @@ namespace VocabMaster
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FormDich());
+            Application.Run(new FromDashboard());
         }
     }
 }

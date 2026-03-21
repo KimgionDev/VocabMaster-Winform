@@ -16,5 +16,12 @@ namespace VocabMaster
         {
             InitializeComponent();
         }
+
+        private void FromDashboard_Load(object sender, EventArgs e)
+        {
+
+        }
+
+
     }
 }
