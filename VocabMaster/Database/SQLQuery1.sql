@@ -8,7 +8,7 @@ DELETE FROM TuVung;
 DELETE FROM ChuDe;
 DELETE FROM LichSuHocTap;
 
--- Reset bộ đếm ID về 0 (nếu bạn dùng IDENTITY)
+-- Reset bộ đếm ID về 0
 DBCC CHECKIDENT ('TuVung', RESEED, 0);
 DBCC CHECKIDENT ('ChuDe', RESEED, 0);
 DBCC CHECKIDENT ('LichSuHocTap', RESEED, 0);
@@ -17,7 +17,7 @@ GO
 -- 2. THÊM DỮ LIỆU GIẢ ĐỊNH
 -- Thêm Chủ đề
 INSERT INTO ChuDe (TenChuDe) VALUES 
-(N'Technology'), (N'Business'), (N'Food'), (N'Travel'), (N'Education'), (N'Others');
+(N'Technology'), (N'Business'), (N'Food'), (N'Travel'), (N'Education'), (N'Chưa phân loại');
 
 -- Thêm Từ vựng (DaThuoc: 1 là thuộc, 0 là chưa)
 INSERT INTO TuVung (TiengAnh, PhienAm, TiengViet, LoaiTu, DaThuoc, IdChuDe) VALUES
@@ -42,7 +42,6 @@ INSERT INTO TuVungKho (IdTuVung, SoLanSai, NgaySaiCuoiCung) VALUES
 (11, 26, GETDATE());     -- Ambiguous
 
 -- Thêm Lịch sử học tập (Lùi ngày để vẽ biểu đồ đường Line Chart)
--- Cột TiLePhanTram tự động tính dựa trên công thức bạn đã tạo lúc Create Table
 INSERT INTO LichSuHocTap (NgayHoc, SoCauDung, TongSoCau) VALUES
 (GETDATE() - 6, 4, 10),
 (GETDATE() - 5, 5, 10),

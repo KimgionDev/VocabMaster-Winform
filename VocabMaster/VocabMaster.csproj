@@ -181,6 +181,12 @@
     <Content Include="Assets\Background\btn_chuyen_doi_en_vi.png" />
     <Content Include="Assets\Background\btn_menu.png" />
     <Content Include="Assets\Background\btn_trac_nghiem.png" />
+    <None Include="Assets\Background\ic_export_json.PNG" />
+    <None Include="Assets\Background\ic_import_json.PNG" />
+    <None Include="Assets\Background\ic_btn_dashboard.png" />
+    <None Include="Assets\Background\ic_total_words.png" />
+    <None Include="Assets\Background\ic_total_words_learned.png" />
+    <None Include="Assets\Background\ic_avg_point.PNG" />
     <Content Include="Assets\Icons\ic_logo.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

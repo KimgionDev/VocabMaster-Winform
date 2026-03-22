@@ -39,7 +39,6 @@
             // 
             // lblDiem
             // 
-            this.lblDiem.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lblDiem.Font = new System.Drawing.Font("K2D", 19.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDiem.Location = new System.Drawing.Point(0, 0);
             this.lblDiem.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
@@ -71,13 +70,12 @@
             // 
             // btnLamLai
             // 
-            this.btnLamLai.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.btnLamLai.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(144)))), ((int)(((byte)(255)))));
             this.btnLamLai.Font = new System.Drawing.Font("K2D SemiBold", 28.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLamLai.Location = new System.Drawing.Point(406, 469);
+            this.btnLamLai.Location = new System.Drawing.Point(406, 454);
             this.btnLamLai.Name = "btnLamLai";
             this.btnLamLai.Radius = 8;
-            this.btnLamLai.Size = new System.Drawing.Size(300, 80);
+            this.btnLamLai.Size = new System.Drawing.Size(463, 95);
             this.btnLamLai.TabIndex = 4;
             this.btnLamLai.Text = "Làm lại";
             this.btnLamLai.Type = AntdUI.TTypeMini.Primary;

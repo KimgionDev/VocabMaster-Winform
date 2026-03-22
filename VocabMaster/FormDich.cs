@@ -411,10 +411,29 @@ namespace VocabMaster
         #endregion
 
         #region Điều hướng Menu & Trắc Nghiệm
+        private void MoFormCon(Form frmCon)
+        {
+            // Đóng các form đang hiển thị trong panel
+            foreach (Form frm in pnlNoiDung.Controls.OfType<Form>().ToList())
+            {
+                frm.Close();
+            }
+
+            // Thiết lập và nhúng Form vào Panel
+            frmCon.TopLevel = false;
+            frmCon.FormBorderStyle = FormBorderStyle.None;
+            frmCon.Dock = DockStyle.Fill;
+
+            pnlNoiDung.Controls.Add(frmCon);
+            frmCon.Show();
+            frmCon.BringToFront();
+        }
+
         private void ResetMauNut()
         {
             btnTuDien.BackColor = Color.White;
             btnTracNghiem.BackColor = Color.White;
+            btnDashboard.BackColor = Color.White;
         }
 
         private void KichHoatNut(Button nutDangChon)
@@ -442,23 +461,11 @@ namespace VocabMaster
             KichHoatNut(btnTracNghiem);
             splitContainer1.Visible = false;
 
-            // Tìm và đóng tất cả các Form đang nhúng trong pnlNoiDung
-            foreach (Form frm in pnlNoiDung.Controls.OfType<Form>().ToList())
-            {
-                frm.Close();
-            }
-
-            // Lấy dữ liệu mới nhất từ CSDL
+            // Lấy dữ liệu từ vựng
             List<TuVung> danhSachMoiNhat = LayDanhSachTuVungTuDB();
 
-            frmTracNghiem = new FormTracNghiem(danhSachMoiNhat);
-            frmTracNghiem.TopLevel = false;
-            frmTracNghiem.FormBorderStyle = FormBorderStyle.None;
-            frmTracNghiem.Dock = DockStyle.Fill;
-            pnlNoiDung.Controls.Add(frmTracNghiem);
-
-            frmTracNghiem.Show();
-            frmTracNghiem.BringToFront();
+            // Mở FormKetQua trước với tham số chuaLamBai = true và số câu mặc định là 5
+            MoFormCon(new FormKetQua(0, 5, danhSachMoiNhat, true));
         }
 
         private void btnMenu_Click(object sender, EventArgs e)
@@ -468,15 +475,21 @@ namespace VocabMaster
                 pnlMenu.Width = 50;
                 btnMenu.Text = "";
                 btnTuDien.Text = "";
+                btnXuatFile.Text = "";
+                btnNhapFile.Text = "";
                 btnTracNghiem.Text = "";
+                btnDashboard.Text = "";
                 _menuMoRong = false;
             }
             else
             {
                 pnlMenu.Width = 200;
-                btnMenu.Text = "    Mở rộng";
-                btnTuDien.Text = "  Từ vựng";
-                btnTracNghiem.Text = "  Trắc nghiệm";
+                btnMenu.Text = "Mở rộng";
+                btnTuDien.Text = "Từ vựng";
+                btnXuatFile.Text = "Xuất file";
+                btnNhapFile.Text = "Nhập file";
+                btnTracNghiem.Text = "Trắc nghiệm";
+                btnDashboard.Text = "Thống kê";
                 _menuMoRong = true;
             }
         }
@@ -642,5 +655,14 @@ namespace VocabMaster
             }
         }
         #endregion
+
+        private void btnDashboard_Click(object sender, EventArgs e)
+        {
+            KichHoatNut(btnDashboard);
+            splitContainer1.Visible = false;
+
+            // Gọi hàm nhúng FormDashboard
+            MoFormCon(new FromDashboard());
+        }
     }
 }

@@ -84,7 +84,8 @@ namespace VocabMaster
                 if (KiemTraDapAn(btnC.Text)) { btnC.Text += " ✅"; btnC.ForeColor = Color.LimeGreen; }
                 if (KiemTraDapAn(btnD.Text)) { btnD.Text += " ✅"; btnD.ForeColor = Color.LimeGreen; }
 
-                CapNhatTuVungKho(_deThi[_chiSoCauHoiHienTai].TuChinh.IdTuVung); // Cập nhật từ vựng khó nếu trả lời sai
+                // Gọi hàm lưu từ khó vào cơ sở dữ liệu
+                CapNhatTuVungKho(_deThi[_chiSoCauHoiHienTai].TuChinh.IdTuVung);
             }
 
             await Task.Delay(2000); // Đợi 2 giây để người dùng nhìn thấy kết quả trước khi chuyển câu hỏi tiếp theo
@@ -115,31 +116,31 @@ namespace VocabMaster
 
         private void ChuyenSangFormKetQua()
         {
+            // Lấy panel chứa form hiện tại
             Panel panelChua = (Panel)this.Parent;
 
+            // chuaLamBai mặc định là false nên sẽ hiện kết quả thi
             FormKetQua frmKetQua = new FormKetQua(_soCauDung, _deThi.Count, _danhSachTu);
             frmKetQua.TopLevel = false;
             frmKetQua.FormBorderStyle = FormBorderStyle.None;
             frmKetQua.Dock = DockStyle.Fill;
 
-            // Thêm vào panel và đưa lên trên cùng
             panelChua.Controls.Add(frmKetQua);
             frmKetQua.Show();
             frmKetQua.BringToFront();
 
-            // Đóng form trắc nghiệm này lại để giải phóng RAM
             this.Close();
         }
 
         private void CapNhatTuVungKho(int idTuVung)
         {
+            // Cập nhật số lần sai nếu từ đã có trong bảng, ngược lại thì chèn mới
             DatabaseHelper db = new DatabaseHelper();
-            // Lệnh SQL: Nếu từ đã có trong bảng TuVungKho thì +1 SoLanSai, nếu chưa có thì INSERT mới
             string sql = $@"
-        IF EXISTS (SELECT 1 FROM TuVungKho WHERE IdTuVung = {idTuVung})
-            UPDATE TuVungKho SET SoLanSai = SoLanSai + 1, NgaySaiCuoiCung = GETDATE() WHERE IdTuVung = {idTuVung}
-        ELSE
-            INSERT INTO TuVungKho (IdTuVung, SoLanSai, NgaySaiCuoiCung) VALUES ({idTuVung}, 1, GETDATE())";
+            IF EXISTS (SELECT 1 FROM TuVungKho WHERE IdTuVung = {idTuVung})
+                UPDATE TuVungKho SET SoLanSai = SoLanSai + 1, NgaySaiCuoiCung = GETDATE() WHERE IdTuVung = {idTuVung}
+            ELSE
+                INSERT INTO TuVungKho (IdTuVung, SoLanSai, NgaySaiCuoiCung) VALUES ({idTuVung}, 1, GETDATE())";
 
             db.ThucThiLenh(sql);
         }
@@ -165,6 +166,8 @@ namespace VocabMaster
         {
             XuLyDapAn(btnD);
         }
+
+
         #endregion
     }
 }

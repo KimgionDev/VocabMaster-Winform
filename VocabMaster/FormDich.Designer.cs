@@ -51,12 +51,13 @@
             this.lblTiengViet = new System.Windows.Forms.Label();
             this.lblChuDe = new System.Windows.Forms.Label();
             this.pnlMenu = new System.Windows.Forms.Panel();
+            this.pnlNoiDung = new System.Windows.Forms.Panel();
+            this.btnTracNghiem = new System.Windows.Forms.Button();
             this.btnNhapFile = new System.Windows.Forms.Button();
             this.btnXuatFile = new System.Windows.Forms.Button();
-            this.btnTracNghiem = new System.Windows.Forms.Button();
+            this.btnDashboard = new System.Windows.Forms.Button();
             this.btnTuDien = new System.Windows.Forms.Button();
             this.btnMenu = new System.Windows.Forms.Button();
-            this.pnlNoiDung = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDanhSach)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -398,6 +399,7 @@
             this.pnlMenu.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.pnlMenu.Controls.Add(this.btnNhapFile);
             this.pnlMenu.Controls.Add(this.btnXuatFile);
+            this.pnlMenu.Controls.Add(this.btnDashboard);
             this.pnlMenu.Controls.Add(this.btnTracNghiem);
             this.pnlMenu.Controls.Add(this.btnTuDien);
             this.pnlMenu.Controls.Add(this.btnMenu);
@@ -410,6 +412,34 @@
             this.pnlMenu.TabIndex = 22;
             this.pnlMenu.TabStop = true;
             // 
+            // pnlNoiDung
+            // 
+            this.pnlNoiDung.Controls.Add(this.splitContainer1);
+            this.pnlNoiDung.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlNoiDung.Location = new System.Drawing.Point(50, 0);
+            this.pnlNoiDung.Name = "pnlNoiDung";
+            this.pnlNoiDung.Size = new System.Drawing.Size(1052, 583);
+            this.pnlNoiDung.TabIndex = 23;
+            // 
+            // btnTracNghiem
+            // 
+            this.btnTracNghiem.BackColor = System.Drawing.Color.White;
+            this.btnTracNghiem.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnTracNghiem.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnTracNghiem.FlatAppearance.BorderSize = 0;
+            this.btnTracNghiem.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnTracNghiem.ForeColor = System.Drawing.Color.Black;
+            this.btnTracNghiem.Image = global::VocabMaster.Properties.Resources.btn_trac_nghiem;
+            this.btnTracNghiem.Location = new System.Drawing.Point(5, 95);
+            this.btnTracNghiem.Margin = new System.Windows.Forms.Padding(0);
+            this.btnTracNghiem.Name = "btnTracNghiem";
+            this.btnTracNghiem.Size = new System.Drawing.Size(40, 40);
+            this.btnTracNghiem.TabIndex = 28;
+            this.btnTracNghiem.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnTracNghiem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnTracNghiem.UseVisualStyleBackColor = false;
+            this.btnTracNghiem.Click += new System.EventHandler(this.btnTracNghiem_Click);
+            // 
             // btnNhapFile
             // 
             this.btnNhapFile.BackColor = System.Drawing.Color.White;
@@ -418,9 +448,8 @@
             this.btnNhapFile.FlatAppearance.BorderSize = 0;
             this.btnNhapFile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnNhapFile.ForeColor = System.Drawing.Color.Black;
-            this.btnNhapFile.Image = global::VocabMaster.Properties.Resources.btn_trac_nghiem;
-            this.btnNhapFile.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnNhapFile.Location = new System.Drawing.Point(5, 175);
+            this.btnNhapFile.Image = global::VocabMaster.Properties.Resources.ic_import_json;
+            this.btnNhapFile.Location = new System.Drawing.Point(5, 215);
             this.btnNhapFile.Margin = new System.Windows.Forms.Padding(0);
             this.btnNhapFile.Name = "btnNhapFile";
             this.btnNhapFile.Size = new System.Drawing.Size(40, 40);
@@ -438,9 +467,8 @@
             this.btnXuatFile.FlatAppearance.BorderSize = 0;
             this.btnXuatFile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnXuatFile.ForeColor = System.Drawing.Color.Black;
-            this.btnXuatFile.Image = global::VocabMaster.Properties.Resources.btn_trac_nghiem;
-            this.btnXuatFile.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnXuatFile.Location = new System.Drawing.Point(5, 135);
+            this.btnXuatFile.Image = global::VocabMaster.Properties.Resources.ic_export_json;
+            this.btnXuatFile.Location = new System.Drawing.Point(5, 175);
             this.btnXuatFile.Margin = new System.Windows.Forms.Padding(0);
             this.btnXuatFile.Name = "btnXuatFile";
             this.btnXuatFile.Size = new System.Drawing.Size(40, 40);
@@ -450,25 +478,24 @@
             this.btnXuatFile.UseVisualStyleBackColor = false;
             this.btnXuatFile.Click += new System.EventHandler(this.btnXuatFile_Click);
             // 
-            // btnTracNghiem
+            // btnDashboard
             // 
-            this.btnTracNghiem.BackColor = System.Drawing.Color.White;
-            this.btnTracNghiem.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnTracNghiem.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnTracNghiem.FlatAppearance.BorderSize = 0;
-            this.btnTracNghiem.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnTracNghiem.ForeColor = System.Drawing.Color.Black;
-            this.btnTracNghiem.Image = global::VocabMaster.Properties.Resources.btn_trac_nghiem;
-            this.btnTracNghiem.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnTracNghiem.Location = new System.Drawing.Point(5, 95);
-            this.btnTracNghiem.Margin = new System.Windows.Forms.Padding(0);
-            this.btnTracNghiem.Name = "btnTracNghiem";
-            this.btnTracNghiem.Size = new System.Drawing.Size(40, 40);
-            this.btnTracNghiem.TabIndex = 23;
-            this.btnTracNghiem.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnTracNghiem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnTracNghiem.UseVisualStyleBackColor = false;
-            this.btnTracNghiem.Click += new System.EventHandler(this.btnTracNghiem_Click);
+            this.btnDashboard.BackColor = System.Drawing.Color.White;
+            this.btnDashboard.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnDashboard.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnDashboard.FlatAppearance.BorderSize = 0;
+            this.btnDashboard.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDashboard.ForeColor = System.Drawing.Color.Black;
+            this.btnDashboard.Image = global::VocabMaster.Properties.Resources.ic_btn_dashboard;
+            this.btnDashboard.Location = new System.Drawing.Point(5, 135);
+            this.btnDashboard.Margin = new System.Windows.Forms.Padding(0);
+            this.btnDashboard.Name = "btnDashboard";
+            this.btnDashboard.Size = new System.Drawing.Size(40, 40);
+            this.btnDashboard.TabIndex = 27;
+            this.btnDashboard.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnDashboard.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnDashboard.UseVisualStyleBackColor = false;
+            this.btnDashboard.Click += new System.EventHandler(this.btnDashboard_Click);
             // 
             // btnTuDien
             // 
@@ -479,7 +506,6 @@
             this.btnTuDien.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnTuDien.ForeColor = System.Drawing.Color.Black;
             this.btnTuDien.Image = global::VocabMaster.Properties.Resources.btn_chuyen_doi_en_vi;
-            this.btnTuDien.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnTuDien.Location = new System.Drawing.Point(5, 55);
             this.btnTuDien.Margin = new System.Windows.Forms.Padding(0);
             this.btnTuDien.Name = "btnTuDien";
@@ -499,7 +525,6 @@
             this.btnMenu.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnMenu.ForeColor = System.Drawing.Color.Black;
             this.btnMenu.Image = global::VocabMaster.Properties.Resources.btn_menu;
-            this.btnMenu.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnMenu.Location = new System.Drawing.Point(5, 15);
             this.btnMenu.Margin = new System.Windows.Forms.Padding(0);
             this.btnMenu.Name = "btnMenu";
@@ -509,15 +534,6 @@
             this.btnMenu.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnMenu.UseVisualStyleBackColor = false;
             this.btnMenu.Click += new System.EventHandler(this.btnMenu_Click);
-            // 
-            // pnlNoiDung
-            // 
-            this.pnlNoiDung.Controls.Add(this.splitContainer1);
-            this.pnlNoiDung.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlNoiDung.Location = new System.Drawing.Point(50, 0);
-            this.pnlNoiDung.Name = "pnlNoiDung";
-            this.pnlNoiDung.Size = new System.Drawing.Size(1052, 583);
-            this.pnlNoiDung.TabIndex = 23;
             // 
             // FormDich
             // 
@@ -568,10 +584,11 @@
         private System.Windows.Forms.Panel pnlNoiDung;
         private System.Windows.Forms.Panel pnlMenu;
         private System.Windows.Forms.Button btnTuDien;
-        private System.Windows.Forms.Button btnTracNghiem;
         private System.Windows.Forms.Button btnMenu;
         private System.Windows.Forms.Button btnNhapFile;
         private System.Windows.Forms.Button btnXuatFile;
+        private System.Windows.Forms.Button btnDashboard;
+        private System.Windows.Forms.Button btnTracNghiem;
     }
 }
 

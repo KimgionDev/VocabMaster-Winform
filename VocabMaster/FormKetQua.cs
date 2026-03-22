@@ -9,7 +9,7 @@ namespace VocabMaster
         private List<TuVung> _danhSachTu;
 
         #region Khởi tạo
-        public FormKetQua(int soCauDung, int tongSoCau, List<TuVung> danhSachTu)
+        public FormKetQua(int soCauDung, int tongSoCau, List<TuVung> danhSachTu, bool chuaLamBai = false)
         {
             InitializeComponent();
             lblDiem.Left = (this.ClientSize.Width - lblDiem.Width) / 2;
@@ -18,13 +18,23 @@ namespace VocabMaster
 
             _danhSachTu = danhSachTu;
 
-            // Hiển thị kết quả
-            HienThiNhanXet(soCauDung, tongSoCau);
+            if (chuaLamBai)
+            {
+                // Chế độ chờ làm bài lần đầu
+                lblDiem.Text = "Sẵn sàng ôn tập từ vựng chưa?";
+                btnLamLai.Text = "Bắt đầu làm bài";
+            }
+            else
+            {
+                // Chế độ hiển thị kết quả
+                LuuKetQuaVaoLichSu(soCauDung, tongSoCau);
+                HienThiNhanXet(soCauDung, tongSoCau);
+                btnLamLai.Text = "Làm lại";
+            }
 
-            // Cài đặt thông số mặc định cho ô nhập số lượng câu
-            nudSoCauHoi.Minimum = 4; // LuyenTapService yêu cầu ít nhất 4 từ
+            nudSoCauHoi.Minimum = 4;
             nudSoCauHoi.Maximum = _danhSachTu.Count;
-            nudSoCauHoi.Value = tongSoCau; // Gợi ý lại số câu vừa làm
+            nudSoCauHoi.Value = Math.Min(tongSoCau, _danhSachTu.Count);
         }
         #endregion
 
