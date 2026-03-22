@@ -131,10 +131,12 @@
     <Compile Include="FromDashboard.Designer.cs">
       <DependentUpon>FromDashboard.cs</DependentUpon>
     </Compile>
+    <Compile Include="LichSuHocTap.cs" />
     <Compile Include="LuyenTapService.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TuVung.cs" />
+    <Compile Include="TuVungKho.cs" />
     <EmbeddedResource Include="FormDich.resx">
       <DependentUpon>FormDich.cs</DependentUpon>
     </EmbeddedResource>
