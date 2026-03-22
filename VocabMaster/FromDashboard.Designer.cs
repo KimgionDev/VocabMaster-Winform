@@ -50,12 +50,12 @@
             this.progress1 = new AntdUI.Progress();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.panel6 = new AntdUI.Panel();
+            this.chartLine = new AntdUI.Chart();
             this.label8 = new AntdUI.Label();
             this.panel5 = new AntdUI.Panel();
+            this.chartPie = new AntdUI.Chart();
             this.label7 = new AntdUI.Label();
             this.label6 = new AntdUI.Label();
-            this.chart1 = new AntdUI.Chart();
-            this.chart2 = new AntdUI.Chart();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -319,7 +319,7 @@
             // 
             // panel6
             // 
-            this.panel6.Controls.Add(this.chart2);
+            this.panel6.Controls.Add(this.chartLine);
             this.panel6.Controls.Add(this.label8);
             this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel6.Location = new System.Drawing.Point(562, 42);
@@ -330,6 +330,29 @@
             this.panel6.Size = new System.Drawing.Size(533, 164);
             this.panel6.TabIndex = 6;
             this.panel6.Text = "panel6";
+            // 
+            // chartLine
+            // 
+            this.chartLine.AxisColor = null;
+            this.chartLine.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.chartLine.GridColor = null;
+            this.chartLine.LegendBackColor = null;
+            this.chartLine.LegendBorderColor = null;
+            this.chartLine.Location = new System.Drawing.Point(5, 28);
+            this.chartLine.Name = "chartLine";
+            this.chartLine.PieColors = null;
+            this.chartLine.Size = new System.Drawing.Size(523, 131);
+            this.chartLine.TabIndex = 0;
+            this.chartLine.Text = "chart2";
+            this.chartLine.Title = null;
+            this.chartLine.TitleColor = null;
+            this.chartLine.TitleFont = null;
+            this.chartLine.XAxisLabelFormat = null;
+            this.chartLine.XMax = null;
+            this.chartLine.XMin = null;
+            this.chartLine.YAxisLabelFormat = null;
+            this.chartLine.YMax = null;
+            this.chartLine.YMin = null;
             // 
             // label8
             // 
@@ -344,7 +367,7 @@
             // 
             // panel5
             // 
-            this.panel5.Controls.Add(this.chart1);
+            this.panel5.Controls.Add(this.chartPie);
             this.panel5.Controls.Add(this.label7);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel5.Location = new System.Drawing.Point(10, 42);
@@ -355,6 +378,37 @@
             this.panel5.Size = new System.Drawing.Size(532, 164);
             this.panel5.TabIndex = 5;
             this.panel5.Text = "panel5";
+            // 
+            // chartPie
+            // 
+            this.chartPie.AxisColor = null;
+            this.chartPie.ChartType = AntdUI.TChartType.Pie;
+            this.chartPie.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.chartPie.GridColor = null;
+            this.chartPie.LegendBackColor = null;
+            this.chartPie.LegendBorderColor = null;
+            this.chartPie.LegendPosition = System.Drawing.ContentAlignment.MiddleRight;
+            this.chartPie.Location = new System.Drawing.Point(5, 28);
+            this.chartPie.Name = "chartPie";
+            this.chartPie.Padding = 0;
+            this.chartPie.PieColors = null;
+            this.chartPie.ShowAxes = false;
+            this.chartPie.ShowGrid = false;
+            this.chartPie.ShowLegend = false;
+            this.chartPie.ShowXAxisLabels = false;
+            this.chartPie.ShowYAxisLabels = false;
+            this.chartPie.Size = new System.Drawing.Size(522, 131);
+            this.chartPie.TabIndex = 0;
+            this.chartPie.Text = "chart1";
+            this.chartPie.Title = null;
+            this.chartPie.TitleColor = null;
+            this.chartPie.TitleFont = null;
+            this.chartPie.XAxisLabelFormat = null;
+            this.chartPie.XMax = null;
+            this.chartPie.XMin = null;
+            this.chartPie.YAxisLabelFormat = "";
+            this.chartPie.YMax = null;
+            this.chartPie.YMin = null;
             // 
             // label7
             // 
@@ -376,53 +430,6 @@
             this.label6.Size = new System.Drawing.Size(1099, 26);
             this.label6.TabIndex = 1;
             this.label6.Text = "Đồ thị";
-            // 
-            // chart1
-            // 
-            this.chart1.AxisColor = null;
-            this.chart1.ChartType = AntdUI.TChartType.Pie;
-            this.chart1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.chart1.GridColor = null;
-            this.chart1.LegendBackColor = null;
-            this.chart1.LegendBorderColor = null;
-            this.chart1.Location = new System.Drawing.Point(5, 28);
-            this.chart1.Name = "chart1";
-            this.chart1.PieColors = null;
-            this.chart1.Size = new System.Drawing.Size(522, 131);
-            this.chart1.TabIndex = 0;
-            this.chart1.Text = "chart1";
-            this.chart1.Title = null;
-            this.chart1.TitleColor = null;
-            this.chart1.TitleFont = null;
-            this.chart1.XAxisLabelFormat = null;
-            this.chart1.XMax = null;
-            this.chart1.XMin = null;
-            this.chart1.YAxisLabelFormat = null;
-            this.chart1.YMax = null;
-            this.chart1.YMin = null;
-            // 
-            // chart2
-            // 
-            this.chart2.AxisColor = null;
-            this.chart2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.chart2.GridColor = null;
-            this.chart2.LegendBackColor = null;
-            this.chart2.LegendBorderColor = null;
-            this.chart2.Location = new System.Drawing.Point(5, 28);
-            this.chart2.Name = "chart2";
-            this.chart2.PieColors = null;
-            this.chart2.Size = new System.Drawing.Size(523, 131);
-            this.chart2.TabIndex = 0;
-            this.chart2.Text = "chart2";
-            this.chart2.Title = null;
-            this.chart2.TitleColor = null;
-            this.chart2.TitleFont = null;
-            this.chart2.XAxisLabelFormat = null;
-            this.chart2.XMax = null;
-            this.chart2.XMin = null;
-            this.chart2.YAxisLabelFormat = null;
-            this.chart2.YMax = null;
-            this.chart2.YMin = null;
             // 
             // FromDashboard
             // 
@@ -476,7 +483,7 @@
         private AntdUI.Label label6;
         private AntdUI.Label label8;
         private AntdUI.Label label7;
-        private AntdUI.Chart chart2;
-        private AntdUI.Chart chart1;
+        private AntdUI.Chart chartLine;
+        private AntdUI.Chart chartPie;
     }
 }
