@@ -478,6 +478,7 @@ namespace VocabMaster
                 btnXuatFile.Text = "";
                 btnNhapFile.Text = "";
                 btnTracNghiem.Text = "";
+                btnFlashCard.Text = "";
                 btnDashboard.Text = "";
                 _menuMoRong = false;
             }
@@ -488,6 +489,7 @@ namespace VocabMaster
                 btnTuDien.Text = "Từ vựng";
                 btnXuatFile.Text = "Xuất file";
                 btnNhapFile.Text = "Nhập file";
+                btnFlashCard.Text = "Flashcard";
                 btnTracNghiem.Text = "Trắc nghiệm";
                 btnDashboard.Text = "Thống kê";
                 _menuMoRong = true;
@@ -663,6 +665,15 @@ namespace VocabMaster
 
             // Gọi hàm nhúng FormDashboard
             MoFormCon(new FromDashboard());
+        }
+
+        private void btnFlashCard_Click(object sender, EventArgs e)
+        {
+            KichHoatNut(btnDashboard);
+            splitContainer1.Visible = false;
+
+            // Gọi hàm nhúng FormDashboard
+            MoFormCon(new FormFlashCard());
         }
     }
 }

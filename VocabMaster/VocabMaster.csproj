@@ -113,6 +113,12 @@
     <Compile Include="FormDich.Designer.cs">
       <DependentUpon>FormDich.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormFlashCard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormFlashCard.Designer.cs">
+      <DependentUpon>FormFlashCard.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormKetQua.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -139,6 +145,9 @@
     <Compile Include="TuVungKho.cs" />
     <EmbeddedResource Include="FormDich.resx">
       <DependentUpon>FormDich.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormFlashCard.resx">
+      <DependentUpon>FormFlashCard.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormKetQua.resx">
       <DependentUpon>FormKetQua.cs</DependentUpon>
@@ -187,6 +196,7 @@
     <None Include="Assets\Background\ic_total_words.png" />
     <None Include="Assets\Background\ic_total_words_learned.png" />
     <None Include="Assets\Background\ic_avg_point.PNG" />
+    <None Include="Assets\Background\ic_btn_flashcard.png" />
     <Content Include="Assets\Icons\ic_logo.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -130,11 +130,14 @@
   <data name="btn_menu" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Assets\Background\btn_menu.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ic_import_json" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Assets\Background\ic_import_json.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="ic_avg_point" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\Background\ic_avg_point.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ic_total_words" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Assets\Background\ic_total_words.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ic_export_json" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\Background\ic_export_json.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="btn_trac_nghiem1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Assets\Background\btn_trac_nghiem.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -142,10 +145,10 @@
   <data name="btn_chuyen_doi_en_vi" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Assets\Background\btn_chuyen_doi_en_vi.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ic_export_json" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Assets\Background\ic_export_json.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="ic_import_json" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\Background\ic_import_json.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ic_avg_point" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Assets\Background\ic_avg_point.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="ic_btn_flashcard" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\Background\ic_btn_flashcard.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

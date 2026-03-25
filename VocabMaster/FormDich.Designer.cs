@@ -51,13 +51,14 @@
             this.lblTiengViet = new System.Windows.Forms.Label();
             this.lblChuDe = new System.Windows.Forms.Label();
             this.pnlMenu = new System.Windows.Forms.Panel();
-            this.pnlNoiDung = new System.Windows.Forms.Panel();
-            this.btnTracNghiem = new System.Windows.Forms.Button();
             this.btnNhapFile = new System.Windows.Forms.Button();
             this.btnXuatFile = new System.Windows.Forms.Button();
             this.btnDashboard = new System.Windows.Forms.Button();
+            this.btnTracNghiem = new System.Windows.Forms.Button();
             this.btnTuDien = new System.Windows.Forms.Button();
             this.btnMenu = new System.Windows.Forms.Button();
+            this.pnlNoiDung = new System.Windows.Forms.Panel();
+            this.btnFlashCard = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDanhSach)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -400,6 +401,7 @@
             this.pnlMenu.Controls.Add(this.btnNhapFile);
             this.pnlMenu.Controls.Add(this.btnXuatFile);
             this.pnlMenu.Controls.Add(this.btnDashboard);
+            this.pnlMenu.Controls.Add(this.btnFlashCard);
             this.pnlMenu.Controls.Add(this.btnTracNghiem);
             this.pnlMenu.Controls.Add(this.btnTuDien);
             this.pnlMenu.Controls.Add(this.btnMenu);
@@ -412,14 +414,62 @@
             this.pnlMenu.TabIndex = 22;
             this.pnlMenu.TabStop = true;
             // 
-            // pnlNoiDung
+            // btnNhapFile
             // 
-            this.pnlNoiDung.Controls.Add(this.splitContainer1);
-            this.pnlNoiDung.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlNoiDung.Location = new System.Drawing.Point(50, 0);
-            this.pnlNoiDung.Name = "pnlNoiDung";
-            this.pnlNoiDung.Size = new System.Drawing.Size(1052, 583);
-            this.pnlNoiDung.TabIndex = 23;
+            this.btnNhapFile.BackColor = System.Drawing.Color.White;
+            this.btnNhapFile.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnNhapFile.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnNhapFile.FlatAppearance.BorderSize = 0;
+            this.btnNhapFile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnNhapFile.ForeColor = System.Drawing.Color.Black;
+            this.btnNhapFile.Image = global::VocabMaster.Properties.Resources.ic_import_json;
+            this.btnNhapFile.Location = new System.Drawing.Point(5, 255);
+            this.btnNhapFile.Margin = new System.Windows.Forms.Padding(0);
+            this.btnNhapFile.Name = "btnNhapFile";
+            this.btnNhapFile.Size = new System.Drawing.Size(40, 40);
+            this.btnNhapFile.TabIndex = 26;
+            this.btnNhapFile.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnNhapFile.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnNhapFile.UseVisualStyleBackColor = false;
+            this.btnNhapFile.Click += new System.EventHandler(this.btnNhapFile_Click);
+            // 
+            // btnXuatFile
+            // 
+            this.btnXuatFile.BackColor = System.Drawing.Color.White;
+            this.btnXuatFile.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnXuatFile.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnXuatFile.FlatAppearance.BorderSize = 0;
+            this.btnXuatFile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnXuatFile.ForeColor = System.Drawing.Color.Black;
+            this.btnXuatFile.Image = global::VocabMaster.Properties.Resources.ic_export_json;
+            this.btnXuatFile.Location = new System.Drawing.Point(5, 215);
+            this.btnXuatFile.Margin = new System.Windows.Forms.Padding(0);
+            this.btnXuatFile.Name = "btnXuatFile";
+            this.btnXuatFile.Size = new System.Drawing.Size(40, 40);
+            this.btnXuatFile.TabIndex = 25;
+            this.btnXuatFile.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnXuatFile.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnXuatFile.UseVisualStyleBackColor = false;
+            this.btnXuatFile.Click += new System.EventHandler(this.btnXuatFile_Click);
+            // 
+            // btnDashboard
+            // 
+            this.btnDashboard.BackColor = System.Drawing.Color.White;
+            this.btnDashboard.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnDashboard.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnDashboard.FlatAppearance.BorderSize = 0;
+            this.btnDashboard.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDashboard.ForeColor = System.Drawing.Color.Black;
+            this.btnDashboard.Image = global::VocabMaster.Properties.Resources.ic_btn_dashboard;
+            this.btnDashboard.Location = new System.Drawing.Point(5, 175);
+            this.btnDashboard.Margin = new System.Windows.Forms.Padding(0);
+            this.btnDashboard.Name = "btnDashboard";
+            this.btnDashboard.Size = new System.Drawing.Size(40, 40);
+            this.btnDashboard.TabIndex = 27;
+            this.btnDashboard.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnDashboard.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnDashboard.UseVisualStyleBackColor = false;
+            this.btnDashboard.Click += new System.EventHandler(this.btnDashboard_Click);
             // 
             // btnTracNghiem
             // 
@@ -439,63 +489,6 @@
             this.btnTracNghiem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnTracNghiem.UseVisualStyleBackColor = false;
             this.btnTracNghiem.Click += new System.EventHandler(this.btnTracNghiem_Click);
-            // 
-            // btnNhapFile
-            // 
-            this.btnNhapFile.BackColor = System.Drawing.Color.White;
-            this.btnNhapFile.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnNhapFile.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnNhapFile.FlatAppearance.BorderSize = 0;
-            this.btnNhapFile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnNhapFile.ForeColor = System.Drawing.Color.Black;
-            this.btnNhapFile.Image = global::VocabMaster.Properties.Resources.ic_import_json;
-            this.btnNhapFile.Location = new System.Drawing.Point(5, 215);
-            this.btnNhapFile.Margin = new System.Windows.Forms.Padding(0);
-            this.btnNhapFile.Name = "btnNhapFile";
-            this.btnNhapFile.Size = new System.Drawing.Size(40, 40);
-            this.btnNhapFile.TabIndex = 26;
-            this.btnNhapFile.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnNhapFile.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnNhapFile.UseVisualStyleBackColor = false;
-            this.btnNhapFile.Click += new System.EventHandler(this.btnNhapFile_Click);
-            // 
-            // btnXuatFile
-            // 
-            this.btnXuatFile.BackColor = System.Drawing.Color.White;
-            this.btnXuatFile.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnXuatFile.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnXuatFile.FlatAppearance.BorderSize = 0;
-            this.btnXuatFile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnXuatFile.ForeColor = System.Drawing.Color.Black;
-            this.btnXuatFile.Image = global::VocabMaster.Properties.Resources.ic_export_json;
-            this.btnXuatFile.Location = new System.Drawing.Point(5, 175);
-            this.btnXuatFile.Margin = new System.Windows.Forms.Padding(0);
-            this.btnXuatFile.Name = "btnXuatFile";
-            this.btnXuatFile.Size = new System.Drawing.Size(40, 40);
-            this.btnXuatFile.TabIndex = 25;
-            this.btnXuatFile.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnXuatFile.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnXuatFile.UseVisualStyleBackColor = false;
-            this.btnXuatFile.Click += new System.EventHandler(this.btnXuatFile_Click);
-            // 
-            // btnDashboard
-            // 
-            this.btnDashboard.BackColor = System.Drawing.Color.White;
-            this.btnDashboard.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnDashboard.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnDashboard.FlatAppearance.BorderSize = 0;
-            this.btnDashboard.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnDashboard.ForeColor = System.Drawing.Color.Black;
-            this.btnDashboard.Image = global::VocabMaster.Properties.Resources.ic_btn_dashboard;
-            this.btnDashboard.Location = new System.Drawing.Point(5, 135);
-            this.btnDashboard.Margin = new System.Windows.Forms.Padding(0);
-            this.btnDashboard.Name = "btnDashboard";
-            this.btnDashboard.Size = new System.Drawing.Size(40, 40);
-            this.btnDashboard.TabIndex = 27;
-            this.btnDashboard.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnDashboard.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnDashboard.UseVisualStyleBackColor = false;
-            this.btnDashboard.Click += new System.EventHandler(this.btnDashboard_Click);
             // 
             // btnTuDien
             // 
@@ -534,6 +527,34 @@
             this.btnMenu.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnMenu.UseVisualStyleBackColor = false;
             this.btnMenu.Click += new System.EventHandler(this.btnMenu_Click);
+            // 
+            // pnlNoiDung
+            // 
+            this.pnlNoiDung.Controls.Add(this.splitContainer1);
+            this.pnlNoiDung.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlNoiDung.Location = new System.Drawing.Point(50, 0);
+            this.pnlNoiDung.Name = "pnlNoiDung";
+            this.pnlNoiDung.Size = new System.Drawing.Size(1052, 583);
+            this.pnlNoiDung.TabIndex = 23;
+            // 
+            // btnFlashCard
+            // 
+            this.btnFlashCard.BackColor = System.Drawing.Color.White;
+            this.btnFlashCard.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnFlashCard.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnFlashCard.FlatAppearance.BorderSize = 0;
+            this.btnFlashCard.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFlashCard.ForeColor = System.Drawing.Color.Black;
+            this.btnFlashCard.Image = global::VocabMaster.Properties.Resources.ic_btn_flashcard;
+            this.btnFlashCard.Location = new System.Drawing.Point(5, 135);
+            this.btnFlashCard.Margin = new System.Windows.Forms.Padding(0);
+            this.btnFlashCard.Name = "btnFlashCard";
+            this.btnFlashCard.Size = new System.Drawing.Size(40, 40);
+            this.btnFlashCard.TabIndex = 29;
+            this.btnFlashCard.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnFlashCard.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnFlashCard.UseVisualStyleBackColor = false;
+            this.btnFlashCard.Click += new System.EventHandler(this.btnFlashCard_Click);
             // 
             // FormDich
             // 
@@ -589,6 +610,7 @@
         private System.Windows.Forms.Button btnXuatFile;
         private System.Windows.Forms.Button btnDashboard;
         private System.Windows.Forms.Button btnTracNghiem;
+        private System.Windows.Forms.Button btnFlashCard;
     }
 }
 
