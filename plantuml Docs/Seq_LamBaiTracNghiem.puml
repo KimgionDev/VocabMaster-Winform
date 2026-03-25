@@ -1,0 +1,70 @@
+@startuml Seq_LamBaiTracNghiem
+title Luồng làm bài trắc nghiệm và lưu kết quả trong VocabMaster
+
+actor NguoiDung as User
+
+participant FormDich
+participant DatabaseHelper
+participant FormKetQua
+participant FormTracNghiem
+participant LuyenTapService
+participant FromDashboard
+
+== Bắt đầu từ FormDich (màn hình chính) ==
+
+User -> FormDich : Click "Trắc nghiệm" (btnTracNghiem_Click)
+FormDich -> DatabaseHelper : LayDuLieu(sql)\n(LayDanhSachTuVungTuDB)
+DatabaseHelper --> FormDich : DataTable\n(danh sách từ vựng)
+FormDich -> FormDich : Chuyển DataTable -> List<TuVung>
+FormDich -> FormKetQua : new FormKetQua(0, 5,\n danhSachTu, chuaLamBai=true)
+FormDich -> FormKetQua : MoFormCon(FormKetQua)\n(TopLevel=false, Dock=Fill)
+
+== FormKetQua chờ bắt đầu làm bài ==
+
+User -> FormKetQua : Nhấn "Bắt đầu làm bài"\n(btnLamLai_Click khi chuaLamBai=true)
+FormKetQua -> FormTracNghiem : new FormTracNghiem(_danhSachTu, soCauMoi)
+FormTracNghiem -> LuyenTapService : new LuyenTapService(danhSachTu)
+FormTracNghiem -> LuyenTapService : TaoDeThi(soLuongCau)
+LuyenTapService --> FormTracNghiem : List<CauHoi> _deThi
+FormKetQua -> FormTracNghiem : nhúng FormTracNghiem vào Panel
+FormKetQua -> FormKetQua : this.Close()
+
+== Vòng lặp làm từng câu hỏi ==
+
+loop Mỗi câu hỏi trong _deThi
+    FormTracNghiem -> FormTracNghiem : HienThiCauHoi()\n(Hiển thị TiengAnh và 4 đáp án)
+    User -> FormTracNghiem : Chọn đáp án (btnA/B/C/D_Click)
+    FormTracNghiem -> FormTracNghiem : XuLyDapAn(dapAnDaChon)\n(KiemTraDapAn, cập nhật _soCauDung)
+
+    alt Đáp án sai
+        FormTracNghiem -> DatabaseHelper : ThucThiLenh(sql)\n(CapNhatTuVungKho)\n- IF EXISTS TuVungKho\n- UPDATE SoLanSai, NgaySaiCuoiCung\n- ELSE INSERT mới
+        DatabaseHelper --> FormTracNghiem : OK
+    end
+
+    FormTracNghiem -> FormTracNghiem : Chờ 2s (Task.Delay)\nSau đó chuyển câu tiếp theo\nhoặc kết thúc đề thi
+end
+
+== Kết thúc đề thi, hiển thị kết quả ==
+
+FormTracNghiem -> FormKetQua : new FormKetQua(_soCauDung,\n _deThi.Count, _danhSachTu)
+FormTracNghiem -> FormKetQua : nhúng FormKetQua vào Panel
+FormTracNghiem -> FormTracNghiem : this.Close()
+
+== FormKetQua lưu lịch sử và hiển thị nhận xét ==
+
+FormKetQua -> FormKetQua : LuuKetQuaVaoLichSu()\n+ HienThiNhanXet()
+FormKetQua -> DatabaseHelper : ThucThiLenh(sql)\nINSERT INTO LichSuHocTap\n(SoCauDung, TongSoCau)
+DatabaseHelper --> FormKetQua : OK
+User -> FormKetQua : Xem điểm, nhận xét,\nchọn "Làm lại" nếu muốn
+
+== Mở màn hình Dashboard xem thống kê ==
+
+User -> FormDich : Click "Thống kê" (btnDashboard_Click)
+FormDich -> FromDashboard : new FromDashboard()
+FormDich -> FromDashboard : MoFormCon(FromDashboard)
+
+FromDashboard -> DatabaseHelper : LayDuLieu(...) nhiều lần\n- Tổng số từ, số từ đã thuộc\n- Lịch sử LichSuHocTap\n- Top từ khó (TuVungKho JOIN TuVung)\n- Phân bố từ theo chủ đề (ChuDe)
+DatabaseHelper --> FromDashboard : DataTable các loại
+FromDashboard -> FromDashboard : Vẽ biểu đồ Pie, Line\nvà bảng Top 5 từ khó
+
+@enduml

@@ -1,0 +1,153 @@
+﻿@startuml ClassDiagram_VocabMaster
+title Sơ đồ Class chính của hệ thống VocabMaster
+
+skinparam classAttributeIconSize 0
+skinparam packageStyle rectangle
+
+package "VocabMaster" {
+
+    ' ==== Models (Thực thể) ====
+    class ChuDe {
+        + IdChuDe : int
+        + TenChuDe : string
+        + ChuDe()
+        + ToString() : string
+    }
+
+    class TuVung {
+        + IdTuVung : int
+        + TiengAnh : string
+        + PhienAm : string
+        + TiengViet : string
+        + LoaiTu : string
+        + ChuDe : ChuDe
+        + DaThuoc : bool
+        + TuVung()
+    }
+
+    class TuVungKho {
+        + IdTuVung : int
+        + SoLanSai : int
+        + NgaySaiCuoiCung : DateTime
+        + ThongTinTuVung : TuVung
+        + TuVungKho()
+    }
+
+    class LichSuHocTap {
+        + IdLichSu : int
+        + NgayHoc : DateTime
+        + SoCauDung : int
+        + TongSoCau : int
+        + TiLePhanTram : double
+        + LichSuHocTap()
+    }
+
+    class CauHoi {
+        + TuChinh : TuVung
+        + CacTuVungSai : List<TuVung>
+        + CacDapAnTuVung : List<TuVung>
+        + CauHoi()
+    }
+
+    ' Quan hệ giữa các entity
+    TuVung "1" o-- "0..1" ChuDe : thuộc
+    TuVungKho "1" --> "1" TuVung : IdTuVung
+    CauHoi "1" --> "1" TuVung : TuChinh
+    CauHoi "1" --> "3" TuVung : CacTuVungSai
+    CauHoi "1" --> "4" TuVung : CacDapAnTuVung
+
+    ' ==== Helpers & Services ====
+    class DatabaseHelper {
+        - _chuoiKetNoi : string
+        + LayDuLieu(cauLenhSql : string) : DataTable
+        + ThucThiLenh(cauLenhSql : string) : int
+    }
+
+    class DichThuatService {
+        - _boDich : AggregateTranslator
+        - _httpClient : HttpClient
+        + TraCuuTuDayDu(tuTiengAnh : string) : Task<KetQuaTraCuu>
+    }
+
+    class KetQuaTraCuu {
+        + NghiaTiengViet : string
+        + PhienAm : string
+        + CacLoaiTu : string
+    }
+
+    DichThuatService o-- KetQuaTraCuu
+
+    class LuyenTapService {
+        - _danhSachTuVung : List<TuVung>
+        - _random : Random
+        + LuyenTapService(danhSachTu : List<TuVung>)
+        + TaoDeThi(soLuongCauHoi : int) : List<CauHoi>
+    }
+
+    LuyenTapService --> TuVung
+    LuyenTapService --> CauHoi
+
+    ' ==== Forms (UI + xử lý) ====
+    class FormDich <<Form>> {
+        - _db : DatabaseHelper
+        - _danhSachTuVung : List<TuVung>
+        - _timerTuDongDich : Timer
+        - _menuMoRong : bool
+        - _idTuDangChon : int
+        + TaiDuLieuLenBang()
+        + LocDuLieu()
+        + XuLyChuDe() : int
+        + LayDanhSachTuVungTuDB() : List<TuVung>
+        - Dich()
+    }
+
+    class FormTracNghiem <<Form>> {
+        - _luyenTapService : LuyenTapService
+        - _deThi : List<CauHoi>
+        - _chiSoCauHoiHienTai : int
+        - _soCauDung : int
+        - _danhSachTu : List<TuVung>
+        + KiemTraDapAn(dapAn : string) : bool
+        + XuLyDapAn(dapAnDaChon)
+        - ChuyenSangFormKetQua()
+    }
+
+    class FormKetQua <<Form>> {
+        - _danhSachTu : List<TuVung>
+        - HienThiNhanXet(soCauDung : int, tongSoCau : int)
+        - LuuKetQuaVaoLichSu(soCauDung : int, tongSoCau : int)
+    }
+
+    class FromDashboard <<Form>> {
+        - _db : DatabaseHelper
+        - LoadOverview()
+        - LoadPieChart()
+        - LoadLineChart()
+        - LoadTopTuKho()
+    }
+
+    ' Quan hệ giữa Forms và Services/Models
+    FormDich --> DatabaseHelper : dùng
+    FormDich --> DichThuatService : dùng
+    FormDich --> TuVung : quản lý
+    FormDich --> ChuDe : quản lý
+    FormDich --> FormTracNghiem : mở
+    FormDich --> FormKetQua : mở
+    FormDich --> FromDashboard : mở
+
+    FormTracNghiem --> LuyenTapService : dùng
+    FormTracNghiem --> TuVung : dùng
+    FormTracNghiem --> CauHoi : dùng
+    FormTracNghiem --> TuVungKho : cập nhật (qua SQL)
+
+    FormKetQua --> DatabaseHelper : INSERT LichSuHocTap
+    FormKetQua --> LichSuHocTap
+
+    FromDashboard --> DatabaseHelper : SELECT nhiều bảng
+    FromDashboard ..> TuVung
+    FromDashboard ..> ChuDe
+    FromDashboard ..> TuVungKho
+    FromDashboard ..> LichSuHocTap
+}
+
+@enduml

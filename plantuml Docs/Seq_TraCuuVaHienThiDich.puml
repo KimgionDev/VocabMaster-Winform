@@ -1,0 +1,62 @@
+@startuml Seq_TraCuuVaHienThi
+title Luồng tra cứu, dịch và hiển thị kết quả trong VocabMaster
+
+actor NguoiDung as User
+
+participant FormDich
+participant Timer as TuDongDichTimer
+participant DichThuatService
+participant AggregateTranslator
+participant HttpClient
+database DictionaryAPI
+
+== Nhập từ và kích hoạt Timer ==
+
+User -> FormDich : Gõ tiếng Anh\n(txtTiengAnh_TextChanged)
+FormDich -> TuDongDichTimer : Stop()\nStart(Interval = 500ms)
+
+== Hết thời gian chờ, bắt đầu dịch ==
+
+TuDongDichTimer -> FormDich : TimerTuDongDich_Tick
+FormDich -> TuDongDichTimer : Stop()
+FormDich -> FormDich : Dich()\n(lấy txtTiengAnh.Text)
+
+alt Ô nhập rỗng
+    FormDich -> FormDich : Không gọi dịch\n(return)
+else Có nội dung cần dịch
+    FormDich -> DichThuatService : TraCuuTuDayDu(tuTiengAnh)\n(async)
+    
+    == Phần 1: Dịch nghĩa (Google/AggregateTranslator) ==
+    DichThuatService -> AggregateTranslator : TranslateAsync(tuTiengAnh,\n source: "en", target: "vi")
+    AggregateTranslator --> DichThuatService : Translation (NghiaTiengViet)
+    DichThuatService -> DichThuatService : Gán ketQua.NghiaTiengViet\nhoặc "Lỗi mạng..." nếu exception
+
+    == Phần 2: Gọi API từ điển lấy phiên âm & loại từ ==
+    alt Chuỗi nhập là câu/cụm từ\n(có dấu cách)
+        DichThuatService -> DichThuatService : Bỏ qua API từ điển\n(trả về chỉ có NghĩaTiengViet)
+    else Từ đơn (không có dấu cách)
+        DichThuatService -> HttpClient : GetStringAsync(\n"https://api.dictionaryapi.dev/...\n/en/{tuTiengAnh}")
+        HttpClient -> DictionaryAPI : HTTP GET /entries/en/{word}
+        DictionaryAPI --> HttpClient : JSON response
+        HttpClient --> DichThuatService : jsonResponse (string)
+
+        DichThuatService -> DichThuatService : Parse JSON bằng JArray\n- Lấy phonetic / phonetics[].text\n- Lấy meanings[].partOfSpeech\n- Gán PhienAm, CacLoaiTu\n(nếu lỗi: bỏ qua, để trống)
+    end
+
+    DichThuatService --> FormDich : KetQuaTraCuu\n(NghiaTiengViet, PhienAm, CacLoaiTu)
+    
+    == Cập nhật giao diện ==
+    FormDich -> FormDich : Điền vào ô:\n- txtTiengViet.Text = NghiaTiengViet\n- txtPhienAm.Text = PhienAm\n- txtLoaiTu.Text = CacLoaiTu
+
+    alt Không tìm được loại từ\nvà chuỗi là cụm từ/câu
+        FormDich -> FormDich : txtLoaiTu.Text = ""
+    end
+end
+
+== Phát âm (tùy chọn) ==
+
+User -> FormDich : Click nút Loa\n(btnDoc_Click)
+FormDich -> FormDich : Tạo SpeechSynthesizer\nVolume=100, Rate=0,\nGiọng en-US
+FormDich -> FormDich : mayDoc.SpeakAsync(txtTiengAnh.Text)
+
+@enduml
