@@ -46,7 +46,7 @@ namespace VocabMaster
             _mayDoc.SelectVoiceByHints(VoiceGender.Female, VoiceAge.Adult, 0, new System.Globalization.CultureInfo("en-US"));
         }
 
-        // Dọn dẹp bộ nhớ máy đọc khi đóng Form (Khắc phục lỗi Copilot báo)
+        // Dọn dẹp bộ nhớ máy đọc khi đóng Form
         protected override void OnFormClosed(FormClosedEventArgs e)
         {
             _mayDoc?.Dispose();
@@ -131,7 +131,7 @@ namespace VocabMaster
 
         private void ChuyenSangFormKetQua()
         {
-            // Ép kiểu an toàn (Khắc phục lỗi Copilot báo)
+            // Ép kiểu an toàn
             Panel panelChua = this.Parent as Panel;
             if (panelChua == null)
             {
@@ -158,10 +158,10 @@ namespace VocabMaster
             // Cập nhật số lần sai nếu từ đã có trong bảng, ngược lại thì chèn mới
             DatabaseHelper db = new DatabaseHelper();
             string sql = $@"
-            IF EXISTS (SELECT 1 FROM TuVungKho WHERE IdTuVung = {idTuVung})
-                UPDATE TuVungKho SET SoLanSai = SoLanSai + 1, NgaySaiCuoiCung = GETDATE() WHERE IdTuVung = {idTuVung}
-            ELSE
-                INSERT INTO TuVungKho (IdTuVung, SoLanSai, NgaySaiCuoiCung) VALUES ({idTuVung}, 1, GETDATE())";
+                IF EXISTS (SELECT 1 FROM TuVungKho WHERE IdTuVung = {idTuVung})
+                    UPDATE TuVungKho SET SoLanSai = SoLanSai + 1, NgaySaiCuoiCung = GETDATE() WHERE IdTuVung = {idTuVung}
+                ELSE
+                    INSERT INTO TuVungKho (IdTuVung, SoLanSai, NgaySaiCuoiCung) VALUES ({idTuVung}, 1, GETDATE())";
 
             db.ThucThiLenh(sql);
         }

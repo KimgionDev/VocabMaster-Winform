@@ -24,7 +24,6 @@ namespace VocabMaster
         {
             KetQuaTraCuu ketQua = new KetQuaTraCuu();
 
-            // --- PHẦN 1: DỊCH NGHĨA (Quan trọng nhất - Chạy riêng) ---
             try
             {
                 var googleResult = await _boDich.TranslateAsync(tuTiengAnh, "vi", "en");
@@ -35,15 +34,13 @@ namespace VocabMaster
                 ketQua.NghiaTiengViet = "Lỗi mạng hoặc không dịch được";
             }
 
-            // --- PHẦN 2: TRA TỪ ĐIỂN (Phụ - Chạy riêng) ---
-            // Nếu nhập cả câu, phần này sẽ lỗi -> Kệ nó, không làm ảnh hưởng phần 1
             try
             {
-                // Nếu thấy có dấu cách (tức là cụm từ hoặc câu), 
+                // Nếu thấy có dấu cách (tức là cụm từ hoặc câu)
                 // thì khỏi gọi API từ điển
                 if (tuTiengAnh.Trim().Contains(" "))
                 {
-                    return ketQua; // Trả về luôn kết quả dịch, bỏ qua đoạn dưới
+                    return ketQua;
                 }
                 // Gọi API từ điển
                 string url = $"https://api.dictionaryapi.dev/api/v2/entries/en/{Uri.EscapeDataString(tuTiengAnh)}";
@@ -75,8 +72,7 @@ namespace VocabMaster
             }
             catch
             {
-                // Nếu phần này lỗi (do không tìm thấy từ), cứ lờ đi
-                // Để nguyên các ô Phiên âm/Loại từ là rỗng
+                // Nếu lỗi (ví dụ: không tìm thấy từ), thì để trống phần phiên âm và loại từ
             }
 
             return ketQua;

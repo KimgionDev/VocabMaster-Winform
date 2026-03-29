@@ -39,8 +39,8 @@ namespace VocabMaster
                                     .Take(3)
                                     .ToList();
                 var tatCaTuVung = new List<TuVung>();
-                tatCaTuVung.AddRange(cauHoi.CacTuVungSai);  // AddRange là thêm tất cả phần tử của danh sách vào danh sách hiện tại 
-                tatCaTuVung.Add(cauHoi.TuChinh);            // trong khi Add chỉ thêm một phần tử duy nhất.
+                tatCaTuVung.AddRange(cauHoi.CacTuVungSai);  // thêm tất cả phần tử của danh sách vào danh sách hiện tại 
+                tatCaTuVung.Add(cauHoi.TuChinh);
                 tatCaTuVung= tatCaTuVung.OrderBy(t => _random.Next()).ToList(); // Trộn lại tất cả các từ (bao gồm cả từ chính) để tạo thành 4 lựa chọn cho câu hỏi.
                 cauHoi.CacDapAnTuVung = tatCaTuVung;
                 deThi.Add(cauHoi);
