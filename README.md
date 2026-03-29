@@ -53,25 +53,20 @@ Dự án áp dụng mô hình phân lớp kết hợp (Forms - Services/Helpers 
 1. **Clone repository này về máy:**
    ```bash
    git clone [https://github.com/TenCuaBan/VocabMaster.git](https://github.com/TenCuaBan/VocabMaster.git)
-2. **Thiết lập Cơ sở dữ liệu:
+2. **Thiết lập Cơ sở dữ liệu:**
+   * Mở SQL Server Management Studio.
+   * Tạo một Database mới (ví dụ: `VocabMasterDB`).
+   * Chạy các lệnh SQL (hoặc file `.sql` đính kèm nếu có) để tạo 4 bảng: `ChuDe`, `TuVung`, `TuVungKho`, `LichSuHocTap`.
+   * Cập nhật chuỗi kết nối (`ConnectionString`) trong lớp `DatabaseHelper.cs` trỏ về máy chủ SQL của bạn.
 
-Mở SQL Server Management Studio.
+3. **Chạy dự án:**
+   * Mở tệp `VocabMaster.sln` bằng Visual Studio 2022.
+   * Chờ Visual Studio tự động khôi phục các gói NuGet (hoặc nhấp chuột phải vào Solution -> Restore NuGet Packages).
+   * Nhấn `F5` hoặc nút **Start** để chạy ứng dụng.
 
-Tạo một Database mới (ví dụ: VocabMasterDB).
+---
 
-Chạy các lệnh SQL (hoặc file .sql đính kèm nếu có) để tạo 4 bảng: ChuDe, TuVung, TuVungKho, LichSuHocTap.
+## Tác giả
 
-Cập nhật chuỗi kết nối (ConnectionString) trong lớp DatabaseHelper.cs trỏ về máy chủ SQL của bạn.
-
-Chạy dự án:
-
-Mở tệp VocabMaster.sln bằng Visual Studio 2022.
-
-Chờ Visual Studio tự động khôi phục các gói NuGet (hoặc nhấp chuột phải vào Solution -> Restore NuGet Packages).
-
-Nhấn F5 hoặc nút Start để chạy ứng dụng.
-
-Tác giả
-Nguyễn Ngọc Đức Phát (MSSV: B2303840)
-
-Đồ án học phần Lập trình .NET (CT246) - Đại học Cần Thơ (CTU).
+* **Nguyễn Ngọc Đức Phát** (MSSV: B2303840)
+* Đồ án học phần Lập trình .NET (CT246) - Đại học Cần Thơ (CTU).
