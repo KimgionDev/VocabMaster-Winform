@@ -22,16 +22,16 @@
 ## Ảnh chụp màn hình
 
 ### Màn hình Tra cứu và Quản lý
-![Màn hình chính](đường_dẫn_ảnh_man_hinh_chinh.png)
+![Màn hình chính](docs/images/main.png)
 
 ### Thống kê Dashboard
-![Dashboard](đường_dẫn_ảnh_dashboard.png)
+![Dashboard](docs/images/dashboard.png)
 
 ### Học qua Flashcard
-![Flashcard](đường_dẫn_ảnh_flashcard.png)
+![Flashcard](docs/images/flashcard.png)
 
 ### Trắc nghiệm Ôn tập
-![Trắc nghiệm](đường_dẫn_ảnh_trac_nghiem.png)
+![Trắc nghiệm](docs/images/quiz.png)
 
 ---
 
