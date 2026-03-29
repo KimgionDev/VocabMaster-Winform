@@ -398,7 +398,7 @@ namespace VocabMaster
             _mayDoc.SpeakAsyncCancelAll();
             _mayDoc.SpeakAsync(cauCanDoc);
 
-            btnLoa.Text = "Loa";
+            btnLoa.Text = "🔊";
             btnLoa.Enabled = true;
         }
         #endregion
