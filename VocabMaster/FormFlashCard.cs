@@ -14,6 +14,7 @@ namespace VocabMaster
         private bool _daLatThe;
         private readonly SpeechSynthesizer _mayDoc;
 
+        #region Khởi tạo & Dọn dẹp
         public FormFlashCard()
         {
             InitializeComponent();
@@ -43,6 +44,15 @@ namespace VocabMaster
             HienThiThe();
         }
 
+        // Dọn dẹp bộ nhớ máy đọc khi đóng Form
+        protected override void OnFormClosed(FormClosedEventArgs e)
+        {
+            _mayDoc?.Dispose();
+            base.OnFormClosed(e);
+        }
+        #endregion
+
+        #region Xử lý dữ liệu
         private void LoadDuLieuTuDatabase()
         {
             _danhSachTuVung.Clear();
@@ -71,7 +81,9 @@ namespace VocabMaster
                 (_danhSachTuVung[i], _danhSachTuVung[j]) = (_danhSachTuVung[j], _danhSachTuVung[i]);
             }
         }
+        #endregion
 
+        #region Xử lý giao diện thẻ
         private void HienThiThe()
         {
             if (_danhSachTuVung.Count == 0)
@@ -112,7 +124,9 @@ namespace VocabMaster
                 lblNoiDungPhu.Text = string.Empty;
             }
         }
+        #endregion
 
+        #region Các sự kiện Click
         private void pnlFlashcard_Click(object sender, EventArgs e) => ThucHienLatThe();
 
         private void lblNoiDungChinh_Click(object sender, EventArgs e) => ThucHienLatThe();
@@ -151,5 +165,6 @@ namespace VocabMaster
             _viTriHienTai++;
             HienThiThe();
         }
+        #endregion
     }
 }

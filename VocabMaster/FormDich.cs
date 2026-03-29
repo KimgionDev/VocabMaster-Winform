@@ -496,6 +496,24 @@ namespace VocabMaster
                 _menuMoRong = true;
             }
         }
+
+        private void btnDashboard_Click(object sender, EventArgs e)
+        {
+            KichHoatNut(btnDashboard);
+            splitContainer1.Visible = false;
+
+            // Gọi hàm nhúng FormDashboard
+            MoFormCon(new FromDashboard());
+        }
+
+        private void btnFlashCard_Click(object sender, EventArgs e)
+        {
+            KichHoatNut(btnFlashCard);
+            splitContainer1.Visible = false;
+
+            // Gọi hàm nhúng FormFlashCard
+            MoFormCon(new FormFlashCard());
+        }
         #endregion
 
         #region Tiện ích & Nhập Xuất File
@@ -574,7 +592,6 @@ namespace VocabMaster
 
             if (hopThoaiLuu.ShowDialog() == DialogResult.OK)
             {
-                // Tái sử dụng hàm lấy dữ liệu bạn vừa tạo lúc nãy
                 List<TuVung> danhSachXuat = LayDanhSachTuVungTuDB();
 
                 // Chuyển thành chữ JSON và lưu
@@ -658,23 +675,5 @@ namespace VocabMaster
             }
         }
         #endregion
-
-        private void btnDashboard_Click(object sender, EventArgs e)
-        {
-            KichHoatNut(btnDashboard);
-            splitContainer1.Visible = false;
-
-            // Gọi hàm nhúng FormDashboard
-            MoFormCon(new FromDashboard());
-        }
-
-        private void btnFlashCard_Click(object sender, EventArgs e)
-        {
-            KichHoatNut(btnFlashCard);
-            splitContainer1.Visible = false;
-
-            // Gọi hàm nhúng FormDashboard
-            MoFormCon(new FormFlashCard());
-        }
     }
 }

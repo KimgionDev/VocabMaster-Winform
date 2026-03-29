@@ -35,7 +35,7 @@ namespace VocabMaster
         }
         #endregion
 
-        #region Xử lý Kết quả
+        #region Xử lý Kết quả & Lịch sử
         private void HienThiNhanXet(int soCauDung, int tongSoCau)
         {
             // Tính tỷ lệ phần trăm
@@ -80,11 +80,19 @@ namespace VocabMaster
         }
         #endregion
 
-        #region Sự kiện
+        #region Các sự kiện Click
         private void btnLamLai_Click(object sender, EventArgs e)
         {
             int soCauMoi = (int)nudSoCauHoi.Value;
-            Panel panelChua = (Panel)this.Parent;
+
+            // Ép kiểu an toàn giống FormTracNghiem để tránh lỗi văng app
+            Panel panelChua = this.Parent as Panel;
+            if (panelChua == null)
+            {
+                MessageBox.Show("Lỗi: Không tìm thấy Panel chứa giao diện.");
+                this.Close();
+                return;
+            }
 
             FormTracNghiem frmTracNghiem = new FormTracNghiem(_danhSachTu, soCauMoi);
             frmTracNghiem.TopLevel = false;

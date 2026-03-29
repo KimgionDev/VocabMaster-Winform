@@ -21,8 +21,7 @@ namespace VocabMaster
         private List<TuVung> _danhSachTu;
         private readonly SpeechSynthesizer _mayDoc;
 
-
-        #region Khởi tạo
+        #region Khởi tạo & Dọn dẹp
         public FormTracNghiem(List<TuVung> danhSachTu, int soLuongCau = 4)
         {
             InitializeComponent();
@@ -45,6 +44,13 @@ namespace VocabMaster
                 Rate = 0
             };
             _mayDoc.SelectVoiceByHints(VoiceGender.Female, VoiceAge.Adult, 0, new System.Globalization.CultureInfo("en-US"));
+        }
+
+        // Dọn dẹp bộ nhớ máy đọc khi đóng Form (Khắc phục lỗi Copilot báo)
+        protected override void OnFormClosed(FormClosedEventArgs e)
+        {
+            _mayDoc?.Dispose();
+            base.OnFormClosed(e);
         }
         #endregion
 
@@ -125,8 +131,14 @@ namespace VocabMaster
 
         private void ChuyenSangFormKetQua()
         {
-            // Lấy panel chứa form hiện tại
-            Panel panelChua = (Panel)this.Parent;
+            // Ép kiểu an toàn (Khắc phục lỗi Copilot báo)
+            Panel panelChua = this.Parent as Panel;
+            if (panelChua == null)
+            {
+                MessageBox.Show("Lỗi: Không tìm thấy Panel chứa giao diện.");
+                this.Close();
+                return;
+            }
 
             // chuaLamBai mặc định là false nên sẽ hiện kết quả thi
             FormKetQua frmKetQua = new FormKetQua(_soCauDung, _deThi.Count, _danhSachTu);
@@ -155,7 +167,7 @@ namespace VocabMaster
         }
         #endregion
 
-        #region Sự kiện Click Đáp án
+        #region Các sự kiện Click (Đáp án & Phát âm)
         private void btnA_Click(object sender, EventArgs e)
         {
             XuLyDapAn(btnA);
@@ -176,14 +188,12 @@ namespace VocabMaster
             XuLyDapAn(btnD);
         }
 
-
-        #endregion
-
         private void btnPhatAm_Click(object sender, EventArgs e)
         {
             if (_deThi == null || _deThi.Count == 0) return; // Kiểm tra nếu không có câu hỏi nào
             _mayDoc.SpeakAsyncCancelAll();
             _mayDoc.SpeakAsync(_deThi[_chiSoCauHoiHienTai].TuChinh.TiengAnh);
         }
+        #endregion
     }
 }
