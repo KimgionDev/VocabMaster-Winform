@@ -12,9 +12,6 @@ namespace VocabMaster
         public FormKetQua(int soCauDung, int tongSoCau, List<TuVung> danhSachTu, bool chuaLamBai = false)
         {
             InitializeComponent();
-            lblDiem.Left = (this.ClientSize.Width - lblDiem.Width) / 2;
-            btnLamLai.Left = (this.ClientSize.Width - btnLamLai.Width) / 2;
-            flpChonSoCau.Left = (this.ClientSize.Width - flpChonSoCau.Width) / 2;
 
             _danhSachTu = danhSachTu;
 

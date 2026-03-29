@@ -434,6 +434,7 @@ namespace VocabMaster
             btnTuDien.BackColor = Color.White;
             btnTracNghiem.BackColor = Color.White;
             btnDashboard.BackColor = Color.White;
+            btnFlashCard.BackColor = Color.White;
         }
 
         private void KichHoatNut(Button nutDangChon)
@@ -669,7 +670,7 @@ namespace VocabMaster
 
         private void btnFlashCard_Click(object sender, EventArgs e)
         {
-            KichHoatNut(btnDashboard);
+            KichHoatNut(btnFlashCard);
             splitContainer1.Visible = false;
 
             // Gọi hàm nhúng FormDashboard

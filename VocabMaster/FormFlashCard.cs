@@ -121,7 +121,7 @@ namespace VocabMaster
 
         private void btnPhatAm_Click(object sender, EventArgs e)
         {
-            if (_danhSachTuVung.Count == 0)
+            if (_danhSachTuVung.Count == 0) // Kiểm tra nếu không có từ vựng nào
             {
                 return;
             }

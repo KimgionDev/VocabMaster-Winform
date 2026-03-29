@@ -54,11 +54,11 @@
             this.btnNhapFile = new System.Windows.Forms.Button();
             this.btnXuatFile = new System.Windows.Forms.Button();
             this.btnDashboard = new System.Windows.Forms.Button();
+            this.btnFlashCard = new System.Windows.Forms.Button();
             this.btnTracNghiem = new System.Windows.Forms.Button();
             this.btnTuDien = new System.Windows.Forms.Button();
             this.btnMenu = new System.Windows.Forms.Button();
             this.pnlNoiDung = new System.Windows.Forms.Panel();
-            this.btnFlashCard = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDanhSach)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -94,7 +94,7 @@
             this.btnLoa.Name = "btnLoa";
             this.btnLoa.Size = new System.Drawing.Size(70, 40);
             this.btnLoa.TabIndex = 14;
-            this.btnLoa.Text = "Loa";
+            this.btnLoa.Text = "🔊";
             this.btnLoa.UseVisualStyleBackColor = false;
             this.btnLoa.Click += new System.EventHandler(this.btnDoc_Click);
             // 
@@ -471,6 +471,25 @@
             this.btnDashboard.UseVisualStyleBackColor = false;
             this.btnDashboard.Click += new System.EventHandler(this.btnDashboard_Click);
             // 
+            // btnFlashCard
+            // 
+            this.btnFlashCard.BackColor = System.Drawing.Color.White;
+            this.btnFlashCard.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnFlashCard.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnFlashCard.FlatAppearance.BorderSize = 0;
+            this.btnFlashCard.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFlashCard.ForeColor = System.Drawing.Color.Black;
+            this.btnFlashCard.Image = global::VocabMaster.Properties.Resources.ic_btn_flashcard;
+            this.btnFlashCard.Location = new System.Drawing.Point(5, 135);
+            this.btnFlashCard.Margin = new System.Windows.Forms.Padding(0);
+            this.btnFlashCard.Name = "btnFlashCard";
+            this.btnFlashCard.Size = new System.Drawing.Size(40, 40);
+            this.btnFlashCard.TabIndex = 29;
+            this.btnFlashCard.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnFlashCard.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnFlashCard.UseVisualStyleBackColor = false;
+            this.btnFlashCard.Click += new System.EventHandler(this.btnFlashCard_Click);
+            // 
             // btnTracNghiem
             // 
             this.btnTracNghiem.BackColor = System.Drawing.Color.White;
@@ -536,25 +555,6 @@
             this.pnlNoiDung.Name = "pnlNoiDung";
             this.pnlNoiDung.Size = new System.Drawing.Size(1052, 583);
             this.pnlNoiDung.TabIndex = 23;
-            // 
-            // btnFlashCard
-            // 
-            this.btnFlashCard.BackColor = System.Drawing.Color.White;
-            this.btnFlashCard.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnFlashCard.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnFlashCard.FlatAppearance.BorderSize = 0;
-            this.btnFlashCard.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnFlashCard.ForeColor = System.Drawing.Color.Black;
-            this.btnFlashCard.Image = global::VocabMaster.Properties.Resources.ic_btn_flashcard;
-            this.btnFlashCard.Location = new System.Drawing.Point(5, 135);
-            this.btnFlashCard.Margin = new System.Windows.Forms.Padding(0);
-            this.btnFlashCard.Name = "btnFlashCard";
-            this.btnFlashCard.Size = new System.Drawing.Size(40, 40);
-            this.btnFlashCard.TabIndex = 29;
-            this.btnFlashCard.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnFlashCard.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnFlashCard.UseVisualStyleBackColor = false;
-            this.btnFlashCard.Click += new System.EventHandler(this.btnFlashCard_Click);
             // 
             // FormDich
             // 

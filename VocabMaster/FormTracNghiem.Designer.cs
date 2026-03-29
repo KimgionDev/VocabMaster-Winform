@@ -34,6 +34,7 @@
             this.btnC = new AntdUI.ButtonShadow();
             this.btnB = new AntdUI.ButtonShadow();
             this.panelTop = new AntdUI.Panel();
+            this.btnPhatAm = new AntdUI.ButtonShadow();
             this.lblSoThuTu = new System.Windows.Forms.Label();
             this.lblCauHoi = new AntdUI.Label();
             this.tableLayoutPanelBot.SuspendLayout();
@@ -142,6 +143,7 @@
             // panelTop
             // 
             this.panelTop.Back = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.panelTop.Controls.Add(this.btnPhatAm);
             this.panelTop.Controls.Add(this.lblSoThuTu);
             this.panelTop.Controls.Add(this.lblCauHoi);
             this.panelTop.Dock = System.Windows.Forms.DockStyle.Top;
@@ -155,6 +157,27 @@
             this.panelTop.Size = new System.Drawing.Size(1022, 192);
             this.panelTop.TabIndex = 1;
             this.panelTop.Text = "panelCauHoi";
+            // 
+            // btnPhatAm
+            // 
+            this.btnPhatAm.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.btnPhatAm.AutoSizeMode = AntdUI.TAutoSize.Auto;
+            this.btnPhatAm.BackActive = System.Drawing.Color.Transparent;
+            this.btnPhatAm.BackColor = System.Drawing.Color.Transparent;
+            this.btnPhatAm.BackHover = System.Drawing.Color.Transparent;
+            this.btnPhatAm.Font = new System.Drawing.Font("K2D", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnPhatAm.ForeActive = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(239)))));
+            this.btnPhatAm.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(92)))), ((int)(((byte)(169)))));
+            this.btnPhatAm.ForeHover = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(239)))));
+            this.btnPhatAm.Location = new System.Drawing.Point(485, 122);
+            this.btnPhatAm.Name = "btnPhatAm";
+            this.btnPhatAm.Shadow = 0;
+            this.btnPhatAm.Size = new System.Drawing.Size(52, 52);
+            this.btnPhatAm.TabIndex = 3;
+            this.btnPhatAm.Text = "🔊";
+            this.btnPhatAm.Type = AntdUI.TTypeMini.Primary;
+            this.btnPhatAm.WaveSize = 0;
+            this.btnPhatAm.Click += new System.EventHandler(this.btnPhatAm_Click);
             // 
             // lblSoThuTu
             // 
@@ -195,6 +218,7 @@
             this.Text = "FormTracNghiem";
             this.tableLayoutPanelBot.ResumeLayout(false);
             this.panelTop.ResumeLayout(false);
+            this.panelTop.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -209,5 +233,6 @@
         private AntdUI.Panel panelTop;
         private AntdUI.Label lblCauHoi;
         private System.Windows.Forms.Label lblSoThuTu;
+        private AntdUI.ButtonShadow btnPhatAm;
     }
 }

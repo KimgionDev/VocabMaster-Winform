@@ -148,11 +148,11 @@ namespace VocabMaster
             int xIndex = 1;
             foreach (DataRow row in dt.Rows)
             {
-                DateTime ngay = Convert.ToDateTime(row["NgayHoc"]);
+                DateTime ngay = Convert.ToDateTime(row["NgayHoc"]); 
                 // Quy đổi tỷ lệ phần trăm (0-100) sang thang điểm 10
                 double diem = Convert.ToDouble(row["TiLePhanTram"]) / 10.0;
 
-                dataset.AddPoint(ngay.ToString("dd/MM"), xIndex, diem);
+                dataset.AddPoint(ngay.ToString("dd/MM"), xIndex, diem); //
                 xIndex++;
             }
 

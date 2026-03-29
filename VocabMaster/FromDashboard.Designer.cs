@@ -38,6 +38,7 @@
             this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
             this.lblPhanTramThuoc = new AntdUI.Label();
             this.lblSoTuDaThuoc = new AntdUI.Label();
+            this.avtSoTuDaThuoc = new AntdUI.Avatar();
             this.label4 = new AntdUI.Label();
             this.panel4 = new AntdUI.Panel();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
@@ -47,11 +48,13 @@
             this.panel3 = new AntdUI.Panel();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.lblDiemTrungBinh = new AntdUI.Label();
+            this.picAVGPoint = new AntdUI.Avatar();
             this.label9 = new AntdUI.Label();
             this.lblTongQuan = new AntdUI.Label();
             this.panel1 = new AntdUI.Panel();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.lblTongSoTu = new AntdUI.Label();
+            this.avtTongSoTu = new AntdUI.Avatar();
             this.lblTotalTitle = new AntdUI.Label();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.panel6 = new AntdUI.Panel();
@@ -61,9 +64,6 @@
             this.chartPie = new AntdUI.Chart();
             this.label7 = new AntdUI.Label();
             this.label6 = new AntdUI.Label();
-            this.avtSoTuDaThuoc = new AntdUI.Avatar();
-            this.picAVGPoint = new AntdUI.Avatar();
-            this.avtTongSoTu = new AntdUI.Avatar();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel8.SuspendLayout();
             this.panel7.SuspendLayout();
@@ -230,6 +230,19 @@
             this.lblSoTuDaThuoc.TabIndex = 2;
             this.lblSoTuDaThuoc.Text = "1200";
             // 
+            // avtSoTuDaThuoc
+            // 
+            this.avtSoTuDaThuoc.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.avtSoTuDaThuoc.Font = new System.Drawing.Font("K2D", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.avtSoTuDaThuoc.Image = global::VocabMaster.Properties.Resources.ic_total_words_learned;
+            this.avtSoTuDaThuoc.Location = new System.Drawing.Point(3, 3);
+            this.avtSoTuDaThuoc.Name = "avtSoTuDaThuoc";
+            this.avtSoTuDaThuoc.Padding = new System.Windows.Forms.Padding(5);
+            this.tableLayoutPanel7.SetRowSpan(this.avtSoTuDaThuoc, 3);
+            this.avtSoTuDaThuoc.Size = new System.Drawing.Size(71, 72);
+            this.avtSoTuDaThuoc.TabIndex = 0;
+            this.avtSoTuDaThuoc.Text = "A";
+            // 
             // label4
             // 
             this.label4.BackColor = System.Drawing.Color.Transparent;
@@ -353,6 +366,19 @@
             this.lblDiemTrungBinh.TabIndex = 2;
             this.lblDiemTrungBinh.Text = "8.5/10";
             // 
+            // picAVGPoint
+            // 
+            this.picAVGPoint.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.picAVGPoint.Font = new System.Drawing.Font("K2D", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.picAVGPoint.Image = global::VocabMaster.Properties.Resources.ic_avg_point;
+            this.picAVGPoint.Location = new System.Drawing.Point(3, 3);
+            this.picAVGPoint.Name = "picAVGPoint";
+            this.picAVGPoint.Padding = new System.Windows.Forms.Padding(5);
+            this.tableLayoutPanel5.SetRowSpan(this.picAVGPoint, 2);
+            this.picAVGPoint.Size = new System.Drawing.Size(71, 74);
+            this.picAVGPoint.TabIndex = 0;
+            this.picAVGPoint.Text = "A";
+            // 
             // label9
             // 
             this.label9.BackColor = System.Drawing.Color.Transparent;
@@ -420,6 +446,19 @@
             this.lblTongSoTu.TabIndex = 2;
             this.lblTongSoTu.Text = "3500";
             // 
+            // avtTongSoTu
+            // 
+            this.avtTongSoTu.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.avtTongSoTu.Font = new System.Drawing.Font("K2D", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.avtTongSoTu.Image = global::VocabMaster.Properties.Resources.ic_total_words;
+            this.avtTongSoTu.Location = new System.Drawing.Point(3, 3);
+            this.avtTongSoTu.Name = "avtTongSoTu";
+            this.avtTongSoTu.Padding = new System.Windows.Forms.Padding(5);
+            this.tableLayoutPanel4.SetRowSpan(this.avtTongSoTu, 2);
+            this.avtTongSoTu.Size = new System.Drawing.Size(71, 74);
+            this.avtTongSoTu.TabIndex = 0;
+            this.avtTongSoTu.Text = "A";
+            // 
             // lblTotalTitle
             // 
             this.lblTotalTitle.BackColor = System.Drawing.Color.Transparent;
@@ -473,7 +512,7 @@
             this.chartLine.LegendBorderColor = null;
             this.chartLine.Location = new System.Drawing.Point(5, 28);
             this.chartLine.Name = "chartLine";
-            this.chartLine.Padding = 5;
+            this.chartLine.Padding = 10;
             this.chartLine.PieColors = null;
             this.chartLine.Size = new System.Drawing.Size(535, 167);
             this.chartLine.TabIndex = 0;
@@ -568,45 +607,6 @@
             this.label6.Size = new System.Drawing.Size(1083, 19);
             this.label6.TabIndex = 1;
             this.label6.Text = "Đồ thị";
-            // 
-            // avtSoTuDaThuoc
-            // 
-            this.avtSoTuDaThuoc.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.avtSoTuDaThuoc.Font = new System.Drawing.Font("K2D", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.avtSoTuDaThuoc.Image = global::VocabMaster.Properties.Resources.ic_total_words_learned;
-            this.avtSoTuDaThuoc.Location = new System.Drawing.Point(3, 3);
-            this.avtSoTuDaThuoc.Name = "avtSoTuDaThuoc";
-            this.avtSoTuDaThuoc.Padding = new System.Windows.Forms.Padding(5);
-            this.tableLayoutPanel7.SetRowSpan(this.avtSoTuDaThuoc, 3);
-            this.avtSoTuDaThuoc.Size = new System.Drawing.Size(71, 72);
-            this.avtSoTuDaThuoc.TabIndex = 0;
-            this.avtSoTuDaThuoc.Text = "A";
-            // 
-            // picAVGPoint
-            // 
-            this.picAVGPoint.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.picAVGPoint.Font = new System.Drawing.Font("K2D", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.picAVGPoint.Image = global::VocabMaster.Properties.Resources.ic_avg_point;
-            this.picAVGPoint.Location = new System.Drawing.Point(3, 3);
-            this.picAVGPoint.Name = "picAVGPoint";
-            this.picAVGPoint.Padding = new System.Windows.Forms.Padding(5);
-            this.tableLayoutPanel5.SetRowSpan(this.picAVGPoint, 2);
-            this.picAVGPoint.Size = new System.Drawing.Size(71, 74);
-            this.picAVGPoint.TabIndex = 0;
-            this.picAVGPoint.Text = "A";
-            // 
-            // avtTongSoTu
-            // 
-            this.avtTongSoTu.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.avtTongSoTu.Font = new System.Drawing.Font("K2D", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.avtTongSoTu.Image = global::VocabMaster.Properties.Resources.ic_total_words;
-            this.avtTongSoTu.Location = new System.Drawing.Point(3, 3);
-            this.avtTongSoTu.Name = "avtTongSoTu";
-            this.avtTongSoTu.Padding = new System.Windows.Forms.Padding(5);
-            this.tableLayoutPanel4.SetRowSpan(this.avtTongSoTu, 2);
-            this.avtTongSoTu.Size = new System.Drawing.Size(71, 74);
-            this.avtTongSoTu.TabIndex = 0;
-            this.avtTongSoTu.Text = "A";
             // 
             // FromDashboard
             // 

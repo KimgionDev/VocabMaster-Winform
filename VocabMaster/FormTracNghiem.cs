@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Speech.Synthesis;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -18,6 +19,8 @@ namespace VocabMaster
         private bool _dangXuLyDapAn = false;
         private int _soCauDung = 0;
         private List<TuVung> _danhSachTu;
+        private readonly SpeechSynthesizer _mayDoc;
+
 
         #region Khởi tạo
         public FormTracNghiem(List<TuVung> danhSachTu, int soLuongCau = 4)
@@ -36,6 +39,12 @@ namespace VocabMaster
                 MessageBox.Show(ex.Message);
                 this.BeginInvoke(new Action(() => this.Close()));
             }
+            _mayDoc = new SpeechSynthesizer
+            {
+                Volume = 100,
+                Rate = 0
+            };
+            _mayDoc.SelectVoiceByHints(VoiceGender.Female, VoiceAge.Adult, 0, new System.Globalization.CultureInfo("en-US"));
         }
         #endregion
 
@@ -169,5 +178,12 @@ namespace VocabMaster
 
 
         #endregion
+
+        private void btnPhatAm_Click(object sender, EventArgs e)
+        {
+            if (_deThi == null || _deThi.Count == 0) return; // Kiểm tra nếu không có câu hỏi nào
+            _mayDoc.SpeakAsyncCancelAll();
+            _mayDoc.SpeakAsync(_deThi[_chiSoCauHoiHienTai].TuChinh.TiengAnh);
+        }
     }
 }
