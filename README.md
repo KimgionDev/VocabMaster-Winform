@@ -52,7 +52,7 @@ Dự án áp dụng mô hình phân lớp kết hợp (Forms - Services/Helpers 
 
 1. **Clone repository này về máy:**
    ```bash
-   git clone [https://github.com/TenCuaBan/VocabMaster.git](https://github.com/TenCuaBan/VocabMaster.git)
+   git clone https://github.com/KimgionDev/VocabMaster-Winform.git
 2. **Thiết lập Cơ sở dữ liệu:**
    * Mở SQL Server Management Studio.
    * Tạo một Database mới (ví dụ: `VocabMasterDB`).
