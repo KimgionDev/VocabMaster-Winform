@@ -489,7 +489,7 @@ namespace VocabMaster
             KichHoatNut(btnDashboard);
             splitContainer1.Visible = false;
 
-            MoFormCon(new FromDashboard());
+            MoFormCon(new FormDashboard());
         }
 
         private void btnFlashCard_Click(object sender, EventArgs e)

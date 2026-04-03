@@ -5,12 +5,12 @@ using System.Windows.Forms;
 
 namespace VocabMaster
 {
-    public partial class FromDashboard : Form
+    public partial class FormDashboard : Form
     {
         private DatabaseHelper _db = new DatabaseHelper();
 
         #region Khởi tạo & Form Load
-        public FromDashboard()
+        public FormDashboard()
         {
             InitializeComponent();
         }

@@ -1,6 +1,6 @@
 ﻿namespace VocabMaster
 {
-    partial class FromDashboard
+    partial class FormDashboard
     {
         /// <summary>
         /// Required designer variable.
