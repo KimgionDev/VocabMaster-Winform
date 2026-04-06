@@ -53,6 +53,7 @@ Dự án áp dụng mô hình phân lớp kết hợp (Forms - Services/Helpers 
 1. **Clone repository này về máy:**
    ```bash
    git clone https://github.com/KimgionDev/VocabMaster-Winform.git
+   ```
 2. **Thiết lập Cơ sở dữ liệu:**
    * Mở SQL Server Management Studio.
    * Tạo một Database mới (ví dụ: `VocabMasterDB`).
@@ -63,6 +64,19 @@ Dự án áp dụng mô hình phân lớp kết hợp (Forms - Services/Helpers 
    * Mở tệp `VocabMaster.sln` bằng Visual Studio 2022.
    * Chờ Visual Studio tự động khôi phục các gói NuGet (hoặc nhấp chuột phải vào Solution -> Restore NuGet Packages).
    * Nhấn `F5` hoặc nút **Start** để chạy ứng dụng.
+
+---
+
+## ⚠️ Lưu ý quan trọng trước khi chạy
+
+Dự án hiện dùng chuỗi kết nối hard-code trong `VocabMaster/DatabaseHelper.cs`:
+
+```csharp
+// Ví dụ về chuỗi kết nối (ConnectionString) đến SQL Server
+private const string CONNECTION_STRING = "Data Source=.;Initial Catalog=VocabMasterDB;Integrated Security=True";
+```
+
+Bạn cần phải thay đổi chuỗi kết nối này phù hợp với cấu hình máy bạn trước khi chạy ứng dụng lần đầu.
 
 ---
 
