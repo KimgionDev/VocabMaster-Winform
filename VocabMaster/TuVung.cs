@@ -1,5 +1,5 @@
 ﻿using System;
-using System.ComponentModel;    // Thêm thư viện này để dùng [Description]
+using System.ComponentModel;
 
 namespace VocabMaster
 {

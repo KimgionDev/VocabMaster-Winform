@@ -1,4 +1,4 @@
-﻿namespace VocabMaster
+namespace VocabMaster
 {
     partial class FormKetQua
     {
@@ -36,12 +36,23 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel3 = new AntdUI.Panel();
             this.panel2 = new AntdUI.Panel();
+            this.flpNgonNgu = new AntdUI.In.FlowLayoutPanel();
+            this.lblHoiTiengAnh = new System.Windows.Forms.Label();
+            this.switchNgonNgu = new AntdUI.Switch();
+            this.lblHoiTiengViet = new System.Windows.Forms.Label();
             this.panel1 = new AntdUI.Panel();
+            this.object_ed7d36ae_0ae6_4c1e_a883_12c4eb3f2949 = new AntdUI.Switch();
+            this.object_8861273e_73e4_40ae_8691_704b4108b8c6 = new AntdUI.Switch();
+            this.object_9b1c4593_eb87_426f_8c59_52d84795159f = new AntdUI.Switch();
+            this.object_4bd94a5d_1c7e_437b_a738_9c5e821c611c = new AntdUI.In.FlowLayoutPanel();
+            this.object_20ca7303_67ed_4ad7_a5e5_9be3f335a639 = new AntdUI.In.FlowLayoutPanel();
+            this.object_c0766a8e_4762_4f1c_a9af_297ca6ab7e21 = new AntdUI.In.FlowLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)(this.nudSoCauHoi)).BeginInit();
             this.flpChonSoCau.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.flpNgonNgu.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -98,7 +109,7 @@
             this.flpChonSoCau.AutoSize = true;
             this.flpChonSoCau.Controls.Add(this.lblSoCauHoi);
             this.flpChonSoCau.Controls.Add(this.nudSoCauHoi);
-            this.flpChonSoCau.Location = new System.Drawing.Point(335, 73);
+            this.flpChonSoCau.Location = new System.Drawing.Point(335, 28);
             this.flpChonSoCau.Name = "flpChonSoCau";
             this.flpChonSoCau.Size = new System.Drawing.Size(407, 52);
             this.flpChonSoCau.TabIndex = 5;
@@ -137,12 +148,54 @@
             // 
             this.panel2.BackColor = System.Drawing.Color.White;
             this.panel2.Controls.Add(this.flpChonSoCau);
+            this.panel2.Controls.Add(this.flpNgonNgu);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(3, 190);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(1081, 181);
             this.panel2.TabIndex = 1;
             this.panel2.Text = "panel2";
+            // 
+            // flpNgonNgu
+            // 
+            this.flpNgonNgu.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.flpNgonNgu.AutoSize = true;
+            this.flpNgonNgu.Controls.Add(this.lblHoiTiengAnh);
+            this.flpNgonNgu.Controls.Add(this.switchNgonNgu);
+            this.flpNgonNgu.Controls.Add(this.lblHoiTiengViet);
+            this.flpNgonNgu.Location = new System.Drawing.Point(335, 131);
+            this.flpNgonNgu.Name = "flpNgonNgu";
+            this.flpNgonNgu.Size = new System.Drawing.Size(407, 48);
+            this.flpNgonNgu.TabIndex = 6;
+            this.flpNgonNgu.WrapContents = false;
+            // 
+            // lblHoiTiengAnh
+            // 
+            this.lblHoiTiengAnh.Font = new System.Drawing.Font("K2D", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblHoiTiengAnh.Location = new System.Drawing.Point(3, 0);
+            this.lblHoiTiengAnh.Name = "lblHoiTiengAnh";
+            this.lblHoiTiengAnh.Size = new System.Drawing.Size(150, 45);
+            this.lblHoiTiengAnh.TabIndex = 0;
+            this.lblHoiTiengAnh.Text = "Hỏi Tiếng Anh";
+            this.lblHoiTiengAnh.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // switchNgonNgu
+            // 
+            this.switchNgonNgu.Location = new System.Drawing.Point(159, 0);
+            this.switchNgonNgu.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
+            this.switchNgonNgu.Name = "switchNgonNgu";
+            this.switchNgonNgu.Size = new System.Drawing.Size(88, 42);
+            this.switchNgonNgu.TabIndex = 1;
+            // 
+            // lblHoiTiengViet
+            // 
+            this.lblHoiTiengViet.Font = new System.Drawing.Font("K2D", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblHoiTiengViet.Location = new System.Drawing.Point(253, 0);
+            this.lblHoiTiengViet.Name = "lblHoiTiengViet";
+            this.lblHoiTiengViet.Size = new System.Drawing.Size(150, 45);
+            this.lblHoiTiengViet.TabIndex = 2;
+            this.lblHoiTiengViet.Text = "Hỏi Tiếng Việt";
+            this.lblHoiTiengViet.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // panel1
             // 
@@ -154,6 +207,57 @@
             this.panel1.Size = new System.Drawing.Size(1081, 181);
             this.panel1.TabIndex = 0;
             this.panel1.Text = "panel1";
+            // 
+            // object_ed7d36ae_0ae6_4c1e_a883_12c4eb3f2949
+            // 
+            this.object_ed7d36ae_0ae6_4c1e_a883_12c4eb3f2949.Location = new System.Drawing.Point(159, 10);
+            this.object_ed7d36ae_0ae6_4c1e_a883_12c4eb3f2949.Name = "object_ed7d36ae_0ae6_4c1e_a883_12c4eb3f2949";
+            this.object_ed7d36ae_0ae6_4c1e_a883_12c4eb3f2949.Size = new System.Drawing.Size(60, 35);
+            this.object_ed7d36ae_0ae6_4c1e_a883_12c4eb3f2949.TabIndex = 1;
+            // 
+            // object_8861273e_73e4_40ae_8691_704b4108b8c6
+            // 
+            this.object_8861273e_73e4_40ae_8691_704b4108b8c6.Location = new System.Drawing.Point(159, 10);
+            this.object_8861273e_73e4_40ae_8691_704b4108b8c6.Name = "object_8861273e_73e4_40ae_8691_704b4108b8c6";
+            this.object_8861273e_73e4_40ae_8691_704b4108b8c6.Size = new System.Drawing.Size(60, 35);
+            this.object_8861273e_73e4_40ae_8691_704b4108b8c6.TabIndex = 1;
+            // 
+            // object_9b1c4593_eb87_426f_8c59_52d84795159f
+            // 
+            this.object_9b1c4593_eb87_426f_8c59_52d84795159f.Location = new System.Drawing.Point(159, 10);
+            this.object_9b1c4593_eb87_426f_8c59_52d84795159f.Name = "object_9b1c4593_eb87_426f_8c59_52d84795159f";
+            this.object_9b1c4593_eb87_426f_8c59_52d84795159f.Size = new System.Drawing.Size(60, 35);
+            this.object_9b1c4593_eb87_426f_8c59_52d84795159f.TabIndex = 1;
+            // 
+            // object_4bd94a5d_1c7e_437b_a738_9c5e821c611c
+            // 
+            this.object_4bd94a5d_1c7e_437b_a738_9c5e821c611c.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.object_4bd94a5d_1c7e_437b_a738_9c5e821c611c.AutoSize = true;
+            this.object_4bd94a5d_1c7e_437b_a738_9c5e821c611c.Location = new System.Drawing.Point(335, 73);
+            this.object_4bd94a5d_1c7e_437b_a738_9c5e821c611c.Name = "object_4bd94a5d_1c7e_437b_a738_9c5e821c611c";
+            this.object_4bd94a5d_1c7e_437b_a738_9c5e821c611c.Size = new System.Drawing.Size(407, 52);
+            this.object_4bd94a5d_1c7e_437b_a738_9c5e821c611c.TabIndex = 5;
+            this.object_4bd94a5d_1c7e_437b_a738_9c5e821c611c.WrapContents = false;
+            // 
+            // object_20ca7303_67ed_4ad7_a5e5_9be3f335a639
+            // 
+            this.object_20ca7303_67ed_4ad7_a5e5_9be3f335a639.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.object_20ca7303_67ed_4ad7_a5e5_9be3f335a639.AutoSize = true;
+            this.object_20ca7303_67ed_4ad7_a5e5_9be3f335a639.Location = new System.Drawing.Point(335, 73);
+            this.object_20ca7303_67ed_4ad7_a5e5_9be3f335a639.Name = "object_20ca7303_67ed_4ad7_a5e5_9be3f335a639";
+            this.object_20ca7303_67ed_4ad7_a5e5_9be3f335a639.Size = new System.Drawing.Size(407, 52);
+            this.object_20ca7303_67ed_4ad7_a5e5_9be3f335a639.TabIndex = 5;
+            this.object_20ca7303_67ed_4ad7_a5e5_9be3f335a639.WrapContents = false;
+            // 
+            // object_c0766a8e_4762_4f1c_a9af_297ca6ab7e21
+            // 
+            this.object_c0766a8e_4762_4f1c_a9af_297ca6ab7e21.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.object_c0766a8e_4762_4f1c_a9af_297ca6ab7e21.AutoSize = true;
+            this.object_c0766a8e_4762_4f1c_a9af_297ca6ab7e21.Location = new System.Drawing.Point(335, 73);
+            this.object_c0766a8e_4762_4f1c_a9af_297ca6ab7e21.Name = "object_c0766a8e_4762_4f1c_a9af_297ca6ab7e21";
+            this.object_c0766a8e_4762_4f1c_a9af_297ca6ab7e21.Size = new System.Drawing.Size(407, 52);
+            this.object_c0766a8e_4762_4f1c_a9af_297ca6ab7e21.TabIndex = 5;
+            this.object_c0766a8e_4762_4f1c_a9af_297ca6ab7e21.WrapContents = false;
             // 
             // FormKetQua
             // 
@@ -171,6 +275,7 @@
             this.panel3.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            this.flpNgonNgu.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -187,5 +292,15 @@
         private AntdUI.Panel panel3;
         private AntdUI.Panel panel2;
         private AntdUI.Panel panel1;
+        private AntdUI.In.FlowLayoutPanel flpNgonNgu;
+        private System.Windows.Forms.Label lblHoiTiengAnh;
+        private AntdUI.Switch switchNgonNgu;
+        private System.Windows.Forms.Label lblHoiTiengViet;
+        private AntdUI.Switch object_ed7d36ae_0ae6_4c1e_a883_12c4eb3f2949;
+        private AntdUI.Switch object_8861273e_73e4_40ae_8691_704b4108b8c6;
+        private AntdUI.Switch object_9b1c4593_eb87_426f_8c59_52d84795159f;
+        private AntdUI.In.FlowLayoutPanel object_4bd94a5d_1c7e_437b_a738_9c5e821c611c;
+        private AntdUI.In.FlowLayoutPanel object_20ca7303_67ed_4ad7_a5e5_9be3f335a639;
+        private AntdUI.In.FlowLayoutPanel object_c0766a8e_4762_4f1c_a9af_297ca6ab7e21;
     }
 }

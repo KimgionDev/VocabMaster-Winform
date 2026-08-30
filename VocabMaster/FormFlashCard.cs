@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Speech.Synthesis;
@@ -9,16 +9,22 @@ namespace VocabMaster
     public partial class FormFlashCard : Form
     {
         private static readonly Random _random = new Random();
-        private readonly List<TuVung> _danhSachTuVung;
+        private List<TuVung> _danhSachTuVung;
+        private List<TuVung> _toanBoDanhSachTu;
         private int _viTriHienTai;
         private bool _daLatThe;
         private readonly SpeechSynthesizer _mayDoc;
+        private int _soLuongThe;
+        private bool _chiHocTuChuaThuoc;
 
         #region Khởi tạo & Dọn dẹp
-        public FormFlashCard()
+        public FormFlashCard(List<TuVung> danhSachTu, int soLuongThe, bool chiHocTuChuaThuoc)
         {
             InitializeComponent();
-            _danhSachTuVung = new List<TuVung>();
+            
+            _toanBoDanhSachTu = danhSachTu;
+            _soLuongThe = soLuongThe;
+            _chiHocTuChuaThuoc = chiHocTuChuaThuoc;
 
             _mayDoc = new SpeechSynthesizer
             {
@@ -30,16 +36,52 @@ namespace VocabMaster
 
         private void FormFlashCard_Load(object sender, EventArgs e)
         {
-            LoadDuLieuTuDatabase();
+            // Lọc danh sách nếu cần
+            if (_chiHocTuChuaThuoc)
+            {
+                _danhSachTuVung = new List<TuVung>();
+                foreach (var tu in _toanBoDanhSachTu)
+                {
+                    if (!tu.DaThuoc)
+                    {
+                        _danhSachTuVung.Add(tu);
+                    }
+                }
+            }
+            else
+            {
+                _danhSachTuVung = new List<TuVung>(_toanBoDanhSachTu);
+            }
 
             if (_danhSachTuVung.Count == 0)
             {
-                MessageBox.Show("Chưa có từ vựng để học flashcard.", "Thông báo");
+                MessageBox.Show("Chưa có từ vựng nào phù hợp để học flashcard.", "Thông báo");
+                
+                // Trở về form kết quả
+                Panel panelChua = this.Parent as Panel;
+                if (panelChua != null)
+                {
+                    FormKetQua frmKetQua = new FormKetQua(0, _toanBoDanhSachTu.Count, _toanBoDanhSachTu, true, KieuHocTap.FlashCard);
+                    frmKetQua.TopLevel = false;
+                    frmKetQua.FormBorderStyle = FormBorderStyle.None;
+                    frmKetQua.Dock = DockStyle.Fill;
+                    panelChua.Controls.Add(frmKetQua);
+                    frmKetQua.Show();
+                    frmKetQua.BringToFront();
+                }
+                
                 BeginInvoke(new Action(Close));
                 return;
             }
 
             TronDanhSachTuVung();
+            
+            // Giới hạn số lượng thẻ
+            if (_soLuongThe < _danhSachTuVung.Count)
+            {
+                _danhSachTuVung = _danhSachTuVung.GetRange(0, _soLuongThe);
+            }
+
             _viTriHienTai = 0;
             HienThiThe();
         }
@@ -53,26 +95,6 @@ namespace VocabMaster
         #endregion
 
         #region Xử lý dữ liệu
-        private void LoadDuLieuTuDatabase()
-        {
-            _danhSachTuVung.Clear();
-
-            DatabaseHelper db = new DatabaseHelper();
-            const string query = "SELECT IdTuVung, TiengAnh, PhienAm, TiengViet FROM TuVung";
-            DataTable dt = db.LayDuLieu(query);
-
-            foreach (DataRow row in dt.Rows)
-            {
-                _danhSachTuVung.Add(new TuVung
-                {
-                    IdTuVung = Convert.ToInt32(row["IdTuVung"]),
-                    TiengAnh = row["TiengAnh"].ToString(),
-                    PhienAm = row["PhienAm"].ToString(),
-                    TiengViet = row["TiengViet"].ToString()
-                });
-            }
-        }
-
         private void TronDanhSachTuVung()
         {
             for (int i = _danhSachTuVung.Count - 1; i > 0; i--)
@@ -100,7 +122,16 @@ namespace VocabMaster
             prgTienDo.Value = (float)(_viTriHienTai + 1) / _danhSachTuVung.Count;
 
             btnQuayLai.Enabled = _viTriHienTai > 0;
-            btnTiepTheo.Enabled = _viTriHienTai < _danhSachTuVung.Count - 1;
+            
+            if (_viTriHienTai >= _danhSachTuVung.Count - 1)
+            {
+                btnTiepTheo.Text = "Kết thúc";
+            }
+            else
+            {
+                btnTiepTheo.Text = "Tiếp theo >>";
+            }
+            btnTiepTheo.Enabled = true; // Luôn bật để người dùng có thể bấm kết thúc
         }
 
         private void ThucHienLatThe()
@@ -159,6 +190,18 @@ namespace VocabMaster
         {
             if (_viTriHienTai >= _danhSachTuVung.Count - 1)
             {
+                Panel panelChua = this.Parent as Panel;
+                if (panelChua != null)
+                {
+                    FormKetQua frmKetQua = new FormKetQua(0, _danhSachTuVung.Count, _toanBoDanhSachTu, false, KieuHocTap.FlashCard);
+                    frmKetQua.TopLevel = false;
+                    frmKetQua.FormBorderStyle = FormBorderStyle.None;
+                    frmKetQua.Dock = DockStyle.Fill;
+                    panelChua.Controls.Add(frmKetQua);
+                    frmKetQua.Show();
+                    frmKetQua.BringToFront();
+                }
+                this.Close();
                 return;
             }
 

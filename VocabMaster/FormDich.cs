@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -497,7 +497,8 @@ namespace VocabMaster
             KichHoatNut(btnFlashCard);
             splitContainer1.Visible = false;
 
-            MoFormCon(new FormFlashCard());
+            List<TuVung> danhSachMoiNhat = LayDanhSachTuVungTuDB();
+            MoFormCon(new FormKetQua(0, 5, danhSachMoiNhat, true, KieuHocTap.FlashCard));
         }
         #endregion
 

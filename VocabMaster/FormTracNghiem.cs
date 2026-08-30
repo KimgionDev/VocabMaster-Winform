@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -20,12 +20,14 @@ namespace VocabMaster
         private int _soCauDung = 0;
         private List<TuVung> _danhSachTu;
         private readonly SpeechSynthesizer _mayDoc;
+        private bool _isHoiTiengViet = false;
 
         #region Khởi tạo & Dọn dẹp
-        public FormTracNghiem(List<TuVung> danhSachTu, int soLuongCau = 4)
+        public FormTracNghiem(List<TuVung> danhSachTu, int soLuongCau = 4, bool isHoiTiengViet = false)
         {
             InitializeComponent();
             _danhSachTu = danhSachTu; // Lưu lại
+            _isHoiTiengViet = isHoiTiengViet;
             _luyenTapService = new LuyenTapService(_danhSachTu);
             try
             {
@@ -58,18 +60,32 @@ namespace VocabMaster
         private void HienThiCauHoi()
         {
             CauHoi cauHienTai = _deThi[_chiSoCauHoiHienTai];
-            lblCauHoi.Text = cauHienTai.TuChinh.TiengAnh;
-
-            btnA.Text = cauHienTai.CacDapAnTuVung[0].TiengViet;
-            btnB.Text = cauHienTai.CacDapAnTuVung[1].TiengViet;
-            btnC.Text = cauHienTai.CacDapAnTuVung[2].TiengViet;
-            btnD.Text = cauHienTai.CacDapAnTuVung[3].TiengViet;
+            if (_isHoiTiengViet)
+            {
+                lblCauHoi.Text = cauHienTai.TuChinh.TiengViet;
+                btnA.Text = cauHienTai.CacDapAnTuVung[0].TiengAnh;
+                btnB.Text = cauHienTai.CacDapAnTuVung[1].TiengAnh;
+                btnC.Text = cauHienTai.CacDapAnTuVung[2].TiengAnh;
+                btnD.Text = cauHienTai.CacDapAnTuVung[3].TiengAnh;
+                btnPhatAm.Visible = false; // Ẩn nút phát âm khi hỏi Tiếng Việt
+            }
+            else
+            {
+                lblCauHoi.Text = cauHienTai.TuChinh.TiengAnh;
+                btnA.Text = cauHienTai.CacDapAnTuVung[0].TiengViet;
+                btnB.Text = cauHienTai.CacDapAnTuVung[1].TiengViet;
+                btnC.Text = cauHienTai.CacDapAnTuVung[2].TiengViet;
+                btnD.Text = cauHienTai.CacDapAnTuVung[3].TiengViet;
+                btnPhatAm.Visible = true; // Hiện nút phát âm khi hỏi Tiếng Anh
+            }
         }
 
         public bool KiemTraDapAn(string dapAnNguoiDung)
         {
             CauHoi cauHienTai = _deThi[_chiSoCauHoiHienTai];
-            return cauHienTai.TuChinh.TiengViet.Equals(dapAnNguoiDung, StringComparison.OrdinalIgnoreCase);
+            string dapAnDung = _isHoiTiengViet ? cauHienTai.TuChinh.TiengAnh : cauHienTai.TuChinh.TiengViet;
+            // Xóa bỏ icon check/cross nếu có trong text (dù thường so sánh trước khi thêm, nhưng để an toàn)
+            return dapAnDung.Equals(dapAnNguoiDung, StringComparison.OrdinalIgnoreCase);
         }
 
         public async void XuLyDapAn(AntdUI.Button dapAnDaChon)
@@ -90,7 +106,8 @@ namespace VocabMaster
             }
             else
             {
-                lblCauHoi.Text += $" (Đáp án đúng: {_deThi[_chiSoCauHoiHienTai].TuChinh.TiengViet})";
+                string dapAnDung = _isHoiTiengViet ? _deThi[_chiSoCauHoiHienTai].TuChinh.TiengAnh : _deThi[_chiSoCauHoiHienTai].TuChinh.TiengViet;
+                lblCauHoi.Text += $" (Đáp án đúng: {dapAnDung})";
                 dapAnDaChon.Text += " ❎";
                 dapAnDaChon.ForeColor = Color.Red;
 
