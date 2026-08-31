@@ -1,4 +1,4 @@
-﻿namespace VocabMaster
+namespace VocabMaster
 {
     partial class FormDich
     {
@@ -46,6 +46,7 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.cboLocDaThuoc = new System.Windows.Forms.ComboBox();
             this.lblDanhSachTuVung = new System.Windows.Forms.Label();
+            this.btnDaoChieu = new System.Windows.Forms.Button();
             this.cboChonChuDe = new System.Windows.Forms.ComboBox();
             this.btnSua = new System.Windows.Forms.Button();
             this.lblTiengViet = new System.Windows.Forms.Label();
@@ -165,6 +166,7 @@
             this.txtTiengViet.Name = "txtTiengViet";
             this.txtTiengViet.Size = new System.Drawing.Size(438, 85);
             this.txtTiengViet.TabIndex = 10;
+            this.txtTiengViet.TextChanged += new System.EventHandler(this.txtTiengViet_TextChanged);
             // 
             // btnXoa
             // 
@@ -295,6 +297,7 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.BackColor = System.Drawing.Color.White;
+            this.splitContainer1.Panel2.Controls.Add(this.btnDaoChieu);
             this.splitContainer1.Panel2.Controls.Add(this.cboChonChuDe);
             this.splitContainer1.Panel2.Controls.Add(this.btnSua);
             this.splitContainer1.Panel2.Controls.Add(this.btnXoa);
@@ -339,6 +342,20 @@
             this.lblDanhSachTuVung.TabIndex = 15;
             this.lblDanhSachTuVung.Text = "Danh sách từ vựng";
             this.lblDanhSachTuVung.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // btnDaoChieu
+            // 
+            this.btnDaoChieu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDaoChieu.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnDaoChieu.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnDaoChieu.ForeColor = System.Drawing.Color.Black;
+            this.btnDaoChieu.Image = ((System.Drawing.Image)(resources.GetObject("btnDaoChieu.Image")));
+            this.btnDaoChieu.Location = new System.Drawing.Point(408, 10);
+            this.btnDaoChieu.Name = "btnDaoChieu";
+            this.btnDaoChieu.Size = new System.Drawing.Size(40, 40);
+            this.btnDaoChieu.TabIndex = 21;
+            this.btnDaoChieu.UseVisualStyleBackColor = true;
+            this.btnDaoChieu.Click += new System.EventHandler(this.btnDaoChieu_Click);
             // 
             // cboChonChuDe
             // 
@@ -417,6 +434,7 @@
             // btnNhapFile
             // 
             this.btnNhapFile.BackColor = System.Drawing.Color.White;
+            this.btnNhapFile.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnNhapFile.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnNhapFile.Dock = System.Windows.Forms.DockStyle.Top;
             this.btnNhapFile.FlatAppearance.BorderSize = 0;
@@ -436,6 +454,7 @@
             // btnXuatFile
             // 
             this.btnXuatFile.BackColor = System.Drawing.Color.White;
+            this.btnXuatFile.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnXuatFile.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnXuatFile.Dock = System.Windows.Forms.DockStyle.Top;
             this.btnXuatFile.FlatAppearance.BorderSize = 0;
@@ -455,6 +474,7 @@
             // btnDashboard
             // 
             this.btnDashboard.BackColor = System.Drawing.Color.White;
+            this.btnDashboard.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnDashboard.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnDashboard.Dock = System.Windows.Forms.DockStyle.Top;
             this.btnDashboard.FlatAppearance.BorderSize = 0;
@@ -474,6 +494,7 @@
             // btnFlashCard
             // 
             this.btnFlashCard.BackColor = System.Drawing.Color.White;
+            this.btnFlashCard.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnFlashCard.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnFlashCard.Dock = System.Windows.Forms.DockStyle.Top;
             this.btnFlashCard.FlatAppearance.BorderSize = 0;
@@ -493,6 +514,7 @@
             // btnTracNghiem
             // 
             this.btnTracNghiem.BackColor = System.Drawing.Color.White;
+            this.btnTracNghiem.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnTracNghiem.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnTracNghiem.Dock = System.Windows.Forms.DockStyle.Top;
             this.btnTracNghiem.FlatAppearance.BorderSize = 0;
@@ -512,6 +534,7 @@
             // btnTuDien
             // 
             this.btnTuDien.BackColor = System.Drawing.Color.White;
+            this.btnTuDien.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnTuDien.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnTuDien.Dock = System.Windows.Forms.DockStyle.Top;
             this.btnTuDien.FlatAppearance.BorderSize = 0;
@@ -531,6 +554,7 @@
             // btnMenu
             // 
             this.btnMenu.BackColor = System.Drawing.Color.White;
+            this.btnMenu.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnMenu.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnMenu.Dock = System.Windows.Forms.DockStyle.Top;
             this.btnMenu.FlatAppearance.BorderSize = 0;
@@ -542,7 +566,6 @@
             this.btnMenu.Name = "btnMenu";
             this.btnMenu.Size = new System.Drawing.Size(40, 40);
             this.btnMenu.TabIndex = 22;
-            this.btnMenu.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnMenu.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnMenu.UseVisualStyleBackColor = false;
             this.btnMenu.Click += new System.EventHandler(this.btnMenu_Click);
@@ -611,6 +634,7 @@
         private System.Windows.Forms.Button btnDashboard;
         private System.Windows.Forms.Button btnTracNghiem;
         private System.Windows.Forms.Button btnFlashCard;
+        private System.Windows.Forms.Button btnDaoChieu;
     }
 }
 

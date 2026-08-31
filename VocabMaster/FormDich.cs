@@ -47,7 +47,6 @@ namespace VocabMaster
             TaiDanhSachTrangThai();
         }
 
-        // Xóa máy đọc khỏi bộ nhớ khi đóng Form
         protected override void OnFormClosed(FormClosedEventArgs e)
         {
             _mayDoc?.Dispose();
@@ -347,10 +346,12 @@ namespace VocabMaster
                 _db.ThucThiLenh(sqlSuaTrangThai);
             }
         }
+        private bool _isDichAnhViet = true;
+
         #endregion
 
         #region Xử lý Dịch thuật & Phát âm
-        private async Task Dich()
+        private async Task DichAnhViet()
         {
             string tu = txtTiengAnh.Text.Trim();
             if (string.IsNullOrEmpty(tu)) return;
@@ -358,6 +359,8 @@ namespace VocabMaster
             try
             {
                 var ketQua = await _dichService.TraCuuTuDayDu(tu);
+
+                if (txtTiengAnh.Text.Trim() != tu) return;
 
                 txtTiengViet.Text = ketQua.NghiaTiengViet;
                 txtPhienAm.Text = ketQua.PhienAm;
@@ -370,18 +373,92 @@ namespace VocabMaster
             }
             catch (Exception)
             {
-                txtTiengViet.Text = "Lỗi mạng hoặc dịch vụ API...";
+                if (txtTiengAnh.Text.Trim() == tu)
+                    txtTiengViet.Text = "Lỗi mạng hoặc dịch vụ API...";
             }
+        }
+
+        private async Task DichVietAnh()
+        {
+            string tu = txtTiengViet.Text.Trim();
+            if (string.IsNullOrEmpty(tu)) return;
+
+            try
+            {
+                var ketQua = await _dichService.TraCuuTuVietAnh(tu);
+
+                if (txtTiengViet.Text.Trim() != tu) return;
+
+                txtTiengAnh.Text = ketQua.TuTiengAnh;
+                txtPhienAm.Text = ketQua.PhienAm;
+                txtLoaiTu.Text = ketQua.CacLoaiTu;
+            }
+            catch (Exception)
+            {
+                if (txtTiengViet.Text.Trim() == tu)
+                    txtTiengAnh.Text = "Lỗi mạng hoặc dịch vụ API...";
+            }
+        }
+
+        private void btnDaoChieu_Click(object sender, EventArgs e)
+        {
+            _isDichAnhViet = !_isDichAnhViet;
+
+            Point viTriLabelTren = new Point(10, 12);
+            Point viTriTextTren = new Point(10, 53);
+            Point viTriLabelDuoi = new Point(10, 323);
+            Point viTriTextDuoi = new Point(10, 364);
+
+            if (_isDichAnhViet)
+            {
+                lblTiengAnh.Location = viTriLabelTren;
+                txtTiengAnh.Location = viTriTextTren;
+                
+                lblTiengViet.Location = viTriLabelDuoi;
+                txtTiengViet.Location = viTriTextDuoi;
+                
+                txtTiengAnh.Focus();
+            }
+            else
+            {
+                lblTiengViet.Location = viTriLabelTren;
+                txtTiengViet.Location = viTriTextTren;
+                
+                lblTiengAnh.Location = viTriLabelDuoi;
+                txtTiengAnh.Location = viTriTextDuoi;
+                
+                txtTiengViet.Focus();
+            }
+
+            txtTiengAnh.Clear();
+            txtTiengViet.Clear();
+            txtPhienAm.Clear();
+            txtLoaiTu.Clear();
         }
 
         private async void TimerTuDongDich_Tick(object sender, EventArgs e)
         {
             _timerTuDongDich.Stop();
-            await Dich();
+            if (_isDichAnhViet)
+            {
+                await DichAnhViet();
+            }
+            else
+            {
+                await DichVietAnh();
+            }
         }
 
         private void txtTiengAnh_TextChanged(object sender, EventArgs e)
         {
+            if (!_isDichAnhViet || !txtTiengAnh.Focused) return;
+            _timerTuDongDich.Stop();
+            _timerTuDongDich.Start();
+        }
+
+        private void txtTiengViet_TextChanged(object sender, EventArgs e)
+        {
+            if (_isDichAnhViet || !txtTiengViet.Focused) return;
             _timerTuDongDich.Stop();
             _timerTuDongDich.Start();
         }
@@ -394,7 +471,6 @@ namespace VocabMaster
             btnLoa.Text = "...";
             btnLoa.Enabled = false;
 
-            // Tái sử dụng máy đọc toàn cục
             _mayDoc.SpeakAsyncCancelAll();
             _mayDoc.SpeakAsync(cauCanDoc);
 

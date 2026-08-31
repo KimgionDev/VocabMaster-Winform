@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -15,6 +15,7 @@ namespace VocabMaster
         public class KetQuaTraCuu
         {
             public string NghiaTiengViet { get; set; } = "";
+            public string TuTiengAnh { get; set; } = "";
             public string PhienAm { get; set; } = "";
             public string CacLoaiTu { get; set; } = ""; // Ví dụ: "noun, verb"
         }
@@ -59,6 +60,62 @@ namespace VocabMaster
                 ketQua.PhienAm = textPhienAm ?? "";
 
                 // b. Lấy loại từ
+                var meanings = entryDauTien["meanings"] as JArray;
+                if (meanings != null)
+                {
+                    var listLoaiTu = meanings
+                                     .Select(m => m["partOfSpeech"]?.ToString())
+                                     .Where(s => !string.IsNullOrEmpty(s))
+                                     .Distinct()
+                                     .ToList();
+                    ketQua.CacLoaiTu = string.Join(", ", listLoaiTu);
+                }
+            }
+            catch
+            {
+                // Nếu lỗi (ví dụ: không tìm thấy từ), thì để trống phần phiên âm và loại từ
+            }
+
+            return ketQua;
+        }
+
+        public async Task<KetQuaTraCuu> TraCuuTuVietAnh(string tuTiengViet)
+        {
+            KetQuaTraCuu ketQua = new KetQuaTraCuu();
+            string tuTiengAnh = "";
+
+            try
+            {
+                var googleResult = await _boDich.TranslateAsync(tuTiengViet, "en", "vi");
+                tuTiengAnh = googleResult.Translation;
+                ketQua.TuTiengAnh = tuTiengAnh;
+            }
+            catch
+            {
+                ketQua.TuTiengAnh = "Lỗi mạng hoặc không dịch được";
+                return ketQua;
+            }
+
+            try
+            {
+                if (tuTiengAnh.Trim().Contains(" "))
+                {
+                    return ketQua;
+                }
+                
+                string url = $"https://api.dictionaryapi.dev/api/v2/entries/en/{Uri.EscapeDataString(tuTiengAnh)}";
+                string jsonResponse = await _httpClient.GetStringAsync(url);
+
+                JArray duLieu = JArray.Parse(jsonResponse);
+                var entryDauTien = duLieu[0];
+
+                var textPhienAm = entryDauTien["phonetic"]?.ToString();
+                if (string.IsNullOrEmpty(textPhienAm))
+                {
+                    textPhienAm = entryDauTien["phonetics"]?.FirstOrDefault(x => x["text"] != null)?["text"]?.ToString();
+                }
+                ketQua.PhienAm = textPhienAm ?? "";
+
                 var meanings = entryDauTien["meanings"] as JArray;
                 if (meanings != null)
                 {
