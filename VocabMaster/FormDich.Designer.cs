@@ -28,7 +28,7 @@ namespace VocabMaster
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormDich));
             this.cboLocChuDe = new System.Windows.Forms.ComboBox();
             this.btnLoa = new System.Windows.Forms.Button();
@@ -60,6 +60,7 @@ namespace VocabMaster
             this.btnTuDien = new System.Windows.Forms.Button();
             this.btnMenu = new System.Windows.Forms.Button();
             this.pnlNoiDung = new System.Windows.Forms.Panel();
+            this.spin1 = new AntdUI.Spin();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDanhSach)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -240,14 +241,14 @@ namespace VocabMaster
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvDanhSach.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvDanhSach.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(98)))), ((int)(((byte)(180)))));
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("K2D", 10F);
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(98)))), ((int)(((byte)(180)))));
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvDanhSach.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(98)))), ((int)(((byte)(180)))));
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("K2D", 10F);
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(98)))), ((int)(((byte)(180)))));
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvDanhSach.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvDanhSach.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvDanhSach.EnableHeadersVisualStyles = false;
             this.dgvDanhSach.Location = new System.Drawing.Point(6, 98);
@@ -297,6 +298,7 @@ namespace VocabMaster
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.BackColor = System.Drawing.Color.White;
+            this.splitContainer1.Panel2.Controls.Add(this.spin1);
             this.splitContainer1.Panel2.Controls.Add(this.btnDaoChieu);
             this.splitContainer1.Panel2.Controls.Add(this.cboChonChuDe);
             this.splitContainer1.Panel2.Controls.Add(this.btnSua);
@@ -579,6 +581,14 @@ namespace VocabMaster
             this.pnlNoiDung.Size = new System.Drawing.Size(1111, 578);
             this.pnlNoiDung.TabIndex = 23;
             // 
+            // spin1
+            // 
+            this.spin1.Location = new System.Drawing.Point(220, 60);
+            this.spin1.Name = "spin1";
+            this.spin1.Size = new System.Drawing.Size(164, 131);
+            this.spin1.TabIndex = 22;
+            this.spin1.Text = "Đang dịch";
+            // 
             // FormDich
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -635,6 +645,7 @@ namespace VocabMaster
         private System.Windows.Forms.Button btnTracNghiem;
         private System.Windows.Forms.Button btnFlashCard;
         private System.Windows.Forms.Button btnDaoChieu;
+        private AntdUI.Spin spin1;
     }
 }
 
