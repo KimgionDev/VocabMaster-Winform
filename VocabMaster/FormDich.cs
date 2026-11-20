@@ -22,11 +22,14 @@ namespace VocabMaster
 
         private readonly SpeechSynthesizer _mayDoc;
         private readonly DichThuatService _dichService = new DichThuatService();
+        private int _maLuotTraCuu;
+        private bool _dangDongForm;
 
         #region Khởi tạo & Dọn dẹp
         public FormDich()
         {
             InitializeComponent();
+            spin1.Visible = false;
             _timerTuDongDich = new System.Windows.Forms.Timer();
             _timerTuDongDich.Interval = 500;
             _timerTuDongDich.Tick += TimerTuDongDich_Tick;
@@ -49,6 +52,10 @@ namespace VocabMaster
 
         protected override void OnFormClosed(FormClosedEventArgs e)
         {
+            _dangDongForm = true;
+            VoHieuHoaLuotTraCuu();
+            _timerTuDongDich.Tick -= TimerTuDongDich_Tick;
+            _timerTuDongDich.Dispose();
             _mayDoc?.Dispose();
             base.OnFormClosed(e);
         }
@@ -351,16 +358,27 @@ namespace VocabMaster
         #endregion
 
         #region Xử lý Dịch thuật & Phát âm
-        private async Task DichAnhViet()
+        private void VoHieuHoaLuotTraCuu()
         {
-            string tu = txtTiengAnh.Text.Trim();
-            if (string.IsNullOrEmpty(tu)) return;
+            _maLuotTraCuu++;
+            _timerTuDongDich.Stop();
+            if (!spin1.IsDisposed)
+                spin1.Visible = false;
+        }
 
+        private bool LaLuotTraCuuHienHanh(int maLuot, bool dichAnhViet)
+        {
+            return !_dangDongForm && !IsDisposed && !Disposing
+                && maLuot == _maLuotTraCuu && dichAnhViet == _isDichAnhViet;
+        }
+
+        private async Task DichAnhViet(string tu, int maLuot)
+        {
             try
             {
                 var ketQua = await _dichService.TraCuuTuDayDu(tu);
 
-                if (txtTiengAnh.Text.Trim() != tu) return;
+                if (!LaLuotTraCuuHienHanh(maLuot, true) || txtTiengAnh.Text.Trim() != tu) return;
 
                 txtTiengViet.Text = ketQua.NghiaTiengViet;
                 txtPhienAm.Text = ketQua.PhienAm;
@@ -373,21 +391,18 @@ namespace VocabMaster
             }
             catch (Exception)
             {
-                if (txtTiengAnh.Text.Trim() == tu)
+                if (LaLuotTraCuuHienHanh(maLuot, true) && txtTiengAnh.Text.Trim() == tu)
                     txtTiengViet.Text = "Lỗi mạng hoặc dịch vụ API...";
             }
         }
 
-        private async Task DichVietAnh()
+        private async Task DichVietAnh(string tu, int maLuot)
         {
-            string tu = txtTiengViet.Text.Trim();
-            if (string.IsNullOrEmpty(tu)) return;
-
             try
             {
                 var ketQua = await _dichService.TraCuuTuVietAnh(tu);
 
-                if (txtTiengViet.Text.Trim() != tu) return;
+                if (!LaLuotTraCuuHienHanh(maLuot, false) || txtTiengViet.Text.Trim() != tu) return;
 
                 txtTiengAnh.Text = ketQua.TuTiengAnh;
                 txtPhienAm.Text = ketQua.PhienAm;
@@ -395,13 +410,14 @@ namespace VocabMaster
             }
             catch (Exception)
             {
-                if (txtTiengViet.Text.Trim() == tu)
+                if (LaLuotTraCuuHienHanh(maLuot, false) && txtTiengViet.Text.Trim() == tu)
                     txtTiengAnh.Text = "Lỗi mạng hoặc dịch vụ API...";
             }
         }
 
         private void btnDaoChieu_Click(object sender, EventArgs e)
         {
+            VoHieuHoaLuotTraCuu();
             _isDichAnhViet = !_isDichAnhViet;
 
             Point viTriLabelTren = new Point(10, 12);
@@ -434,33 +450,46 @@ namespace VocabMaster
             txtTiengViet.Clear();
             txtPhienAm.Clear();
             txtLoaiTu.Clear();
+            _timerTuDongDich.Stop();
         }
 
         private async void TimerTuDongDich_Tick(object sender, EventArgs e)
         {
             _timerTuDongDich.Stop();
-            if (_isDichAnhViet)
+            int maLuot = _maLuotTraCuu;
+            bool dichAnhViet = _isDichAnhViet;
+            string tu = (dichAnhViet ? txtTiengAnh.Text : txtTiengViet.Text).Trim();
+            if (string.IsNullOrEmpty(tu) || !LaLuotTraCuuHienHanh(maLuot, dichAnhViet)) return;
+
+            spin1.Visible = true;
+            try
             {
-                await DichAnhViet();
+                if (dichAnhViet)
+                    await DichAnhViet(tu, maLuot);
+                else
+                    await DichVietAnh(tu, maLuot);
             }
-            else
+            finally
             {
-                await DichVietAnh();
+                if (LaLuotTraCuuHienHanh(maLuot, dichAnhViet))
+                    spin1.Visible = false;
             }
         }
 
         private void txtTiengAnh_TextChanged(object sender, EventArgs e)
         {
             if (!_isDichAnhViet || !txtTiengAnh.Focused) return;
-            _timerTuDongDich.Stop();
-            _timerTuDongDich.Start();
+            VoHieuHoaLuotTraCuu();
+            if (!string.IsNullOrWhiteSpace(txtTiengAnh.Text))
+                _timerTuDongDich.Start();
         }
 
         private void txtTiengViet_TextChanged(object sender, EventArgs e)
         {
             if (_isDichAnhViet || !txtTiengViet.Focused) return;
-            _timerTuDongDich.Stop();
-            _timerTuDongDich.Start();
+            VoHieuHoaLuotTraCuu();
+            if (!string.IsNullOrWhiteSpace(txtTiengViet.Text))
+                _timerTuDongDich.Start();
         }
 
         private void btnDoc_Click(object sender, EventArgs e)
@@ -525,6 +554,7 @@ namespace VocabMaster
 
         private void btnTracNghiem_Click(object sender, EventArgs e)
         {
+            VoHieuHoaLuotTraCuu();
             KichHoatNut(btnTracNghiem);
             splitContainer1.Visible = false;
 
@@ -562,6 +592,7 @@ namespace VocabMaster
 
         private void btnDashboard_Click(object sender, EventArgs e)
         {
+            VoHieuHoaLuotTraCuu();
             KichHoatNut(btnDashboard);
             splitContainer1.Visible = false;
 
@@ -570,6 +601,7 @@ namespace VocabMaster
 
         private void btnFlashCard_Click(object sender, EventArgs e)
         {
+            VoHieuHoaLuotTraCuu();
             KichHoatNut(btnFlashCard);
             splitContainer1.Visible = false;
 
