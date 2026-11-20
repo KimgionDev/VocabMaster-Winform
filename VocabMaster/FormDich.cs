@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -24,11 +25,20 @@ namespace VocabMaster
         private readonly DichThuatService _dichService = new DichThuatService();
         private int _maLuotTraCuu;
         private bool _dangDongForm;
+        private const int SoTuMoiTrang = 20;
+        private int _trangHienTai = 1;
+        private int _tongSoTrang;
+        private bool _dangKhoiTaoBoLoc;
+        private bool _dangGanDuLieu;
+        private Button _btnTrangTruoc;
+        private Button _btnTrangSau;
+        private Label _lblThongTinTrang;
 
         #region Khởi tạo & Dọn dẹp
         public FormDich()
         {
             InitializeComponent();
+            TaoThanhPhanTrang();
             spin1.Visible = false;
             _timerTuDongDich = new System.Windows.Forms.Timer();
             _timerTuDongDich.Interval = 500;
@@ -45,9 +55,11 @@ namespace VocabMaster
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            TaiDuLieuLenBang();
+            _dangKhoiTaoBoLoc = true;
             TaiDanhSachChuDe();
             TaiDanhSachTrangThai();
+            _dangKhoiTaoBoLoc = false;
+            TaiDuLieuLenBang();
         }
 
         protected override void OnFormClosed(FormClosedEventArgs e)
@@ -62,36 +74,114 @@ namespace VocabMaster
         #endregion
 
         #region Tải dữ liệu & Lọc
+        private void TaoThanhPhanTrang()
+        {
+            var thanhPhanTrang = new FlowLayoutPanel
+            {
+                Dock = DockStyle.Bottom,
+                Height = 42,
+                Padding = new Padding(6, 5, 0, 0),
+                BackColor = splitContainer1.Panel1.BackColor,
+                WrapContents = false
+            };
+            _btnTrangTruoc = new Button { Text = "Trước", Width = 80, Height = 30 };
+            _btnTrangSau = new Button { Text = "Sau", Width = 80, Height = 30 };
+            _lblThongTinTrang = new Label
+            {
+                Text = "Trang 0/0 - 0 từ",
+                Width = 225,
+                Height = 30,
+                TextAlign = ContentAlignment.MiddleCenter,
+                Font = new Font("Segoe UI", 10F)
+            };
+            _btnTrangTruoc.Click += (sender, e) => ChuyenTrang(-1);
+            _btnTrangSau.Click += (sender, e) => ChuyenTrang(1);
+            thanhPhanTrang.Controls.Add(_btnTrangTruoc);
+            thanhPhanTrang.Controls.Add(_lblThongTinTrang);
+            thanhPhanTrang.Controls.Add(_btnTrangSau);
+            splitContainer1.Panel1.Controls.Add(thanhPhanTrang);
+            dgvDanhSach.Height -= thanhPhanTrang.Height;
+        }
+
+        private void ChuyenTrang(int buoc)
+        {
+            int trangMoi = _trangHienTai + buoc;
+            if (trangMoi < 1 || trangMoi > _tongSoTrang) return;
+            _trangHienTai = trangMoi;
+            TaiDuLieuLenBang();
+        }
+
         private void TaiDuLieuLenBang()
         {
-            string sql = @"
-                SELECT 
-                    t.IdTuVung, 
-                    t.TiengAnh, 
-                    t.PhienAm, 
-                    t.TiengViet, 
-                    t.LoaiTu, 
-                    c.TenChuDe AS ChuDe, 
-                    t.DaThuoc 
-                FROM TuVung t
-                LEFT JOIN ChuDe c ON t.IdChuDe = c.IdChuDe
-                ORDER BY t.TiengAnh ASC";
+            string tuKhoa = txtTimKiem.Text.Trim();
+            if (tuKhoa.Equals("Tìm kiếm", StringComparison.OrdinalIgnoreCase)) tuKhoa = "";
+            string chuDe = cboLocChuDe.SelectedItem?.ToString();
+            string trangThai = cboLocDaThuoc.SelectedItem?.ToString();
 
-            DataTable dt = _db.LayDuLieu(sql);
+            string dieuKien = " FROM TuVung t LEFT JOIN ChuDe c ON t.IdChuDe = c.IdChuDe WHERE 1=1";
+            if (tuKhoa.Length > 0)
+                dieuKien += " AND (t.TiengAnh LIKE @TuKhoa OR t.TiengViet LIKE @TuKhoa)";
+            if (!string.IsNullOrEmpty(chuDe) && chuDe != "Tất cả chủ đề")
+                dieuKien += " AND c.TenChuDe = @ChuDe";
+            if (trangThai == "Đã thuộc" || trangThai == "Chưa thuộc")
+                dieuKien += " AND t.DaThuoc = @DaThuoc";
 
-            dgvDanhSach.DataSource = null;
-            dgvDanhSach.DataSource = dt;
+            DataTable bangDem = _db.LayDuLieu("SELECT COUNT(*) AS TongSoTu" + dieuKien,
+                TaoThamSoLoc(tuKhoa, chuDe, trangThai).ToArray());
+            int tongSoTu = Convert.ToInt32(bangDem.Rows[0]["TongSoTu"]);
+            _tongSoTrang = (tongSoTu + SoTuMoiTrang - 1) / SoTuMoiTrang;
+            _trangHienTai = _tongSoTrang == 0 ? 0 : Math.Max(1, Math.Min(_trangHienTai, _tongSoTrang));
 
-            if (dgvDanhSach.Columns.Count > 0)
+            string sql = @"SELECT t.IdTuVung, t.TiengAnh, t.PhienAm, t.TiengViet,
+                    t.LoaiTu, c.TenChuDe AS ChuDe, t.DaThuoc"
+                + dieuKien + " ORDER BY t.TiengAnh ASC, t.IdTuVung ASC OFFSET @BoQua ROWS FETCH NEXT @GioiHan ROWS ONLY";
+            var thamSo = TaoThamSoLoc(tuKhoa, chuDe, trangThai);
+            thamSo.Add(new SqlParameter("@BoQua", SqlDbType.Int) { Value = _trangHienTai == 0 ? 0 : (_trangHienTai - 1) * SoTuMoiTrang });
+            thamSo.Add(new SqlParameter("@GioiHan", SqlDbType.Int) { Value = SoTuMoiTrang });
+            DataTable dt = _db.LayDuLieu(sql, thamSo.ToArray());
+
+            _dangGanDuLieu = true;
+            try
             {
-                dgvDanhSach.Columns["IdTuVung"].Visible = false;
-                dgvDanhSach.Columns["TiengAnh"].HeaderText = "Từ Tiếng Anh";
-                dgvDanhSach.Columns["PhienAm"].HeaderText = "Phiên Âm";
-                dgvDanhSach.Columns["TiengViet"].HeaderText = "Nghĩa Tiếng Việt";
-                dgvDanhSach.Columns["LoaiTu"].HeaderText = "Loại Từ";
-                dgvDanhSach.Columns["ChuDe"].HeaderText = "Chủ Đề";
-                dgvDanhSach.Columns["DaThuoc"].HeaderText = "Đã Thuộc";
+                dgvDanhSach.DataSource = null;
+                dgvDanhSach.DataSource = dt;
+                DinhDangBangTuVung();
+                dgvDanhSach.ClearSelection();
             }
+            finally
+            {
+                _dangGanDuLieu = false;
+            }
+            _idTuDangChon = -1;
+            _lblThongTinTrang.Text = $"Trang {_trangHienTai}/{_tongSoTrang} - {tongSoTu} từ";
+            _btnTrangTruoc.Enabled = _trangHienTai > 1;
+            _btnTrangSau.Enabled = _trangHienTai > 0 && _trangHienTai < _tongSoTrang;
+        }
+
+        private List<SqlParameter> TaoThamSoLoc(string tuKhoa, string chuDe, string trangThai)
+        {
+            var thamSo = new List<SqlParameter>();
+            if (tuKhoa.Length > 0)
+                thamSo.Add(new SqlParameter("@TuKhoa", SqlDbType.NVarChar, 255) { Value = "%" + tuKhoa + "%" });
+            if (!string.IsNullOrEmpty(chuDe) && chuDe != "Tất cả chủ đề")
+                thamSo.Add(new SqlParameter("@ChuDe", SqlDbType.NVarChar, 100) { Value = chuDe });
+            if (trangThai == "Đã thuộc" || trangThai == "Chưa thuộc")
+                thamSo.Add(new SqlParameter("@DaThuoc", SqlDbType.Bit) { Value = trangThai == "Đã thuộc" });
+            return thamSo;
+        }
+
+        private void DinhDangBangTuVung()
+        {
+            if (dgvDanhSach.Columns.Count == 0) return;
+            dgvDanhSach.Columns["IdTuVung"].Visible = false;
+            dgvDanhSach.Columns["TiengAnh"].HeaderText = "Từ Tiếng Anh";
+            dgvDanhSach.Columns["PhienAm"].HeaderText = "Phiên Âm";
+            dgvDanhSach.Columns["TiengViet"].HeaderText = "Nghĩa Tiếng Việt";
+            dgvDanhSach.Columns["LoaiTu"].HeaderText = "Loại Từ";
+            dgvDanhSach.Columns["ChuDe"].HeaderText = "Chủ Đề";
+            dgvDanhSach.Columns["DaThuoc"].HeaderText = "Đã Thuộc";
+            foreach (DataGridViewColumn cot in dgvDanhSach.Columns)
+                cot.ReadOnly = cot.Name != "DaThuoc";
         }
 
         private void txtTimKiem_TextChanged(object sender, EventArgs e)
@@ -101,6 +191,7 @@ namespace VocabMaster
 
         private void TaiDanhSachChuDe()
         {
+            string chuDeDangLoc = cboLocChuDe.SelectedItem?.ToString();
             string sql = "SELECT TenChuDe FROM ChuDe ORDER BY TenChuDe ASC";
             DataTable dt = _db.LayDuLieu(sql);
 
@@ -112,7 +203,18 @@ namespace VocabMaster
                 danhSachChuDe.Add(row["TenChuDe"].ToString());
             }
 
-            cboLocChuDe.DataSource = danhSachChuDe;
+            bool dangKhoiTao = _dangKhoiTaoBoLoc;
+            _dangKhoiTaoBoLoc = true;
+            try
+            {
+                cboLocChuDe.DataSource = danhSachChuDe;
+                if (danhSachChuDe.Contains(chuDeDangLoc))
+                    cboLocChuDe.SelectedItem = chuDeDangLoc;
+            }
+            finally
+            {
+                _dangKhoiTaoBoLoc = dangKhoiTao;
+            }
 
             List<string> danhSachChon = new List<string>(danhSachChuDe);
             danhSachChon.Remove("Tất cả chủ đề");
@@ -121,6 +223,7 @@ namespace VocabMaster
 
         private void cboLocChuDe_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (_dangKhoiTaoBoLoc) return;
             LocDuLieu();
         }
 
@@ -135,81 +238,15 @@ namespace VocabMaster
 
         private void cboLocDaThuoc_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (_dangKhoiTaoBoLoc) return;
             LocDuLieu();
         }
 
         private void LocDuLieu()
         {
-            string tuKhoa = txtTimKiem.Text.Trim().Replace("'", "''");
-            if (tuKhoa.ToLower() == "tìm kiếm")
-            {
-                tuKhoa = "";
-            }
-
-            string chuDeDaChon = cboLocChuDe.SelectedItem?.ToString();
-            string trangThai = cboLocDaThuoc.Text;
-
-            string sql = @"
-                SELECT 
-                    t.IdTuVung, 
-                    t.TiengAnh, 
-                    t.PhienAm, 
-                    t.TiengViet, 
-                    t.LoaiTu, 
-                    c.TenChuDe AS ChuDe, 
-                    t.DaThuoc 
-                FROM TuVung t
-                LEFT JOIN ChuDe c ON t.IdChuDe = c.IdChuDe
-                WHERE 1=1 ";
-
-            if (!string.IsNullOrEmpty(tuKhoa))
-            {
-                sql += $" AND (t.TiengAnh LIKE N'%{tuKhoa}%' OR t.TiengViet LIKE N'%{tuKhoa}%') ";
-            }
-
-            if (trangThai == "Đã thuộc")
-            {
-                sql += " AND t.DaThuoc = 1 ";
-            }
-            else if (trangThai == "Chưa thuộc")
-            {
-                sql += " AND t.DaThuoc = 0 ";
-            }
-
-            if (!string.IsNullOrEmpty(chuDeDaChon) && chuDeDaChon != "Tất cả chủ đề")
-            {
-                sql += $" AND c.TenChuDe = N'{chuDeDaChon}' ";
-            }
-
-            sql += " ORDER BY t.TiengAnh ASC";
-
-            DataTable dt = _db.LayDuLieu(sql);
-            dgvDanhSach.DataSource = null;
-            dgvDanhSach.DataSource = dt;
-
-            if (dgvDanhSach.Columns.Count > 0)
-            {
-                dgvDanhSach.Columns["IdTuVung"].Visible = false;
-                dgvDanhSach.Columns["TiengAnh"].HeaderText = "Từ Tiếng Anh";
-                dgvDanhSach.Columns["PhienAm"].HeaderText = "Phiên Âm";
-                dgvDanhSach.Columns["TiengViet"].HeaderText = "Nghĩa Tiếng Việt";
-                dgvDanhSach.Columns["LoaiTu"].HeaderText = "Loại Từ";
-                dgvDanhSach.Columns["ChuDe"].HeaderText = "Chủ Đề";
-                dgvDanhSach.Columns["DaThuoc"].HeaderText = "Đã Thuộc";
-            }
-            dgvDanhSach.ReadOnly = false;
-
-            foreach (DataGridViewColumn cot in dgvDanhSach.Columns)
-            {
-                if (cot.Name == "DaThuoc")
-                {
-                    cot.ReadOnly = false;
-                }
-                else
-                {
-                    cot.ReadOnly = true;
-                }
-            }
+            if (_dangKhoiTaoBoLoc || !IsHandleCreated) return;
+            _trangHienTai = 1;
+            TaiDuLieuLenBang();
         }
         #endregion
 
@@ -241,8 +278,8 @@ namespace VocabMaster
                                $"VALUES (N'{tiengAnh}', N'{tiengViet}', N'{loaiTu}', N'{phienAm}', 0, {idChuDe})";
             _db.ThucThiLenh(sqlThemTu);
 
-            TaiDuLieuLenBang();
             TaiDanhSachChuDe();
+            TaiDuLieuLenBang();
 
             txtTiengAnh.Text = "";
             txtTiengViet.Text = "";
@@ -273,8 +310,8 @@ namespace VocabMaster
             string sqlSua = $"UPDATE TuVung SET TiengAnh = N'{tiengAnh}', TiengViet = N'{tiengViet}', LoaiTu = N'{loaiTu}', PhienAm = N'{phienAm}', IdChuDe = {idChuDe} WHERE IdTuVung = {_idTuDangChon}";
             _db.ThucThiLenh(sqlSua);
 
-            TaiDuLieuLenBang();
             TaiDanhSachChuDe();
+            TaiDuLieuLenBang();
 
             _idTuDangChon = -1;
             btnSua.Text = "Sửa";
@@ -300,8 +337,8 @@ namespace VocabMaster
                 string sqlXoa = $"DELETE FROM TuVung WHERE IdTuVung = {idXoa}";
                 _db.ThucThiLenh(sqlXoa);
 
-                TaiDuLieuLenBang();
                 TaiDanhSachChuDe();
+                TaiDuLieuLenBang();
 
                 txtTiengAnh.Text = "";
                 txtTiengViet.Text = "";
@@ -343,7 +380,7 @@ namespace VocabMaster
 
         private void dgvDanhSach_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0 && dgvDanhSach.Columns[e.ColumnIndex].Name == "DaThuoc")
+            if (!_dangGanDuLieu && e.RowIndex >= 0 && e.ColumnIndex >= 0 && dgvDanhSach.Columns[e.ColumnIndex].Name == "DaThuoc")
             {
                 int idTuVung = Convert.ToInt32(dgvDanhSach.Rows[e.RowIndex].Cells["IdTuVung"].Value);
                 bool daThuoc = Convert.ToBoolean(dgvDanhSach.Rows[e.RowIndex].Cells["DaThuoc"].Value);
@@ -351,6 +388,10 @@ namespace VocabMaster
                 int trangThai = daThuoc ? 1 : 0;
                 string sqlSuaTrangThai = $"UPDATE TuVung SET DaThuoc = {trangThai} WHERE IdTuVung = {idTuVung}";
                 _db.ThucThiLenh(sqlSuaTrangThai);
+                BeginInvoke(new Action(() =>
+                {
+                    if (!_dangDongForm && !IsDisposed) TaiDuLieuLenBang();
+                }));
             }
         }
         private bool _isDichAnhViet = true;
@@ -747,8 +788,8 @@ namespace VocabMaster
                         }
                     }
 
-                    TaiDuLieuLenBang();
                     TaiDanhSachChuDe();
+                    TaiDuLieuLenBang();
                     MessageBox.Show($"Đã nhập thành công {soTuThemThanhCong} từ hợp lệ vào hệ thống!", "Hoàn tất");
                 }
                 catch (Exception)

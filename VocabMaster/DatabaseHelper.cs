@@ -10,10 +10,15 @@ namespace VocabMaster {
         
         // Hàm chạy lệnh SELECT, trả về một bảng dữ liệu (DataTable)
         public DataTable LayDuLieu(string cauLenhSql) {
+            return LayDuLieu(cauLenhSql, Array.Empty<SqlParameter>());
+        }
+
+        public DataTable LayDuLieu(string cauLenhSql, params SqlParameter[] thamSo) {
             DataTable bangDuLieu = new DataTable();
             using (SqlConnection ketNoi = new SqlConnection(_chuoiKetNoi)) {
                 ketNoi.Open();
                 using (SqlCommand lenh = new SqlCommand(cauLenhSql, ketNoi)) {
+                    lenh.Parameters.AddRange(thamSo);
                     using (SqlDataAdapter boChuyenDoi = new SqlDataAdapter(lenh)) {
                         boChuyenDoi.Fill(bangDuLieu);
                     }
