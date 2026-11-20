@@ -11,20 +11,22 @@ namespace VocabMaster
         private static readonly Random _random = new Random();
         private List<TuVung> _danhSachTuVung;
         private List<TuVung> _toanBoDanhSachTu;
+        private List<TuVung> _danhSachTheDaChon;
         private int _viTriHienTai;
         private bool _daLatThe;
         private readonly SpeechSynthesizer _mayDoc;
         private int _soLuongThe;
-        private bool _chiHocTuChuaThuoc;
+        private CheDoFlashCard _cheDoFlashCard;
 
         #region Khởi tạo & Dọn dẹp
-        public FormFlashCard(List<TuVung> danhSachTu, int soLuongThe, bool chiHocTuChuaThuoc)
+        public FormFlashCard(List<TuVung> danhSachTu, List<TuVung> danhSachTheDaChon, int soLuongThe, CheDoFlashCard cheDoFlashCard)
         {
             InitializeComponent();
             
             _toanBoDanhSachTu = danhSachTu;
+            _danhSachTheDaChon = danhSachTheDaChon;
             _soLuongThe = soLuongThe;
-            _chiHocTuChuaThuoc = chiHocTuChuaThuoc;
+            _cheDoFlashCard = cheDoFlashCard;
 
             _mayDoc = new SpeechSynthesizer
             {
@@ -36,22 +38,7 @@ namespace VocabMaster
 
         private void FormFlashCard_Load(object sender, EventArgs e)
         {
-            // Lọc danh sách nếu cần
-            if (_chiHocTuChuaThuoc)
-            {
-                _danhSachTuVung = new List<TuVung>();
-                foreach (var tu in _toanBoDanhSachTu)
-                {
-                    if (!tu.DaThuoc)
-                    {
-                        _danhSachTuVung.Add(tu);
-                    }
-                }
-            }
-            else
-            {
-                _danhSachTuVung = new List<TuVung>(_toanBoDanhSachTu);
-            }
+            _danhSachTuVung = new List<TuVung>(_danhSachTheDaChon);
 
             if (_danhSachTuVung.Count == 0)
             {
@@ -61,7 +48,7 @@ namespace VocabMaster
                 Panel panelChua = this.Parent as Panel;
                 if (panelChua != null)
                 {
-                    FormKetQua frmKetQua = new FormKetQua(0, _toanBoDanhSachTu.Count, _toanBoDanhSachTu, true, KieuHocTap.FlashCard);
+                    FormKetQua frmKetQua = new FormKetQua(0, _toanBoDanhSachTu.Count, _toanBoDanhSachTu, true, KieuHocTap.FlashCard, _cheDoFlashCard);
                     frmKetQua.TopLevel = false;
                     frmKetQua.FormBorderStyle = FormBorderStyle.None;
                     frmKetQua.Dock = DockStyle.Fill;
@@ -74,7 +61,8 @@ namespace VocabMaster
                 return;
             }
 
-            TronDanhSachTuVung();
+            if (_cheDoFlashCard != CheDoFlashCard.TuKho)
+                TronDanhSachTuVung();
             
             // Giới hạn số lượng thẻ
             if (_soLuongThe < _danhSachTuVung.Count)
@@ -193,7 +181,7 @@ namespace VocabMaster
                 Panel panelChua = this.Parent as Panel;
                 if (panelChua != null)
                 {
-                    FormKetQua frmKetQua = new FormKetQua(0, _danhSachTuVung.Count, _toanBoDanhSachTu, false, KieuHocTap.FlashCard);
+                    FormKetQua frmKetQua = new FormKetQua(0, _danhSachTuVung.Count, _toanBoDanhSachTu, false, KieuHocTap.FlashCard, _cheDoFlashCard);
                     frmKetQua.TopLevel = false;
                     frmKetQua.FormBorderStyle = FormBorderStyle.None;
                     frmKetQua.Dock = DockStyle.Fill;
