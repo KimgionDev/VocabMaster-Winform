@@ -26,14 +26,16 @@ namespace VocabMaster
         private KieuHocTap _kieuHocTap;
         private ComboBox _cboCheDoFlashCard;
         private string _thongDiepFlashCard;
+        private string _thongDiepTracNghiem;
 
         #region Khởi tạo
-        public FormKetQua(int soCauDung, int tongSoCau, List<TuVung> danhSachTu, bool chuaLamBai = false, KieuHocTap kieuHocTap = KieuHocTap.TracNghiem, CheDoFlashCard cheDoFlashCard = CheDoFlashCard.TatCa)
+        public FormKetQua(int soCauDung, int tongSoCau, List<TuVung> danhSachTu, bool chuaLamBai = false, KieuHocTap kieuHocTap = KieuHocTap.TracNghiem, CheDoFlashCard cheDoFlashCard = CheDoFlashCard.TatCa, bool isHoiTiengViet = false)
         {
             InitializeComponent();
 
             _danhSachTu = danhSachTu;
             _kieuHocTap = kieuHocTap;
+            switchNgonNgu.Checked = isHoiTiengViet;
 
             if (_kieuHocTap == KieuHocTap.FlashCard)
             {
@@ -75,15 +77,36 @@ namespace VocabMaster
                 }
             }
 
-            nudSoCauHoi.Minimum = _kieuHocTap == KieuHocTap.FlashCard ? 1 : 4;
-            nudSoCauHoi.Maximum = _danhSachTu.Count == 0 ? 1 : _danhSachTu.Count;
-            nudSoCauHoi.Value = Math.Min(tongSoCau, nudSoCauHoi.Maximum);
+            nudSoCauHoi.Minimum = 1;
+            nudSoCauHoi.Maximum = Math.Max(1, _danhSachTu.Count);
+            nudSoCauHoi.Value = Math.Max(1, Math.Min(tongSoCau, nudSoCauHoi.Maximum));
 
             if (_kieuHocTap == KieuHocTap.FlashCard)
                 TaoLuaChonCheDoFlashCard(cheDoFlashCard);
+            else
+            {
+                _thongDiepTracNghiem = lblDiem.Text;
+                switchNgonNgu.CheckedChanged += (sender, e) => CapNhatGioiHanTracNghiem();
+                CapNhatGioiHanTracNghiem();
+            }
         }
         #endregion
 
+        private void CapNhatGioiHanTracNghiem()
+        {
+            int soCauHopLe = new LuyenTapService(_danhSachTu)
+                .DemSoCauHoiHopLe(switchNgonNgu.Checked);
+            bool duDieuKien = soCauHopLe >= 4;
+            nudSoCauHoi.Minimum = duDieuKien ? 4 : 1;
+            nudSoCauHoi.Maximum = duDieuKien ? soCauHopLe : 1;
+            nudSoCauHoi.Value = Math.Max(nudSoCauHoi.Minimum,
+                Math.Min(nudSoCauHoi.Value, nudSoCauHoi.Maximum));
+            nudSoCauHoi.Enabled = duDieuKien;
+            btnLamLai.Enabled = duDieuKien;
+            lblDiem.Text = _thongDiepTracNghiem;
+            if (!duDieuKien)
+                lblDiem.Text += "\nChưa đủ bốn câu với lựa chọn phân biệt. Vui lòng bổ sung từ vựng có nghĩa khác nhau.";
+        }
         #region Chọn nguồn thẻ Flashcard
         private void TaoLuaChonCheDoFlashCard(CheDoFlashCard cheDoBanDau)
         {
@@ -205,6 +228,11 @@ namespace VocabMaster
         #region Các sự kiện Click
         private void btnLamLai_Click(object sender, EventArgs e)
         {
+            if (_kieuHocTap == KieuHocTap.TracNghiem)
+            {
+                CapNhatGioiHanTracNghiem();
+                if (!btnLamLai.Enabled) return;
+            }
             int soCauMoi = (int)nudSoCauHoi.Value;
             bool trangThaiSwitch = switchNgonNgu.Checked;
             CheDoFlashCard cheDoFlashCard = CheDoFlashCard.TatCa;
