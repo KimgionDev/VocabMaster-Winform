@@ -180,6 +180,7 @@ namespace VocabMaster
             dgvDanhSach.Columns["LoaiTu"].HeaderText = "Loại Từ";
             dgvDanhSach.Columns["ChuDe"].HeaderText = "Chủ Đề";
             dgvDanhSach.Columns["DaThuoc"].HeaderText = "Đã Thuộc";
+            dgvDanhSach.ReadOnly = false;
             foreach (DataGridViewColumn cot in dgvDanhSach.Columns)
                 cot.ReadOnly = cot.Name != "DaThuoc";
         }
