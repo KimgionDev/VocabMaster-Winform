@@ -38,6 +38,8 @@ namespace VocabMaster
         public FormDich()
         {
             InitializeComponent();
+            // SQL Server giới hạn mẫu LIKE Unicode ở 4000 ký tự, gồm hai dấu %.
+            txtTimKiem.MaxLength = 3998;
             TaoThanhPhanTrang();
             spin1.Visible = false;
             _timerTuDongDich = new System.Windows.Forms.Timer();
@@ -111,7 +113,7 @@ namespace VocabMaster
             TaiDuLieuLenBang();
         }
 
-        private void TaiDuLieuLenBang()
+        private void TaiDuLieuLenBang(bool giuNoiDungDangSua = false)
         {
             string tuKhoa = txtTimKiem.Text.Trim();
             if (tuKhoa.Equals("Tìm kiếm", StringComparison.OrdinalIgnoreCase)) tuKhoa = "";
@@ -152,7 +154,7 @@ namespace VocabMaster
             {
                 _dangGanDuLieu = false;
             }
-            _idTuDangChon = -1;
+            if (!giuNoiDungDangSua) _idTuDangChon = -1;
             _lblThongTinTrang.Text = $"Trang {_trangHienTai}/{_tongSoTrang} - {tongSoTu} từ";
             _btnTrangTruoc.Enabled = _trangHienTai > 1;
             _btnTrangSau.Enabled = _trangHienTai > 0 && _trangHienTai < _tongSoTrang;
@@ -162,7 +164,12 @@ namespace VocabMaster
         {
             var thamSo = new List<SqlParameter>();
             if (tuKhoa.Length > 0)
-                thamSo.Add(new SqlParameter("@TuKhoa", SqlDbType.NVarChar, 255) { Value = "%" + tuKhoa + "%" });
+            {
+                string mauTimKiem = "%" + tuKhoa + "%";
+                if (mauTimKiem.Length > 4000)
+                    throw new ArgumentException("Từ khóa tìm kiếm không được vượt quá 3998 ký tự.", nameof(tuKhoa));
+                thamSo.Add(new SqlParameter("@TuKhoa", SqlDbType.NVarChar, mauTimKiem.Length) { Value = mauTimKiem });
+            }
             if (!string.IsNullOrEmpty(chuDe) && chuDe != "Tất cả chủ đề")
                 thamSo.Add(new SqlParameter("@ChuDe", SqlDbType.NVarChar, 100) { Value = chuDe });
             if (trangThai == "Đã thuộc" || trangThai == "Chưa thuộc")
@@ -182,7 +189,11 @@ namespace VocabMaster
             dgvDanhSach.Columns["DaThuoc"].HeaderText = "Đã Thuộc";
             dgvDanhSach.ReadOnly = false;
             foreach (DataGridViewColumn cot in dgvDanhSach.Columns)
+            {
                 cot.ReadOnly = cot.Name != "DaThuoc";
+                // Thứ tự toàn bộ kết quả được quyết định bởi ORDER BY trước khi phân trang.
+                cot.SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
         }
 
         private void txtTimKiem_TextChanged(object sender, EventArgs e)
@@ -391,7 +402,7 @@ namespace VocabMaster
                 _db.ThucThiLenh(sqlSuaTrangThai);
                 BeginInvoke(new Action(() =>
                 {
-                    if (!_dangDongForm && !IsDisposed) TaiDuLieuLenBang();
+                    if (!_dangDongForm && !IsDisposed) TaiDuLieuLenBang(giuNoiDungDangSua: true);
                 }));
             }
         }

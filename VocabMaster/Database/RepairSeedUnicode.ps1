@@ -61,18 +61,38 @@ try {
     try {
         $update = $connection.CreateCommand()
         $update.Transaction = $transaction
-        $update.CommandText = 'UPDATE dbo.TuVung SET TiengViet = @Vietnamese, PhienAm = @Ipa WHERE IdTuVung = @Id AND TiengAnh = @English'
         $update.Parameters.Add('@Vietnamese', [System.Data.SqlDbType]::NVarChar, 255) | Out-Null
         $update.Parameters.Add('@Ipa', [System.Data.SqlDbType]::NVarChar, 100) | Out-Null
         $update.Parameters.Add('@Id', [System.Data.SqlDbType]::Int) | Out-Null
         $update.Parameters.Add('@English', [System.Data.SqlDbType]::NVarChar, 100) | Out-Null
+        $update.Parameters.Add('@OriginalVietnamese', [System.Data.SqlDbType]::NVarChar, 255) | Out-Null
+        $update.Parameters.Add('@OriginalIpa', [System.Data.SqlDbType]::NVarChar, 100) | Out-Null
+
+        # Compare the exact snapshot, including case, accents, trailing spaces and NULL.
+        $snapshotCondition = @'
+ WHERE IdTuVung = @Id
+ AND DATALENGTH(TiengAnh) = DATALENGTH(@English)
+ AND CONVERT(varbinary(max), TiengAnh) = CONVERT(varbinary(max), @English)
+ AND ((TiengViet IS NULL AND @OriginalVietnamese IS NULL) OR
+      (DATALENGTH(TiengViet) = DATALENGTH(@OriginalVietnamese)
+       AND CONVERT(varbinary(max), TiengViet) = CONVERT(varbinary(max), @OriginalVietnamese)))
+ AND ((PhienAm IS NULL AND @OriginalIpa IS NULL) OR
+      (DATALENGTH(PhienAm) = DATALENGTH(@OriginalIpa)
+       AND CONVERT(varbinary(max), PhienAm) = CONVERT(varbinary(max), @OriginalIpa)))
+'@
 
         foreach ($row in $damagedRows) {
             $seed = $seedRows[$row.IdTuVung - 1]
+            $assignments = @()
+            if ($row.TiengViet.Contains('?')) { $assignments += 'TiengViet = @Vietnamese' }
+            if ($null -ne $row.PhienAm -and $row.PhienAm.Contains('?')) { $assignments += 'PhienAm = @Ipa' }
+            $update.CommandText = 'UPDATE dbo.TuVung SET ' + ($assignments -join ', ') + $snapshotCondition
             $update.Parameters['@Vietnamese'].Value = $seed.Groups['vietnamese'].Value
             $update.Parameters['@Ipa'].Value = $seed.Groups['ipa'].Value
             $update.Parameters['@Id'].Value = $row.IdTuVung
             $update.Parameters['@English'].Value = $row.TiengAnh
+            $update.Parameters['@OriginalVietnamese'].Value = $row.TiengViet
+            $update.Parameters['@OriginalIpa'].Value = if ($null -eq $row.PhienAm) { [DBNull]::Value } else { $row.PhienAm }
             if ($update.ExecuteNonQuery() -ne 1) {
                 throw "Could not update seed row $($row.IdTuVung)."
             }

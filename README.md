@@ -58,7 +58,7 @@ Dự án áp dụng mô hình phân lớp kết hợp (Forms - Services/Helpers 
    * Mở SQL Server Management Studio.
    * Tạo một Database mới (ví dụ: `VocabMasterDB`).
    * Chạy các lệnh SQL (hoặc file `.sql` đính kèm nếu có) để tạo 4 bảng: `ChuDe`, `TuVung`, `TuVungKho`, `LichSuHocTap`.
-   * Cập nhật chuỗi kết nối (`ConnectionString`) trong lớp `DatabaseHelper.cs` trỏ về máy chủ SQL của bạn.
+   * Nếu dùng SQL Server instance khác mặc định, đặt biến môi trường `VOCABMASTER_CONNECTION_STRING` theo hướng dẫn bên dưới.
 
 3. **Chạy dự án:**
    * Mở tệp `VocabMaster.sln` bằng Visual Studio 2022.
@@ -69,14 +69,19 @@ Dự án áp dụng mô hình phân lớp kết hợp (Forms - Services/Helpers 
 
 ## ⚠️ Lưu ý quan trọng trước khi chạy
 
-Dự án hiện dùng chuỗi kết nối hard-code trong `VocabMaster/DatabaseHelper.cs`:
+Dự án mặc định kết nối đến SQL Server trên máy hiện tại bằng tài khoản Windows:
 
-```csharp
-// Ví dụ về chuỗi kết nối (ConnectionString) đến SQL Server
-private const string CONNECTION_STRING = "Data Source=.;Initial Catalog=VocabMasterDB;Integrated Security=True";
+```text
+Server=.;Database=VocabMasterDB;Integrated Security=True;TrustServerCertificate=True;
 ```
 
-Bạn cần phải thay đổi chuỗi kết nối này phù hợp với cấu hình máy bạn trước khi chạy ứng dụng lần đầu.
+Để dùng instance khác, đặt biến môi trường `VOCABMASTER_CONNECTION_STRING` trước khi mở Visual Studio hoặc chạy ứng dụng. Ví dụ trong PowerShell:
+
+```powershell
+$env:VOCABMASTER_CONNECTION_STRING = 'Server=.\SQLEXPRESS;Database=VocabMasterDB;Integrated Security=True;TrustServerCertificate=True;'
+```
+
+Biến môi trường này ghi đè cấu hình mặc định. Không đưa thông tin đăng nhập SQL Server vào mã nguồn hoặc commit Git.
 
 ---
 
