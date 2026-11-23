@@ -5,8 +5,9 @@ using System.Data.SqlClient;
 namespace VocabMaster {
     public class DatabaseHelper {
         // Chuỗi kết nối SQL Server
-        private string _chuoiKetNoi =
-            "Server=127.0.0.1,1433;Database=VocabMasterDB;User Id=sa;Password=Password123!;TrustServerCertificate=True;";
+        private readonly string _chuoiKetNoi =
+            Environment.GetEnvironmentVariable("VOCABMASTER_CONNECTION_STRING")
+            ?? "Server=.;Database=VocabMasterDB;Integrated Security=True;TrustServerCertificate=True;";
         
         // Hàm chạy lệnh SELECT, trả về một bảng dữ liệu (DataTable)
         public DataTable LayDuLieu(string cauLenhSql) {
