@@ -11,6 +11,8 @@ namespace VocabMaster
         private readonly Random _random = new Random();
         private readonly Dictionary<int, string> _tiengAnh;
         private readonly Dictionary<int, string> _tiengViet;
+        private readonly Dictionary<string, HashSet<string>> _nghiaTheoTiengAnh;
+        private readonly Dictionary<string, HashSet<string>> _tuTheoTiengViet;
 
         public LuyenTapService(List<TuVung> danhSachTu)
         {
@@ -20,6 +22,15 @@ namespace VocabMaster
                 .GroupBy(t => t.IdTuVung).Select(g => g.First()).ToList();
             _tiengAnh = _danhSachTuVung.ToDictionary(t => t.IdTuVung, t => ChuanHoa(t.TiengAnh));
             _tiengViet = _danhSachTuVung.ToDictionary(t => t.IdTuVung, t => ChuanHoa(t.TiengViet));
+            _nghiaTheoTiengAnh = NhomDapAnTheoCauHoi(_tiengAnh, _tiengViet);
+            _tuTheoTiengViet = NhomDapAnTheoCauHoi(_tiengViet, _tiengAnh);
+        }
+
+        private static Dictionary<string, HashSet<string>> NhomDapAnTheoCauHoi(
+            Dictionary<int, string> cauHoi, Dictionary<int, string> dapAn)
+        {
+            return cauHoi.GroupBy(cap => cap.Value, cap => dapAn[cap.Key])
+                .ToDictionary(nhom => nhom.Key, nhom => new HashSet<string>(nhom, StringComparer.Ordinal));
         }
 
         private static string ChuanHoa(string noiDung)
@@ -34,14 +45,14 @@ namespace VocabMaster
 
         private IEnumerable<TuVung> LayDapAnNhieu(TuVung tuChinh, bool isHoiTiengViet)
         {
+            var dapAnDung = isHoiTiengViet
+                ? _tuTheoTiengViet[_tiengViet[tuChinh.IdTuVung]]
+                : _nghiaTheoTiengAnh[_tiengAnh[tuChinh.IdTuVung]];
             var noiDungDaChon = new HashSet<string>(StringComparer.Ordinal);
-            // Cùng từ tiếng Anh hoặc cùng nghĩa tiếng Việt đều không phải đáp án nhiễu.
             foreach (var tu in _danhSachTuVung)
             {
-                if (tu.IdTuVung != tuChinh.IdTuVung
-                    && _tiengAnh[tu.IdTuVung] != _tiengAnh[tuChinh.IdTuVung]
-                    && _tiengViet[tu.IdTuVung] != _tiengViet[tuChinh.IdTuVung]
-                    && noiDungDaChon.Add(NoiDungDapAn(tu, isHoiTiengViet)))
+                string noiDung = NoiDungDapAn(tu, isHoiTiengViet);
+                if (!dapAnDung.Contains(noiDung) && noiDungDaChon.Add(noiDung))
                     yield return tu;
             }
         }
