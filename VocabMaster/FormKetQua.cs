@@ -1,5 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace VocabMaster
@@ -10,13 +13,22 @@ namespace VocabMaster
         FlashCard
     }
 
+    public enum CheDoFlashCard
+    {
+        TatCa,
+        ChuaThuoc,
+        TuKho
+    }
+
     public partial class FormKetQua : Form
     {
         private List<TuVung> _danhSachTu;
         private KieuHocTap _kieuHocTap;
+        private ComboBox _cboCheDoFlashCard;
+        private string _thongDiepFlashCard;
 
         #region Khởi tạo
-        public FormKetQua(int soCauDung, int tongSoCau, List<TuVung> danhSachTu, bool chuaLamBai = false, KieuHocTap kieuHocTap = KieuHocTap.TracNghiem)
+        public FormKetQua(int soCauDung, int tongSoCau, List<TuVung> danhSachTu, bool chuaLamBai = false, KieuHocTap kieuHocTap = KieuHocTap.TracNghiem, CheDoFlashCard cheDoFlashCard = CheDoFlashCard.TatCa)
         {
             InitializeComponent();
 
@@ -39,6 +51,8 @@ namespace VocabMaster
                     lblDiem.Text = $"Bạn đã ôn tập xong {tongSoCau} thẻ Flashcard!";
                     btnLamLai.Text = "Học lại";
                 }
+
+                _thongDiepFlashCard = lblDiem.Text;
             }
             else
             {
@@ -64,6 +78,82 @@ namespace VocabMaster
             nudSoCauHoi.Minimum = _kieuHocTap == KieuHocTap.FlashCard ? 1 : 4;
             nudSoCauHoi.Maximum = _danhSachTu.Count == 0 ? 1 : _danhSachTu.Count;
             nudSoCauHoi.Value = Math.Min(tongSoCau, nudSoCauHoi.Maximum);
+
+            if (_kieuHocTap == KieuHocTap.FlashCard)
+                TaoLuaChonCheDoFlashCard(cheDoFlashCard);
+        }
+        #endregion
+
+        #region Chọn nguồn thẻ Flashcard
+        private void TaoLuaChonCheDoFlashCard(CheDoFlashCard cheDoBanDau)
+        {
+            flpNgonNgu.Visible = false;
+            _cboCheDoFlashCard = new ComboBox
+            {
+                Name = "cboCheDoFlashCard",
+                DropDownStyle = ComboBoxStyle.DropDownList,
+                Font = new Font("K2D", 14F),
+                Location = flpNgonNgu.Location,
+                Size = new Size(407, 45),
+                Anchor = AnchorStyles.None
+            };
+            _cboCheDoFlashCard.Items.AddRange(new object[]
+            {
+                "Tất cả từ vựng", "Từ chưa thuộc", "Luyện từ khó"
+            });
+            panel2.Controls.Add(_cboCheDoFlashCard);
+            _cboCheDoFlashCard.BringToFront();
+            _cboCheDoFlashCard.SelectedIndexChanged += (sender, e) => CapNhatGioiHanThe();
+            _cboCheDoFlashCard.SelectedIndex = (int)cheDoBanDau;
+        }
+
+        private CheDoFlashCard CheDoDaChon => (CheDoFlashCard)_cboCheDoFlashCard.SelectedIndex;
+
+        private List<TuVung> LayDanhSachTheTheoCheDo()
+        {
+            if (CheDoDaChon == CheDoFlashCard.ChuaThuoc)
+                return _danhSachTu.Where(tu => !tu.DaThuoc).ToList();
+            if (CheDoDaChon != CheDoFlashCard.TuKho)
+                return new List<TuVung>(_danhSachTu);
+
+            const string sql = @"
+                SELECT t.IdTuVung, t.TiengAnh, t.TiengViet, t.PhienAm, t.LoaiTu, t.DaThuoc
+                FROM TuVungKho tk
+                INNER JOIN TuVung t ON t.IdTuVung = tk.IdTuVung
+                WHERE tk.SoLanSai >= 1
+                ORDER BY tk.SoLanSai DESC, tk.NgaySaiCuoiCung DESC, tk.IdTuVung ASC";
+
+            DataTable bangTuKho = new DatabaseHelper().LayDuLieu(sql);
+            return bangTuKho.Rows.Cast<DataRow>().Select(row => new TuVung
+            {
+                IdTuVung = Convert.ToInt32(row["IdTuVung"]),
+                TiengAnh = row["TiengAnh"].ToString(),
+                TiengViet = row["TiengViet"].ToString(),
+                PhienAm = row["PhienAm"].ToString(),
+                LoaiTu = row["LoaiTu"].ToString(),
+                DaThuoc = Convert.ToBoolean(row["DaThuoc"])
+            }).ToList();
+        }
+
+        private void CapNhatGioiHanThe()
+        {
+            try
+            {
+                int soThe = LayDanhSachTheTheoCheDo().Count;
+                nudSoCauHoi.Maximum = Math.Max(1, soThe);
+                nudSoCauHoi.Value = Math.Min(nudSoCauHoi.Value, nudSoCauHoi.Maximum);
+                btnLamLai.Enabled = soThe > 0;
+                lblDiem.Text = soThe == 0
+                    ? (CheDoDaChon == CheDoFlashCard.TuKho
+                        ? "Chưa có từ khó để luyện Flashcard."
+                        : "Chưa có từ vựng phù hợp để học Flashcard.")
+                    : _thongDiepFlashCard;
+            }
+            catch (Exception)
+            {
+                btnLamLai.Enabled = false;
+                lblDiem.Text = "Không thể tải danh sách từ khó. Vui lòng kiểm tra kết nối dữ liệu.";
+            }
         }
         #endregion
 
@@ -117,6 +207,30 @@ namespace VocabMaster
         {
             int soCauMoi = (int)nudSoCauHoi.Value;
             bool trangThaiSwitch = switchNgonNgu.Checked;
+            CheDoFlashCard cheDoFlashCard = CheDoFlashCard.TatCa;
+            List<TuVung> danhSachThe = null;
+
+            if (_kieuHocTap == KieuHocTap.FlashCard)
+            {
+                cheDoFlashCard = CheDoDaChon;
+                try
+                {
+                    danhSachThe = LayDanhSachTheTheoCheDo();
+                }
+                catch (Exception)
+                {
+                    btnLamLai.Enabled = false;
+                    lblDiem.Text = "Không thể tải danh sách từ khó. Vui lòng kiểm tra kết nối dữ liệu.";
+                    return;
+                }
+
+                if (danhSachThe.Count == 0)
+                {
+                    CapNhatGioiHanThe();
+                    return;
+                }
+                soCauMoi = Math.Min(soCauMoi, danhSachThe.Count);
+            }
 
             // Ép kiểu an toàn giống FormTracNghiem để tránh lỗi văng app
             Panel panelChua = this.Parent as Panel;
@@ -134,7 +248,7 @@ namespace VocabMaster
             }
             else
             {
-                formCon = new FormFlashCard(_danhSachTu, soCauMoi, trangThaiSwitch);
+                formCon = new FormFlashCard(_danhSachTu, danhSachThe, soCauMoi, cheDoFlashCard);
             }
 
             formCon.TopLevel = false;

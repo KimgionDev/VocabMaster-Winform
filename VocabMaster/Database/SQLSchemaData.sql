@@ -1,6 +1,6 @@
 USE VocabMasterDB;
 GO
--- Vui lòng cập nhật biến _chuoiKetNoi trong file DatabaseHelper.cs cho đúng SQL Server instance.
+-- Đặt biến môi trường VOCABMASTER_CONNECTION_STRING nếu dùng SQL Server instance khác mặc định.
 
 -- 1) Xóa bảng cũ (nếu có)
 IF OBJECT_ID(N'dbo.TuVungKho', N'U') IS NOT NULL DROP TABLE dbo.TuVungKho;
