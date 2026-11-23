@@ -1,50 +1,86 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+using System.Text.RegularExpressions;
 
 namespace VocabMaster
 {
     internal class LuyenTapService
     {
-        private List<TuVung> _danhSachTuVung;
-        private Random _random = new Random();
+        private readonly List<TuVung> _danhSachTuVung;
+        private readonly Random _random = new Random();
+        private readonly Dictionary<int, string> _tiengAnh;
+        private readonly Dictionary<int, string> _tiengViet;
+        private readonly Dictionary<string, HashSet<string>> _nghiaTheoTiengAnh;
+        private readonly Dictionary<string, HashSet<string>> _tuTheoTiengViet;
+
         public LuyenTapService(List<TuVung> danhSachTu)
         {
-            _danhSachTuVung = danhSachTu;
+            _danhSachTuVung = (danhSachTu ?? new List<TuVung>())
+                .Where(t => t != null && !string.IsNullOrWhiteSpace(t.TiengAnh)
+                    && !string.IsNullOrWhiteSpace(t.TiengViet))
+                .GroupBy(t => t.IdTuVung).Select(g => g.First()).ToList();
+            _tiengAnh = _danhSachTuVung.ToDictionary(t => t.IdTuVung, t => ChuanHoa(t.TiengAnh));
+            _tiengViet = _danhSachTuVung.ToDictionary(t => t.IdTuVung, t => ChuanHoa(t.TiengViet));
+            _nghiaTheoTiengAnh = NhomDapAnTheoCauHoi(_tiengAnh, _tiengViet);
+            _tuTheoTiengViet = NhomDapAnTheoCauHoi(_tiengViet, _tiengAnh);
         }
 
-        public List<CauHoi> TaoDeThi(int soLuongCauHoi)
+        private static Dictionary<string, HashSet<string>> NhomDapAnTheoCauHoi(
+            Dictionary<int, string> cauHoi, Dictionary<int, string> dapAn)
         {
-            List<CauHoi> deThi = new List<CauHoi>();
-            if (_danhSachTuVung.Count < 4 || soLuongCauHoi > _danhSachTuVung.Count)
+            return cauHoi.GroupBy(cap => cap.Value, cap => dapAn[cap.Key])
+                .ToDictionary(nhom => nhom.Key, nhom => new HashSet<string>(nhom, StringComparer.Ordinal));
+        }
+
+        private static string ChuanHoa(string noiDung)
+        {
+            return Regex.Replace((noiDung ?? "").Trim(), @"\s+", " ").ToUpperInvariant();
+        }
+
+        private string NoiDungDapAn(TuVung tu, bool isHoiTiengViet)
+        {
+            return isHoiTiengViet ? _tiengAnh[tu.IdTuVung] : _tiengViet[tu.IdTuVung];
+        }
+
+        private IEnumerable<TuVung> LayDapAnNhieu(TuVung tuChinh, bool isHoiTiengViet)
+        {
+            var dapAnDung = isHoiTiengViet
+                ? _tuTheoTiengViet[_tiengViet[tuChinh.IdTuVung]]
+                : _nghiaTheoTiengAnh[_tiengAnh[tuChinh.IdTuVung]];
+            var noiDungDaChon = new HashSet<string>(StringComparer.Ordinal);
+            foreach (var tu in _danhSachTuVung)
             {
-                MessageBox.Show("Không đủ từ vựng để tạo đề thi. Vui lòng thêm nhiều từ hơn.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return deThi;
+                string noiDung = NoiDungDapAn(tu, isHoiTiengViet);
+                if (!dapAnDung.Contains(noiDung) && noiDungDaChon.Add(noiDung))
+                    yield return tu;
             }
-            var danhSachTuDaTron = _danhSachTuVung
-                                  .OrderBy(t => _random.Next())
-                                  .Take(soLuongCauHoi)  // Lấy số luọng câu hỏi yêu cầu, ví dụ 3 câu thì lấy 3 từ đã được trộn ngẫu nhiên.
-                                  .ToList();            // 3 từ này sẽ là từ chính trong 3 câu hỏi của đề thi.
-            foreach (var tuChinh in danhSachTuDaTron)
+        }
+        private List<TuVung> LayTuLamCauHoi(bool isHoiTiengViet)
+        {
+            return _danhSachTuVung.Where(t => LayDapAnNhieu(t, isHoiTiengViet).Take(3).Count() == 3).ToList();
+        }
+
+        public int DemSoCauHoiHopLe(bool isHoiTiengViet = false)
+        {
+            return LayTuLamCauHoi(isHoiTiengViet).Count;
+        }
+
+        public List<CauHoi> TaoDeThi(int soLuongCauHoi, bool isHoiTiengViet = false)
+        {
+            var tuHopLe = LayTuLamCauHoi(isHoiTiengViet);
+            if (soLuongCauHoi < 1 || soLuongCauHoi > tuHopLe.Count)
+                return new List<CauHoi>();
+
+            var deThi = new List<CauHoi>();
+            foreach (var tuChinh in tuHopLe.OrderBy(t => _random.Next()).Take(soLuongCauHoi))
             {
-                CauHoi cauHoi = new CauHoi();
-                cauHoi.TuChinh = tuChinh;
-                cauHoi.CacTuVungSai = _danhSachTuVung
-                                    .Where(t => t.IdTuVung != tuChinh.IdTuVung 
-                                    && t.TiengAnh.ToLower() != tuChinh.TiengAnh.ToLower())
-                                    .OrderBy(t => _random.Next())
-                                    .Take(3)
-                                    .ToList();
-                var tatCaTuVung = new List<TuVung>();
-                tatCaTuVung.AddRange(cauHoi.CacTuVungSai);  // thêm tất cả phần tử của danh sách vào danh sách hiện tại 
-                tatCaTuVung.Add(cauHoi.TuChinh);
-                tatCaTuVung= tatCaTuVung.OrderBy(t => _random.Next()).ToList(); // Trộn lại tất cả các từ (bao gồm cả từ chính) để tạo thành 4 lựa chọn cho câu hỏi.
-                cauHoi.CacDapAnTuVung = tatCaTuVung;
+                var cauHoi = new CauHoi { TuChinh = tuChinh };
+                cauHoi.CacTuVungSai = LayDapAnNhieu(tuChinh, isHoiTiengViet)
+                    .OrderBy(t => _random.Next()).Take(3).ToList();
+                cauHoi.CacDapAnTuVung = cauHoi.CacTuVungSai.Concat(new[] { tuChinh })
+                    .OrderBy(t => _random.Next()).ToList();
                 deThi.Add(cauHoi);
-                
             }
             return deThi;
         }
