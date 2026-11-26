@@ -59,6 +59,7 @@ Dự án áp dụng mô hình phân lớp kết hợp (Forms - Services/Helpers 
    * Tạo một Database mới (ví dụ: `VocabMasterDB`).
    * Chạy các lệnh SQL (hoặc file `.sql` đính kèm nếu có) để tạo 4 bảng: `ChuDe`, `TuVung`, `TuVungKho`, `LichSuHocTap`.
    * Nếu dùng SQL Server instance khác mặc định, đặt biến môi trường `VOCABMASTER_CONNECTION_STRING` theo hướng dẫn bên dưới.
+   * Với database đã có dữ liệu và còn dùng khóa ngoại cũ cho `TuVungKho`, chọn đúng database rồi chạy [EnableDifficultWordCascade.sql](VocabMaster/Database/EnableDifficultWordCascade.sql) để bật xóa dây chuyền và giữ dữ liệu hiện có.
 
 3. **Chạy dự án:**
    * Mở tệp `VocabMaster.sln` bằng Visual Studio 2022.
