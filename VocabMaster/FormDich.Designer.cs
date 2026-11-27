@@ -28,7 +28,7 @@ namespace VocabMaster
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormDich));
             this.cboLocChuDe = new System.Windows.Forms.ComboBox();
             this.btnLoa = new System.Windows.Forms.Button();
@@ -46,6 +46,7 @@ namespace VocabMaster
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.cboLocDaThuoc = new System.Windows.Forms.ComboBox();
             this.lblDanhSachTuVung = new System.Windows.Forms.Label();
+            this.spin1 = new AntdUI.Spin();
             this.btnDaoChieu = new System.Windows.Forms.Button();
             this.cboChonChuDe = new System.Windows.Forms.ComboBox();
             this.btnSua = new System.Windows.Forms.Button();
@@ -60,7 +61,6 @@ namespace VocabMaster
             this.btnTuDien = new System.Windows.Forms.Button();
             this.btnMenu = new System.Windows.Forms.Button();
             this.pnlNoiDung = new System.Windows.Forms.Panel();
-            this.spin1 = new AntdUI.Spin();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDanhSach)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -102,8 +102,7 @@ namespace VocabMaster
             // 
             // txtLoaiTu
             // 
-            this.txtLoaiTu.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtLoaiTu.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
             this.txtLoaiTu.BackColor = System.Drawing.Color.White;
             this.txtLoaiTu.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.txtLoaiTu.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
@@ -129,8 +128,7 @@ namespace VocabMaster
             // 
             // txtPhienAm
             // 
-            this.txtPhienAm.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtPhienAm.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
             this.txtPhienAm.BackColor = System.Drawing.Color.White;
             this.txtPhienAm.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.txtPhienAm.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
@@ -156,8 +154,7 @@ namespace VocabMaster
             // 
             // txtTiengViet
             // 
-            this.txtTiengViet.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtTiengViet.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
             this.txtTiengViet.BackColor = System.Drawing.Color.White;
             this.txtTiengViet.Font = new System.Drawing.Font("Segoe UI", 13F);
             this.txtTiengViet.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
@@ -205,8 +202,7 @@ namespace VocabMaster
             // 
             // txtTiengAnh
             // 
-            this.txtTiengAnh.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtTiengAnh.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
             this.txtTiengAnh.BackColor = System.Drawing.Color.White;
             this.txtTiengAnh.Font = new System.Drawing.Font("Segoe UI", 13F);
             this.txtTiengAnh.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
@@ -236,19 +232,17 @@ namespace VocabMaster
             this.dgvDanhSach.AllowUserToAddRows = false;
             this.dgvDanhSach.AllowUserToDeleteRows = false;
             this.dgvDanhSach.AllowUserToResizeRows = false;
-            this.dgvDanhSach.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvDanhSach.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvDanhSach.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvDanhSach.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(98)))), ((int)(((byte)(180)))));
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("K2D", 10F);
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(98)))), ((int)(((byte)(180)))));
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvDanhSach.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(98)))), ((int)(((byte)(180)))));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("K2D", 10F);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(98)))), ((int)(((byte)(180)))));
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvDanhSach.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvDanhSach.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvDanhSach.EnableHeadersVisualStyles = false;
             this.dgvDanhSach.Location = new System.Drawing.Point(6, 98);
@@ -267,8 +261,7 @@ namespace VocabMaster
             // 
             // txtTimKiem
             // 
-            this.txtTimKiem.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtTimKiem.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
             this.txtTimKiem.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.txtTimKiem.Location = new System.Drawing.Point(14, 12);
             this.txtTimKiem.Multiline = true;
@@ -345,6 +338,14 @@ namespace VocabMaster
             this.lblDanhSachTuVung.Text = "Danh sách từ vựng";
             this.lblDanhSachTuVung.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // spin1
+            //
+            this.spin1.Location = new System.Drawing.Point(177, 170);
+            this.spin1.Name = "spin1";
+            this.spin1.Size = new System.Drawing.Size(95, 85);
+            this.spin1.TabIndex = 22;
+            this.spin1.Text = "Đang dịch";
+            //
             // btnDaoChieu
             // 
             this.btnDaoChieu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -581,14 +582,6 @@ namespace VocabMaster
             this.pnlNoiDung.Size = new System.Drawing.Size(1111, 578);
             this.pnlNoiDung.TabIndex = 23;
             // 
-            // spin1
-            // 
-            this.spin1.Location = new System.Drawing.Point(220, 60);
-            this.spin1.Name = "spin1";
-            this.spin1.Size = new System.Drawing.Size(164, 131);
-            this.spin1.TabIndex = 22;
-            this.spin1.Text = "Đang dịch";
-            // 
             // FormDich
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -611,7 +604,6 @@ namespace VocabMaster
             this.pnlMenu.ResumeLayout(false);
             this.pnlNoiDung.ResumeLayout(false);
             this.ResumeLayout(false);
-
         }
 
         #endregion
